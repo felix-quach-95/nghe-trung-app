@@ -1,0 +1,1144 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Nghe Trung Mỗi Ngày</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+SC:wght@500;700&display=swap">
+<style>
+/* Layout: one listening console. The day reads as a scroll of four blocks (新 温 浸 眠); a docked player holds the sentence you are hearing. */
+:root {
+  --paper: #eef2ef;
+  --card: #fbfcfb;
+  --ink: #16212a;
+  --muted: #56666d;
+  --line: #d5ddd9;
+  --jade: #1d6b58;
+  --jade-soft: #dcebe5;
+  --seal: #b83a29;
+  --seal-soft: #f5e1dc;
+  --on-jade: #ffffff;
+  --shadow: 0 1px 2px rgb(22 33 42 / .06), 0 10px 28px rgb(22 33 42 / .07);
+  --zh: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --ui: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0d1315; --card: #141c1f; --ink: #e3eae7; --muted: #91a19d; --line: #25322f;
+    --jade: #5bbfa3; --jade-soft: #16302a; --seal: #e3624d; --seal-soft: #3b201b; --on-jade: #06120e;
+    --shadow: 0 1px 2px rgb(0 0 0 / .35), 0 10px 28px rgb(0 0 0 / .3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0d1315; --card: #141c1f; --ink: #e3eae7; --muted: #91a19d; --line: #25322f;
+  --jade: #5bbfa3; --jade-soft: #16302a; --seal: #e3624d; --seal-soft: #3b201b; --on-jade: #06120e;
+  --shadow: 0 1px 2px rgb(0 0 0 / .35), 0 10px 28px rgb(0 0 0 / .3);
+  color-scheme: dark;
+}
+html, body { background: var(--paper); color: var(--ink); }
+body { font-family: var(--ui); font-size: 16px; line-height: 1.55; -webkit-text-size-adjust: 100%; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+* { box-sizing: border-box; }
+button, select, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--jade); outline-offset: 2px; border-radius: 6px; }
+a { color: var(--jade); }
+.zh { font-family: var(--zh); font-weight: 500; }
+.py { color: var(--muted); font-size: .92em; }
+.num { font-variant-numeric: tabular-nums; }
+
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 170px; }
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); padding-block: 12px 0; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.seal { width: 34px; height: 34px; flex: none; display: grid; place-items: center; background: var(--seal); color: #fff; border-radius: 6px; font-family: var(--zh); font-weight: 700; font-size: 21px; line-height: 1; }
+.brand-name { font-weight: 700; letter-spacing: -.01em; }
+.brand-sub { color: var(--muted); font-size: 13px; }
+.brand .grow { flex: 1; min-width: 0; }
+.daypill { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--jade-soft); color: var(--jade); white-space: nowrap; }
+.tabs { display: flex; gap: 2px; margin-top: 10px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.tabs a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 14px; padding: 8px 6px 10px; border-bottom: 2px solid transparent; white-space: nowrap; }
+.tabs a[aria-current="page"] { color: var(--ink); border-color: var(--seal); }
+
+section.view { padding-top: 22px; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h2 { font-size: 22px; letter-spacing: -.01em; }
+h3 { font-size: 17px; }
+p { margin: 0; }
+.lead { color: var(--muted); max-width: 62ch; }
+
+/* Today */
+.hero { display: grid; gap: 8px; }
+.hero .zh-title { font-family: var(--zh); font-weight: 700; font-size: clamp(30px, 7vw, 44px); line-height: 1.2; letter-spacing: .02em; }
+.hero .vi-title { font-weight: 600; font-size: 18px; }
+.hero .scene { color: var(--muted); max-width: 60ch; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 10px; }
+.btn { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 9px 16px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+.btn:hover { border-color: var(--muted); }
+.btn-primary { background: var(--jade); border-color: var(--jade); color: var(--on-jade); padding: 12px 20px; font-size: 16px; }
+.btn-primary:hover { filter: brightness(1.08); border-color: var(--jade); }
+.btn svg, .pl-btn svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+.daynav { display: inline-flex; align-items: center; gap: 2px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
+.daynav button { border: 0; background: none; padding: 8px 12px; font-weight: 700; color: var(--muted); }
+.daynav button:disabled { opacity: .35; cursor: default; }
+.daynav span { font-size: 14px; font-weight: 600; padding: 0 4px; }
+
+.scroll { display: flex; gap: 3px; height: 10px; margin-top: 18px; }
+.scroll i { display: block; border-radius: 3px; background: var(--line); min-width: 6px; }
+.scroll i[data-s="done"] { background: var(--jade); }
+.scroll i[data-s="now"] { background: var(--seal); }
+.scroll-legend { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+.blocks { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
+.block { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; }
+.block[data-s="now"] { border-color: var(--seal); box-shadow: var(--shadow); }
+.glyph { width: 46px; text-align: center; }
+.glyph b { display: grid; place-items: center; width: 42px; height: 42px; margin: 0 auto; border-radius: 50%; font-family: var(--zh); font-size: 22px; font-weight: 700; background: var(--jade-soft); color: var(--jade); }
+.block[data-s="done"] .glyph b { background: var(--jade); color: var(--card); }
+.block[data-s="now"] .glyph b { background: var(--seal-soft); color: var(--seal); }
+.glyph small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+.b-main { min-width: 0; }
+.b-title { font-weight: 700; }
+.b-hint { color: var(--muted); font-size: 14px; }
+.b-side { display: flex; align-items: center; gap: 10px; }
+.b-dur { font-size: 14px; color: var(--muted); white-space: nowrap; }
+.b-play { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); display: grid; place-items: center; }
+.b-play svg { width: 16px; height: 16px; fill: currentColor; }
+.b-play:hover { border-color: var(--jade); color: var(--jade); }
+.chip { white-space: nowrap; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--jade-soft); color: var(--jade); }
+.chip.seal { background: var(--seal-soft); color: var(--seal); }
+
+.note { margin-top: 18px; border-left: 3px solid var(--seal); padding: 4px 0 4px 14px; color: var(--muted); font-size: 15px; max-width: 64ch; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 12px; color: var(--muted); }
+@media (max-width: 560px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Library */
+.week { margin-top: 22px; }
+.week h3 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.lrow { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center; padding: 11px 4px; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit; }
+.lrow:hover .lv { color: var(--jade); }
+.lno { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 600; text-align: right; }
+.lmain { min-width: 0; }
+.lz { font-family: var(--zh); font-size: 18px; }
+.lv { font-size: 14px; color: var(--muted); }
+
+/* Lesson detail */
+.back { display: inline-flex; gap: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
+.toggles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.tg { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.tg[aria-pressed="true"] { color: var(--jade); border-color: var(--jade); background: var(--jade-soft); }
+.part { margin-top: 26px; }
+.part > h3 { margin-bottom: 10px; }
+.line { display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); }
+.line .who { font-size: 13px; font-weight: 600; color: var(--muted); padding-top: 4px; white-space: pre-line; }
+.line .txt { min-width: 0; }
+.line .zh { font-size: 20px; line-height: 1.45; }
+.line .vi { color: var(--ink); opacity: .85; font-size: 15px; }
+.say { border: 0; background: none; padding: 0; text-align: left; cursor: pointer; color: inherit; }
+.say:hover .zh { color: var(--jade); }
+.hide-py .py, .hide-vi .vi, .hide-vi .hv { display: none; }
+.chunks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 560px) { .chunks { grid-template-columns: minmax(0, 1fr); } }
+.chunk { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.chunk .zh { font-size: 22px; }
+.hv { font-size: 13px; color: var(--seal); font-weight: 600; }
+.hv em { font-style: normal; color: var(--muted); font-weight: 400; }
+.pattern { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+.pattern .sk { font-weight: 700; }
+.pattern .sk .zh { font-size: 18px; }
+.pattern ul { margin: 6px 0 0; padding: 0; list-style: none; }
+.pattern li { padding: 5px 0; border-top: 1px dashed var(--line); }
+
+/* Method */
+.prose { max-width: 66ch; }
+.prose p + p { margin-top: 10px; }
+.evidence { display: grid; gap: 12px; margin-top: 16px; }
+.ev { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.ev b { display: block; margin-bottom: 4px; }
+.principles { counter-reset: pr; list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 12px; }
+.principles li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; }
+.principles li::before { counter-increment: pr; content: counter(pr); font-weight: 700; color: var(--seal); font-variant-numeric: tabular-nums; }
+.principles .how { color: var(--jade); font-weight: 600; }
+.tablewrap { overflow-x: auto; margin-top: 14px; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 15px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td .zh { font-size: 20px; color: var(--jade); }
+.refs { font-size: 14px; color: var(--muted); padding-left: 18px; }
+.refs li { margin-top: 6px; }
+
+/* Options */
+.opt { display: grid; gap: 8px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.opt label, .opt .lab { font-weight: 600; }
+.opt .help { color: var(--muted); font-size: 14px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 13px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.seg button[aria-pressed="true"] { border-color: var(--jade); color: var(--jade); background: var(--jade-soft); }
+.danger { color: var(--seal); }
+select { border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 7px 10px; }
+
+/* Player */
+.player { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--card); border-top: 1px solid var(--line); box-shadow: 0 -8px 30px rgb(0 0 0 / .08); padding-bottom: env(safe-area-inset-bottom, 0px); max-height: 88vh; overflow-y: auto; }
+.pl-in { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px 12px; }
+.pl-bar { height: 4px; background: var(--line); border-radius: 2px; cursor: pointer; position: relative; margin-bottom: 10px; touch-action: none; }
+.pl-bar i { position: absolute; inset: 0 auto 0 0; background: var(--seal); border-radius: 2px; width: 0; }
+.pl-row { display: flex; align-items: center; gap: 8px; }
+.pl-info { flex: 1; min-width: 0; border: 0; background: none; text-align: left; padding: 0; }
+.pl-head { font-size: 12px; color: var(--muted); display: flex; gap: 8px; white-space: nowrap; overflow: hidden; }
+.pl-head .num { margin-left: auto; }
+.pl-mini { font-family: var(--zh); font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pl-mini.vi { font-family: var(--ui); font-size: 15px; color: var(--muted); }
+.pl-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); display: grid; place-items: center; flex: none; }
+.pl-btn.main { width: 50px; height: 50px; background: var(--jade); border-color: var(--jade); color: var(--on-jade); }
+.pl-btn.main svg { width: 22px; height: 22px; }
+.pl-sheet { display: grid; gap: 12px; padding-top: 14px; }
+.now { min-height: 150px; display: grid; align-content: center; gap: 4px; text-align: center; padding: 6px 0; }
+.now .who { font-size: 13px; font-weight: 600; color: var(--muted); }
+.now .zh { font-size: clamp(26px, 6.5vw, 38px); line-height: 1.35; }
+.now .py { font-size: 16px; }
+.now .vi { font-size: 16px; }
+.now .vi.speaking, .now .zh.speaking { color: var(--seal); }
+.now .cue { color: var(--muted); font-size: 16px; max-width: 46ch; margin: 0 auto; }
+.ctrls { display: flex; justify-content: center; align-items: center; gap: 12px; }
+.subopts { display: grid; gap: 8px; }
+.subopts .seg { justify-content: center; }
+.subopts .lab { font-size: 12px; color: var(--muted); text-align: center; }
+.prep { font-size: 13px; color: var(--seal); font-weight: 600; }
+.boot-error { margin-top: 40px; padding: 16px; border: 1px solid var(--seal); border-radius: 12px; }
+@media (prefers-reduced-motion: no-preference) { .pl-bar i { transition: width .25s linear; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="seal" aria-hidden="true">听</div>
+      <div class="grow"><div class="brand-name">Nghe Trung Mỗi Ngày</div><div class="brand-sub">Học tiếng Trung giao tiếp chỉ bằng tai</div></div>
+      <span class="daypill num" id="daypill">Ngày 1</span>
+    </div>
+    <nav class="tabs" aria-label="Mục">
+      <a href="#hom-nay" data-v="hom-nay">Hôm nay</a>
+      <a href="#thu-vien" data-v="thu-vien">Thư viện</a>
+      <a href="#phuong-phap" data-v="phuong-phap">Phương pháp</a>
+      <a href="#tuy-chon" data-v="tuy-chon">Tùy chọn</a>
+    </nav>
+  </header>
+
+  <div class="boot-error" id="boot-error" hidden>Không tìm thấy dữ liệu bài học (data.js). Hãy chạy bước build rồi mở lại trang.</div>
+
+  <section class="view" id="v-hom-nay"></section>
+  <section class="view" id="v-thu-vien" hidden></section>
+  <section class="view" id="v-bai" hidden></section>
+  <section class="view" id="v-phuong-phap" hidden>
+    <div class="eyebrow">Nghiên cứu phía sau app</div>
+    <h2 style="margin-top:6px">Vì sao chỉ nghe mà vẫn học được</h2>
+    <div class="prose" style="margin-top:12px">
+      <p>Nghe là con đường chính để tai quen tiếng Trung, với một điều kiện: bạn phải hiểu thứ mình đang nghe. Nghe một ngôn ngữ hoàn toàn không hiểu thì gần như không học được gì. Vì vậy mọi thứ trong app được làm cho dễ hiểu trước, rồi mới lặp lại cho đến khi thấm.</p>
+    </div>
+    <h3 style="margin-top:26px">Bằng chứng nói gì</h3>
+    <div class="evidence">
+      <div class="ev"><b>Nghe mà không hiểu: hiệu quả rất thấp</b>Kuhl, Tsao và Liu (2003) cho trẻ 9 tháng tuổi nghe tiếng Phổ thông. Nghe người thật thì trẻ tiếp thu được âm, còn nghe băng ghi âm hoặc xem video thì không.</div>
+      <div class="ev"><b>Nghe nền vẫn có ích, nhưng ở mức âm thanh</b>Alexander, Van Hedger và Batterink (2023): người lớn nghe podcast tiếng Ý mỗi ngày trong lúc sinh hoạt bình thường. Sau hai tuần họ nhận ra từ tiếng Ý tốt hơn, nhưng đó là quen hình dạng từ, chưa phải hiểu nghĩa.</div>
+      <div class="ev"><b>Thụ động cộng chủ động mạnh hơn từng thứ riêng lẻ</b>Wright và cộng sự (2015): xen kẽ luyện tập với những quãng chỉ nghe thụ động cho kết quả bằng hoặc hơn luyện tập liên tục. Chỉ nghe thụ động thì không học được. App tương tác của bạn là phần luyện tập, app này là phần nghe.</div>
+    </div>
+    <h3 style="margin-top:28px">Tám nguyên tắc được đưa vào app</h3>
+    <ol class="principles">
+      <li><div><b>Hiểu trước, nghe nhiều sau.</b> Krashen gọi đây là đầu vào dễ hiểu. Chang và Read (2006) thấy cho người học biết trước chủ đề là kiểu hỗ trợ hiệu quả nhất, nghe lặp lại đứng thứ hai. <span class="how">Trong app:</span> mỗi bài mở đầu bằng bối cảnh tiếng Việt, mỗi câu được kẹp Trung, Việt, Trung chậm, rồi Trung.</div></li>
+      <li><div><b>Nghe hẹp, lặp lại có biến thể.</b> Krashen (1996) đề xuất nghe nhiều lần các bản ghi cùng một chủ đề, và người học trong nghiên cứu của Dupuy (1999) thấy cách này giúp nghe hiểu, độ trôi chảy và vốn từ. <span class="how">Trong app:</span> khối Đắm chìm xoay vòng các bài của 7 ngày gần nhất với 8 biến thể: giọng khác, bản chậm, cụm từ, mẫu câu, câu chuyện.</div></li>
+      <li><div><b>Nhiều giọng đọc.</b> Wang, Spence, Jongman và Sereno (1999) luyện thanh điệu tiếng Phổ thông với nhiều người nói: độ chính xác tăng khoảng 21%, áp dụng được cho giọng mới và vẫn giữ sau 6 tháng. <span class="how">Trong app:</span> 5 giọng Trung khác nhau, mỗi câu được nghe bằng ít nhất 2 giọng.</div></li>
+      <li><div><b>Ôn giãn cách.</b> Cepeda và cộng sự (2008) cho thấy khoảng cách ôn tối ưu dài dần theo thời gian bạn cần nhớ. <span class="how">Trong app:</span> mỗi bài quay lại sau 1, 2, 4, 7, 12, 20, 30, 45 và 60 ngày.</div></li>
+      <li><div><b>Nhớ lại trong đầu.</b> Roediger và Karpicke (2006): tự nhớ lại giữ kiến thức lâu hơn hẳn đọc lại. <span class="how">Trong app:</span> phần ôn có khoảng lặng để bạn đoán nghĩa hoặc nói thầm câu tiếng Trung, rồi nghe đáp án. Không cần chạm vào màn hình.</div></li>
+      <li><div><b>Chậm trước, tự nhiên sau.</b> Các nghiên cứu về tốc độ nói cho kết quả lẫn lộn, nhưng người mới học thường được lợi khi có thêm thời gian xử lý. <span class="how">Trong app:</span> câu mới có bản đọc chậm còn 70% tốc độ và luôn được nghe lại ở tốc độ tự nhiên.</div></li>
+      <li><div><b>Lợi thế của người Việt.</b> Khoảng một phần ba đến 40% từ vựng tiếng Việt có gốc Hán, nhiều hơn hẳn trong văn trang trọng. <span class="how">Trong app:</span> mỗi cụm từ có âm Hán Việt và lời nhắc những từ dễ nhầm, như <span class="zh">便宜</span> đọc là tiện nghi nhưng nghĩa là rẻ.</div></li>
+      <li><div><b>Ngủ để củng cố.</b> Gais, Lucas và Born (2006): ngủ trong vài giờ sau khi học giúp nhớ tốt hơn. Schreiner và Rasch (2015): phát lại từ vừa học trong giấc ngủ sâu giúp nhớ, còn phát lúc thức thì không. <span class="how">Trong app:</span> khối Trước khi ngủ chậm, nhỏ dần rồi tắt. App không phát âm thanh suốt đêm.</div></li>
+    </ol>
+    <h3 style="margin-top:28px">Một ngày nghe 60 đến 120 phút</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Khối</th><th>Thời lượng</th><th>Nghe khi nào</th><th>Mức tập trung</th></tr></thead>
+        <tbody>
+          <tr><td><span class="zh">新</span> Bài mới</td><td class="num">10–12 phút</td><td>Buổi sáng, đeo tai nghe, ngồi yên</td><td>Cao</td></tr>
+          <tr><td><span class="zh">温</span> Ôn giãn cách</td><td class="num">5–25 phút</td><td>Trên đường đi làm</td><td>Vừa, có khoảng lặng để nhớ lại</td></tr>
+          <tr><td><span class="zh">浸</span> Đắm chìm</td><td class="num">15–70 phút</td><td>Làm việc nhà, tập thể dục, nấu ăn</td><td>Thấp đến vừa</td></tr>
+          <tr><td><span class="zh">眠</span> Trước khi ngủ</td><td class="num">6–9 phút</td><td>Lúc nằm thư giãn</td><td>Thả lỏng</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lead" style="margin-top:10px">Chữ trên mỗi khối là một gợi ý Hán Việt: <span class="zh">新</span> tân (mới), <span class="zh">温</span> ôn (như ôn tập, từ câu ôn cố tri tân), <span class="zh">浸</span> tẩm (ngấm), <span class="zh">眠</span> miên (ngủ).</p>
+    <h3 style="margin-top:28px">Kỳ vọng thực tế</h3>
+    <div class="prose" style="margin-top:8px">
+      <p>Sau 30 ngày, khoảng 40 đến 60 giờ nghe, bạn sẽ hiểu các hội thoại đời thường nói chậm và rõ trong 30 tình huống, với khoảng 240 cụm từ và 60 mẫu câu nằm trong ngữ cảnh.</p>
+      <p>Nghe không thay thế được nói. Hãy dùng app tương tác để nói và phản xạ; kết hợp hai thứ mới là cách mạnh nhất.</p>
+      <p>Giọng đọc được tạo bằng AI. Chúng rất gần giọng người, nhưng khi đã quen, hãy thêm phim và podcast tiếng Trung thật.</p>
+      <p>Những ngày đầu thời lượng ngắn hơn mục tiêu vì chưa có nhiều bài. Nghe một bài quá nhiều lần trong một ngày sẽ giảm hiệu quả, nên app không kéo dài nhân tạo.</p>
+    </div>
+    <h3 style="margin-top:28px">Nguồn tham khảo</h3>
+    <ol class="refs">
+      <li>Kuhl, Tsao &amp; Liu (2003). Foreign-language experience in infancy. <i>PNAS</i>. <a href="https://pubmed.ncbi.nlm.nih.gov/12861072/" target="_blank" rel="noopener">PubMed</a></li>
+      <li>Alexander, Van Hedger &amp; Batterink (2023). Learning words without trying: daily second language podcasts support word-form learning in adults. <i>Psychonomic Bulletin &amp; Review</i>. <a href="https://doi.org/10.3758/s13423-022-02190-1" target="_blank" rel="noopener">DOI</a></li>
+      <li>Wright, Baese-Berk, Marrone &amp; Bradlow (2015). Enhancing speech learning by combining task practice with periods of stimulus exposure without practice. <i>JASA</i> 138. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4545053/" target="_blank" rel="noopener">PMC</a></li>
+      <li>Chang &amp; Read (2006). The effects of listening support on the listening performance of EFL learners. <i>TESOL Quarterly</i> 40(2). <a href="https://doi.org/10.2307/40264527" target="_blank" rel="noopener">DOI</a></li>
+      <li>Krashen (1996). The case for narrow listening. <i>System</i> 24(1). <a href="https://doi.org/10.1016/0346-251X(95)00054-N" target="_blank" rel="noopener">DOI</a></li>
+      <li>Wang, Spence, Jongman &amp; Sereno (1999). Training American listeners to perceive Mandarin tones. <i>JASA</i> 106. <a href="https://kuscholarworks.ku.edu/entities/publication/499786a0-dec8-4422-aaf9-68909b608369" target="_blank" rel="noopener">KU ScholarWorks</a></li>
+      <li>Cepeda, Vul, Rohrer, Wixted &amp; Pashler (2008). Spacing effects in learning: a temporal ridgeline of optimal retention. <i>Psychological Science</i> 19(11). <a href="https://pubmed.ncbi.nlm.nih.gov/19076480/" target="_blank" rel="noopener">PubMed</a></li>
+      <li>Roediger &amp; Karpicke (2006). Test-enhanced learning. <i>Psychological Science</i> 17(3). <a href="https://pubmed.ncbi.nlm.nih.gov/16507066/" target="_blank" rel="noopener">PubMed</a></li>
+      <li>Gais, Lucas &amp; Born (2006). Sleep after learning aids memory recall. <i>Learning &amp; Memory</i> 13(3). <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Gais+Lucas+Born+2006+sleep+after+learning+aids+memory+recall" target="_blank" rel="noopener">PubMed</a></li>
+      <li>Schreiner &amp; Rasch (2015). Boosting vocabulary learning by verbal cueing during sleep. <i>Cerebral Cortex</i> 25(11). <a href="https://pubmed.ncbi.nlm.nih.gov/24962994/" target="_blank" rel="noopener">PubMed</a></li>
+      <li>Từ Hán Việt: ước tính tỷ lệ trong từ vựng tiếng Việt. <a href="https://en.wikipedia.org/wiki/Sino-Vietnamese_vocabulary" target="_blank" rel="noopener">Wikipedia</a></li>
+    </ol>
+  </section>
+  <section class="view" id="v-tuy-chon" hidden></section>
+</div>
+
+<div class="player" id="player" hidden>
+  <div class="pl-in">
+    <div class="pl-bar" id="pl-bar" role="slider" aria-label="Vị trí trong khối" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><i id="pl-fill"></i></div>
+    <div class="pl-row">
+      <button class="pl-info" id="pl-info" aria-expanded="false" aria-controls="pl-sheet">
+        <div class="pl-head"><span id="pl-block">Đang chuẩn bị</span><span class="prep" id="pl-prep" hidden></span><span class="num" id="pl-time">0:00 / 0:00</span></div>
+        <div class="pl-mini" id="pl-mini">&nbsp;</div>
+      </button>
+      <button class="pl-btn" id="pl-replay" aria-label="Nghe lại câu vừa rồi" title="Nghe lại câu"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg></button>
+      <button class="pl-btn main" id="pl-toggle" aria-label="Phát"><svg viewBox="0 0 24 24" id="pl-icon"><path d="M8 5v14l11-7z"/></svg></button>
+      <button class="pl-btn" id="pl-next" aria-label="Sang khối tiếp theo" title="Khối tiếp theo"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm9-12v12h2V6h-2z"/></svg></button>
+    </div>
+    <div class="pl-sheet" id="pl-sheet" hidden>
+      <div class="now" id="now"></div>
+      <div class="ctrls">
+        <button class="btn" id="pl-back10" aria-label="Lùi 10 giây"><span class="num">−10s</span></button>
+        <button class="btn" id="pl-fwd10" aria-label="Tiến 10 giây"><span class="num">+10s</span></button>
+      </div>
+      <div class="subopts">
+        <div class="lab">Tốc độ</div><div class="seg" id="pl-rate"></div>
+        <div class="lab">Hiện chữ</div><div class="seg" id="pl-text"></div>
+        <div class="lab">Hẹn giờ tắt</div><div class="seg" id="pl-sleep"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<audio id="au" preload="auto" playsinline></audio>
+<script src="data.js"></script>
+<script>
+(() => {
+'use strict';
+const D = window.NT_DATA;
+const $ = (s, r = document) => r.querySelector(s);
+if (!D) { $('#boot-error').hidden = false; return; }
+const SR = D.sr, LES = D.lessons, N = LES.length;
+
+// ---------------------------------------------------------------- helpers
+function h(tag, attrs, ...kids) {
+  const e = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    const v = attrs[k];
+    if (v == null || v === false) continue;
+    if (k === 'class') e.className = v;
+    else if (k === 'text') e.textContent = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v === true ? '' : v);
+  }
+  for (const c of kids.flat(3)) if (c != null && c !== false) e.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return e;
+}
+const pad2 = n => String(n).padStart(2, '0');
+const fmt = t => { t = Math.max(0, Math.floor(t)); const m = Math.floor(t / 60), s = t % 60; return m >= 60 ? `${Math.floor(m / 60)}:${pad2(m % 60)}:${pad2(s)}` : `${m}:${pad2(s)}`; };
+const mins = t => Math.max(1, Math.round(t / 60));
+const localDate = (d = new Date()) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const ICON = {
+  play: 'M8 5v14l11-7z',
+  pause: 'M6 5h4v14H6zm8 0h4v14h-4z',
+};
+const svg = d => { const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true'); const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', d); s.append(p); return s; };
+
+// ---------------------------------------------------------------- state
+const DEF = { target: 90, pace: 1, support: 'auto', think: 2, rate: 1, sleep: true, chime: true, lock: true, text: 'full' };
+const LS_KEY = 'nt-progress-v1';
+const fresh = () => ({ v: 1, day: 1, set: { ...DEF }, done: {}, dayDate: {}, log: {}, resume: null, updatedAt: 0 });
+let S = fresh();
+const normalize = o => { const s = fresh(); Object.assign(s, o || {}); s.set = { ...DEF, ...((o && o.set) || {}) }; s.done = s.done || {}; s.dayDate = s.dayDate || {}; s.log = s.log || {}; return s; };
+try { const raw = localStorage.getItem(LS_KEY); if (raw) { const o = JSON.parse(raw); if (o && o.v === 1) S = normalize(o); } } catch (e) { /* storage unavailable */ }
+
+let db = null, docRef = null, syncState = 'local', dirty = false, writing = false, lastWrite = 0;
+function save(remoteNow) {
+  S.updatedAt = Date.now();
+  try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) { /* ignore */ }
+  dirty = true;
+  if (remoteNow) flush();
+}
+async function flush() {
+  if (!docRef || writing || !dirty) return;
+  writing = true; dirty = false;
+  try { await docRef.set({ state: JSON.parse(JSON.stringify(S)) }); lastWrite = Date.now(); }
+  catch (e) { dirty = true; if (e && (e.code === 'invalid_argument' || e.code === 'revoked' || e.code === 'not_granted')) { docRef = null; setSync('local'); } }
+  finally { writing = false; }
+}
+function setSync(s) { syncState = s; if (route.v === 'tuy-chon') renderOptions(); }
+async function initSync() {
+  try {
+    if (!window.claude || typeof window.claude.use !== 'function') return;
+    const [dbns, userns] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+    if (!dbns || !userns) return;
+    const uid = await userns.id();
+    if (!uid) return;
+    db = dbns;
+    docRef = db.doc('data/users/' + uid + '/progress');
+    setSync('connecting');
+    const timer = setTimeout(() => { if (syncState === 'connecting') setSync('offline'); }, 10000);
+    docRef.onSnapshot(snap => {
+      if (!snap.metadata.fromCache) { clearTimeout(timer); if (syncState !== 'synced') setSync('synced'); }
+      if (snap.exists) {
+        const r = snap.data();
+        if (r && r.state && (r.state.updatedAt || 0) > S.updatedAt) adoptRemote(r.state);
+      } else if (!snap.metadata.fromCache && S.updatedAt > 0) { dirty = true; flush(); }
+    }, () => { clearTimeout(timer); docRef = null; setSync('local'); });
+  } catch (e) { setSync('local'); }
+}
+function adoptRemote(r) {
+  const playing = P.cur && !au.paused;
+  const keepRate = S.set.rate;
+  S = normalize(r);
+  try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) { /* ignore */ }
+  if (playing) S.set.rate = keepRate;
+  planCache.clear();
+  rollDay();
+  renderRoute();
+}
+
+// ---------------------------------------------------------------- planner
+const PAD = 0.03, CHIME = 0.9, PART = 20 * 60;
+const spr = id => 'l' + pad2(id);
+const clipInfo = (sp, key) => (D.sprites[sp] && D.sprites[sp].c[key]) || null;
+const gapDur = it => it.t ? it.d * (S.set.think / 2) : it.d;
+const itemDur = it => it.k === 'c' ? ((clipInfo(it.sp, it.key) || [0, 0])[1] + 2 * PAD) : it.k === 'g' ? gapDur(it) : CHIME;
+const total = items => items.reduce((a, it) => a + itemDur(it), 0);
+const C = (sp, key, m, g) => ({ k: 'c', sp, key, m, g });
+const G = (d, t) => ({ k: 'g', d, t: !!t });
+const B = () => ({ k: 'b' });
+const cue = name => C('cues', name, { cue: name });
+const M = (L, p, i, j) => ({ L, p, i, j });
+
+function lessonsOfDay(d) {
+  const pace = S.set.pace, out = [];
+  for (let k = 0; k < pace; k++) { const idx = (d - 1) * pace + k; out.push({ id: (idx % N) + 1, cycle: Math.floor(idx / N) }); }
+  return out;
+}
+function supportOf(id, cycle) {
+  const s = S.set.support;
+  if (s !== 'auto') return s;
+  if (cycle > 0) return 'low';
+  return id <= 14 ? 'full' : 'med';
+}
+function primerItems() {
+  const it = [B()];
+  D.primer.steps.forEach((st, i) => {
+    it.push(C('l00', 'x' + i, M(0, 'x', i)), G(st[0] === 'v' ? 0.8 : 1.0));
+  });
+  it.push(G(0.8));
+  return it;
+}
+function lessonItems(id, sup) {
+  const L = LES[id - 1], s = spr(id), it = [];
+  const nd = L.d.length, nc = L.c.length, ns = L.s.length;
+  it.push(B(), C(s, 'in', M(id, 'in')), G(0.9), cue('listen_all'), G(0.6));
+  for (let i = 0; i < nd; i++) it.push(C(s, `d${i}.a`, M(id, 'd', i)), G(0.35));
+  it.push(G(0.6), B(), cue('chunks'), G(0.6));
+  for (let i = 0; i < nc; i++) {
+    const m = M(id, 'c', i);
+    it.push(C(s, `c${i}.s`, m), G(0.6), C(s, sup === 'low' ? `c${i}.m` : `c${i}.v`, m), G(0.5), C(s, `c${i}.a`, m), G(0.5), C(s, `c${i}.b`, m), G(0.9));
+  }
+  it.push(B(), cue('patterns'), G(0.6));
+  L.p.forEach((p, i) => {
+    it.push(C(s, `p${i}.v`, M(id, 'p', i)), G(0.6));
+    p[2].forEach((_, j) => {
+      const m = M(id, 'pe', i, j);
+      it.push(C(s, `p${i}.e${j}.a`, m), G(0.5));
+      if (sup !== 'low') it.push(C(s, `p${i}.e${j}.v`, m), G(0.5));
+      it.push(C(s, `p${i}.e${j}.b`, m), G(0.9));
+    });
+  });
+  it.push(B(), cue(sup === 'full' ? 'lines_full' : sup === 'med' ? 'lines_med' : 'lines_low'), G(0.6));
+  for (let i = 0; i < nd; i++) {
+    const m = M(id, 'd', i);
+    if (sup === 'full') it.push(C(s, `d${i}.a`, m), G(0.5), C(s, `d${i}.v`, m), G(0.5), C(s, `d${i}.s`, m), G(0.6), C(s, `d${i}.a`, m), G(1.0));
+    else if (sup === 'med') it.push(C(s, `d${i}.a`, m), G(0.4), C(s, `d${i}.s`, m), G(1.3, true), C(s, `d${i}.v`, m), G(0.5), C(s, `d${i}.a`, m), G(1.0));
+    else it.push(C(s, `d${i}.a`, m), G(0.4), C(s, `d${i}.s`, m), G(0.5), C(s, `d${i}.b`, m), G(1.0));
+  }
+  it.push(B(), cue('again'), G(0.6));
+  for (let i = 0; i < nd; i++) it.push(C(s, `d${i}.a`, M(id, 'd', i)), G(0.35));
+  it.push(G(0.6), B(), cue('story'), G(0.6));
+  for (let i = 0; i < ns; i++) {
+    const m = M(id, 's', i);
+    if (sup === 'full') it.push(C(s, `s${i}.a`, m), G(0.5), C(s, `s${i}.v`, m), G(0.5), C(s, `s${i}.s`, m), G(0.9));
+    else if (sup === 'med') it.push(C(s, `s${i}.a`, m), G(0.4), C(s, `s${i}.s`, m), G(1.1, true), C(s, `s${i}.v`, m), G(0.8));
+    else it.push(C(s, `s${i}.a`, m), G(0.4), C(s, `s${i}.s`, m), G(0.9));
+  }
+  it.push(G(0.4), cue('story_zh'), G(0.6));
+  for (let i = 0; i < ns; i++) it.push(C(s, `s${i}.b`, M(id, 's', i)), G(0.5));
+  it.push(G(0.5), B(), cue('final'), G(0.6));
+  for (let i = 0; i < nd; i++) it.push(C(s, `d${i}.b`, M(id, 'd', i)), G(0.35));
+  it.push(G(0.6), B(), cue('lesson_done'), G(1.0));
+  return it;
+}
+function secondPassItems(list) {
+  const it = [B(), cue('second_pass'), G(0.6)];
+  list.forEach(({ id }) => {
+    const L = LES[id - 1], s = spr(id);
+    L.d.forEach((_, i) => { const m = M(id, 'd', i); it.push(C(s, `d${i}.b`, m), G(0.4), C(s, `d${i}.s`, m), G(1.3, true), C(s, `d${i}.v`, m), G(0.5), C(s, `d${i}.a`, m), G(0.9)); });
+    it.push(G(0.6), B());
+    L.s.forEach((_, i) => it.push(C(s, `s${i}.a`, M(id, 's', i)), G(0.5)));
+  });
+  it.push(G(0.8));
+  return it;
+}
+function reviewItems(id, mode) {
+  const L = LES[id - 1], s = spr(id), it = [B(), C(s, 'rv', M(id, 'rv')), G(0.7)];
+  if (mode === 'comp') {
+    L.c.forEach((_, i) => { const m = M(id, 'c', i); it.push(C(s, `c${i}.a`, m), G(1.6, true), C(s, `c${i}.m`, m), G(0.6)); });
+    L.d.forEach((_, i) => { const m = M(id, 'd', i); it.push(C(s, `d${i}.b`, m), G(2, true), C(s, `d${i}.v`, m), G(0.4), C(s, `d${i}.a`, m), G(0.9)); });
+  } else if (mode === 'prod') {
+    L.c.forEach((_, i) => { const m = M(id, 'c', i); it.push(C(s, `c${i}.m`, m), G(2.2, true), C(s, `c${i}.a`, m), G(0.8)); });
+    L.d.forEach((_, i) => { const m = M(id, 'd', i); it.push(C(s, `d${i}.v`, m), G(3, true), C(s, `d${i}.a`, m), G(0.5), C(s, `d${i}.b`, m), G(0.9)); });
+  } else {
+    L.d.forEach((_, i) => it.push(C(s, `d${i}.a`, M(id, 'd', i)), G(0.35)));
+    it.push(G(0.6));
+    L.s.forEach((_, i) => it.push(C(s, `s${i}.a`, M(id, 's', i)), G(0.5)));
+  }
+  return it;
+}
+const INTERVALS = [[1, 'comp'], [2, 'prod'], [4, 'comp'], [7, 'prod'], [12, 'listen'], [20, 'prod'], [30, 'listen'], [45, 'listen'], [60, 'listen']];
+function reviewDayItems(d) {
+  const g = { comp: [], prod: [], listen: [] }, seen = new Set();
+  let t = 0;
+  for (const [k, mode] of INTERVALS) {
+    if (d - k < 1) continue;
+    for (const { id } of lessonsOfDay(d - k)) {
+      const key = id + mode;
+      if (seen.has(key)) continue;
+      const r = reviewItems(id, mode), rt = total(r);
+      if (t > 0 && t + rt > 26 * 60) continue;
+      seen.add(key); g[mode].push(...r); t += rt;
+    }
+  }
+  const out = [];
+  if (g.comp.length) out.push(cue('review'), G(0.6), ...g.comp);
+  if (g.prod.length) out.push(G(0.6), cue('review_prod'), G(0.6), ...g.prod);
+  if (g.listen.length) out.push(G(0.6), cue('review_listen'), G(0.6), ...g.listen);
+  return out;
+}
+function immUnits(id) {
+  const L = LES[id - 1], s = spr(id);
+  const dlg = v => L.d.flatMap((_, i) => [C(s, `d${i}.${v}`, M(id, 'd', i)), G(0.35)]);
+  const sty = v => L.s.flatMap((_, i) => [C(s, `s${i}.${v}`, M(id, 's', i)), G(0.5)]);
+  const chunks = () => L.c.flatMap((_, i) => [C(s, `c${i}.a`, M(id, 'c', i)), G(0.5), C(s, `c${i}.n`, M(id, 'c', i)), G(0.8)]);
+  const pats = () => L.p.flatMap((p, i) => p[2].flatMap((_, j) => [C(s, `p${i}.e${j}.a`, M(id, 'pe', i, j)), G(0.5), C(s, `p${i}.e${j}.b`, M(id, 'pe', i, j)), G(0.8)]));
+  return [dlg('a'), sty('a'), dlg('b'), chunks(), sty('b'), dlg('s'), pats(), sty('s')];
+}
+function immersionItems(d, want) {
+  const pool = [];
+  for (let k = 0; k < 7; k++) if (d - k >= 1) for (const { id } of lessonsOfDay(d - k)) if (!pool.includes(id)) pool.push(id);
+  if (d > 7) {
+    const older = [];
+    for (let x = 1; x <= d - 7; x++) for (const { id } of lessonsOfDay(x)) if (!pool.includes(id) && !older.includes(id)) older.push(id);
+    const r = rng(d * 7919);
+    for (let k = 0; k < 2 && older.length; k++) pool.push(older.splice(Math.floor(r() * older.length), 1)[0]);
+  }
+  const units = pool.map(immUnits);
+  const out = [cue('immersion'), G(0.8)];
+  let t = total(out);
+  const rounds = Math.max(24, Math.min(40, Math.floor(120 / pool.length)));
+  for (let r = 0; r < rounds && t < want; r++) {
+    for (let li = 0; li < pool.length && t < want; li++) {
+      const u = units[li][(r + li) % 8];
+      out.push(B(), ...u, G(0.5));
+      t += CHIME + total(u) + 0.5;
+    }
+  }
+  return out;
+}
+function sleepItems(list) {
+  const out = [cue('sleep'), G(1.5)];
+  list.forEach(({ id }) => {
+    const L = LES[id - 1], s = spr(id);
+    L.c.forEach((_, i) => { const m = M(id, 'c', i); out.push(C(s, `c${i}.s`, m, 0.62), G(1.2), C(s, `c${i}.a`, m, 0.62), G(2)); });
+    L.d.forEach((_, i) => out.push(C(s, `d${i}.s`, M(id, 'd', i), 0.62), G(1.8)));
+    L.s.forEach((_, i) => out.push(C(s, `s${i}.s`, M(id, 's', i), 0.62), G(2)));
+    L.p.forEach((p, i) => p[2].forEach((_, j) => out.push(C(s, `p${i}.e${j}.b`, M(id, 'pe', i, j), 0.58), G(1.8))));
+    L.d.forEach((_, i) => out.push(C(s, `d${i}.b`, M(id, 'd', i), 0.55), G(1.6)));
+    L.c.forEach((_, i) => out.push(C(s, `c${i}.n`, M(id, 'c', i), 0.5), G(2.2)));
+  });
+  out.push(G(2), cue('day_done'), G(3));
+  return out;
+}
+function splitParts(items, first) {
+  const parts = []; let cur = [], t = 0;
+  for (const it of items) {
+    if (it.k === 'b' && t > PART && cur.length) { parts.push(cur); cur = [cue('immersion_next'), G(0.6)]; t = total(cur); }
+    cur.push(it); t += itemDur(it);
+  }
+  if (cur.length) parts.push(cur);
+  if (parts.length > 1 && total(parts[parts.length - 1]) < 6 * 60) {
+    const last = parts.pop();
+    parts[parts.length - 1].push(...last.slice(2));
+  }
+  return parts;
+}
+const KIND = {
+  new: { g: '新', hv: 'tân', title: 'Bài mới', hint: 'Tập trung, nên đeo tai nghe. Có giải thích tiếng Việt.' },
+  review: { g: '温', hv: 'ôn', title: 'Ôn giãn cách', hint: 'Trên đường đi. Có khoảng lặng để nhớ lại trong đầu.' },
+  imm: { g: '浸', hv: 'tẩm', title: 'Đắm chìm', hint: 'Chỉ tiếng Trung. Nghe khi làm việc nhà, tập thể dục.' },
+  sleep: { g: '眠', hv: 'miên', title: 'Trước khi ngủ', hint: 'Chậm, nhỏ dần rồi tắt.' },
+};
+const sigOf = () => JSON.stringify([S.set.target, S.set.pace, S.set.support, S.set.think, S.set.sleep, S.set.chime]);
+const planCache = new Map();
+function planDay(d) {
+  const key = d + '|' + sigOf();
+  if (planCache.has(key)) return planCache.get(key);
+  const list = lessonsOfDay(d), blocks = [];
+  const add = (kind, items, extra) => blocks.push({ kind, items, dur: total(items), sig: key + '|' + blocks.length, ...KIND[kind], ...(extra || {}) });
+  let nw = [];
+  if (d === 1 && list[0].cycle === 0) nw.push(...primerItems());
+  list.forEach(({ id, cycle }) => nw.push(...lessonItems(id, supportOf(id, cycle))));
+  add('new', nw);
+  let rv = reviewDayItems(d);
+  if (!rv.length) rv = secondPassItems(list);
+  add('review', rv);
+  const sl = S.set.sleep ? sleepItems(list) : null;
+  const used = blocks[0].dur + blocks[1].dur + (sl ? total(sl) : 0);
+  const want = Math.max(8 * 60, S.set.target * 60 - used);
+  const imm = immersionItems(d, want);
+  if (!sl) imm.push(G(1), cue('day_done'), G(2));
+  const parts = splitParts(imm);
+  parts.forEach((p, i) => add('imm', p, { title: parts.length > 1 ? `Đắm chìm ${i + 1}` : 'Đắm chìm' }));
+  if (sl) add('sleep', sl, { fade: true });
+  planCache.set(key, blocks);
+  return blocks;
+}
+const dayTotal = d => planDay(d).reduce((a, b) => a + b.dur, 0);
+
+// ---------------------------------------------------------------- text lookup
+function textOf(it) {
+  const m = it.m || {};
+  if (m.cue) return { kind: 'cue', vi: D.cues[m.cue] };
+  const vi = /\.(v|m)$/.test(it.key) || it.key === 'in' || it.key === 'rv';
+  if (m.L === 0) {
+    const st = D.primer.steps[m.i];
+    return st[0] === 'v' ? { kind: 'cue', vi: st[1] } : { kind: 'zh', zh: st[1], py: st[3], speak: 'zh' };
+  }
+  const L = LES[m.L - 1];
+  if (m.p === 'in') return { kind: 'cue', title: L.tz, vi: `Bài ${L.id}. ${L.t}. ${L.sc}` };
+  if (m.p === 'rv') return { kind: 'cue', title: L.tz, vi: `Ôn bài ${L.id}: ${L.t}` };
+  if (m.p === 'p') return { kind: 'cue', title: L.p[m.i][0], vi: L.p[m.i][1] };
+  let row;
+  if (m.p === 'd') { row = L.d[m.i]; const sp = L.sp[row[0]]; return { kind: 'zh', who: `${sp[0]} · ${sp[2]}`, zh: row[1], vi: row[2], py: row[3], speak: vi ? 'vi' : 'zh', slow: /\.s$/.test(it.key) }; }
+  if (m.p === 'c') { row = L.c[m.i]; return { kind: 'zh', who: 'Từ & cụm từ', zh: row[0], vi: row[1], hv: row[2], note: row[3], py: row[4], speak: vi ? 'vi' : 'zh', slow: /\.s$/.test(it.key) }; }
+  if (m.p === 'pe') { row = L.p[m.i][2][m.j]; return { kind: 'zh', who: 'Mẫu câu', zh: row[0], vi: row[1], py: row[2], speak: vi ? 'vi' : 'zh' }; }
+  if (m.p === 's') { row = L.s[m.i]; return { kind: 'zh', who: 'Câu chuyện', zh: row[0], vi: row[1], py: row[2], speak: vi ? 'vi' : 'zh', slow: /\.s$/.test(it.key) }; }
+  return { kind: 'cue', vi: '' };
+}
+
+// ---------------------------------------------------------------- audio engine
+const au = $('#au');
+const raw = new Map();
+let dec = { sp: null, val: null }, decCtx = null, chimeBuf = null;
+function rawSprite(sp) {
+  if (!raw.has(sp)) {
+    const p = fetch(D.sprites[sp].f).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.arrayBuffer(); });
+    p.catch(() => raw.delete(sp));
+    raw.set(sp, p);
+  }
+  return raw.get(sp);
+}
+function decodeAB(ab) {
+  if (!decCtx) { const O = window.OfflineAudioContext || window.webkitOfflineAudioContext; decCtx = new O(1, 2, SR); }
+  return new Promise((res, rej) => { const p = decCtx.decodeAudioData(ab, res, rej); if (p && p.then) p.then(res, rej); });
+}
+async function decoded(sp) {
+  if (dec.sp === sp) return dec.val;
+  const ab = await rawSprite(sp);
+  const buf = await decodeAB(ab.slice(0));
+  let data = buf.getChannelData(0);
+  if (buf.sampleRate !== SR) {
+    const ratio = buf.sampleRate / SR, out = new Float32Array(Math.floor(data.length / ratio));
+    for (let k = 0; k < out.length; k++) { const x = k * ratio, i = Math.floor(x), f = x - i; out[k] = (data[i] || 0) * (1 - f) + (data[i + 1] || 0) * f; }
+    data = out;
+  }
+  const mk = D.sprites[sp].mk || 0.2, lim = Math.min(data.length, SR);
+  let at = -1;
+  for (let k = 0; k < lim; k++) if (Math.abs(data[k]) > 0.12) { at = k; break; }
+  let delta = at >= 0 ? at / SR - mk : 0;
+  if (Math.abs(delta) > 0.25) delta = 0;
+  dec = { sp, val: { data, delta } };
+  return dec.val;
+}
+function chime() {
+  if (chimeBuf) return chimeBuf;
+  const n = Math.round(CHIME * SR), a = new Int16Array(n);
+  for (let k = 0; k < n; k++) {
+    const t = k / SR, env = Math.min(1, t / 0.004) * Math.exp(-t / 0.2);
+    const v = 0.12 * env * (Math.sin(2 * Math.PI * 784 * t) + 0.55 * Math.sin(2 * Math.PI * 1176 * t) + 0.2 * Math.sin(2 * Math.PI * 1568 * t));
+    a[k] = (v * 32767) | 0;
+  }
+  return (chimeBuf = a);
+}
+function wavHeader(n) {
+  const b = new ArrayBuffer(44), v = new DataView(b);
+  const w = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  w(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); w(8, 'WAVE'); w(12, 'fmt ');
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, SR, true); v.setUint32(28, SR * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+  w(36, 'data'); v.setUint32(40, n * 2, true);
+  return b;
+}
+const rendered = new Map(), pending = new Map();
+function renderBlock(block, onProg) {
+  if (rendered.has(block.sig)) return Promise.resolve(rendered.get(block.sig));
+  if (pending.has(block.sig)) return pending.get(block.sig);
+  const job = (async () => {
+    const tl = []; let pos = 0;
+    for (const it of block.items) { const n = Math.round(itemDur(it) * SR); tl.push({ s: pos, n, it }); pos += n; }
+    const len = pos + Math.round(0.4 * SR), pcm = new Int16Array(len);
+    const groups = new Map();
+    for (const seg of tl) if (seg.it.k === 'c') { if (!groups.has(seg.it.sp)) groups.set(seg.it.sp, []); groups.get(seg.it.sp).push(seg); }
+    const sps = [...groups.keys()];
+    sps.forEach(sp => rawSprite(sp));
+    let done = 0;
+    for (const sp of sps) {
+      const { data, delta } = await decoded(sp), man = D.sprites[sp];
+      for (const seg of groups.get(sp)) {
+        const c = man.c[seg.it.key]; if (!c) continue;
+        const gain = (seg.it.g || 1), n = seg.n, src = Math.round((c[0] - PAD + delta) * SR), f = Math.min(Math.round(0.006 * SR), n >> 2);
+        for (let k = 0; k < n; k++) {
+          const si = src + k; if (si < 0 || si >= data.length) continue;
+          let w = gain; if (k < f) w *= k / f; else if (k > n - f) w *= (n - k) / f;
+          const v = data[si] * w;
+          pcm[seg.s + k] = v >= 1 ? 32767 : v <= -1 ? -32768 : (v * 32767) | 0;
+        }
+      }
+      done++; if (onProg) onProg(done / sps.length);
+      await new Promise(r => setTimeout(r, 0));
+    }
+    if (S.set.chime) { const ch = chime(); for (const seg of tl) if (seg.it.k === 'b') pcm.set(ch.subarray(0, Math.min(ch.length, seg.n)), seg.s); }
+    if (block.fade) { const F = Math.min(len, Math.round(45 * SR)); for (let k = 0; k < F; k++) { const i = len - F + k; pcm[i] = (pcm[i] * (1 - k / F)) | 0; } }
+    const url = URL.createObjectURL(new Blob([wavHeader(len), pcm], { type: 'audio/wav' }));
+    const segs = tl.filter(x => x.it.k === 'c').map(x => ({ t0: x.s / SR, t1: (x.s + x.n) / SR, it: x.it }));
+    const r = { url, segs, dur: len / SR, sig: block.sig };
+    rendered.set(block.sig, r);
+    return r;
+  })();
+  pending.set(block.sig, job);
+  job.then(() => pending.delete(block.sig), () => pending.delete(block.sig));
+  return job;
+}
+function prune() {
+  const keep = new Set([P.blocks[P.bi] && P.blocks[P.bi].sig, P.blocks[P.bi + 1] && P.blocks[P.bi + 1].sig]);
+  for (const [k, r] of rendered) if (!keep.has(k)) { URL.revokeObjectURL(r.url); rendered.delete(k); }
+}
+
+// ---------------------------------------------------------------- player
+const P = { mode: null, day: 0, label: '', blocks: [], bi: -1, cur: null, seg: -1, tick: 0, lastResume: 0, sleepAt: 0, token: 0, open: false };
+const ui = {
+  player: $('#player'), block: $('#pl-block'), prep: $('#pl-prep'), time: $('#pl-time'), mini: $('#pl-mini'),
+  fill: $('#pl-fill'), bar: $('#pl-bar'), icon: $('#pl-icon'), toggle: $('#pl-toggle'), sheet: $('#pl-sheet'), info: $('#pl-info'), now: $('#now'),
+};
+function blockLabel() {
+  const b = P.blocks[P.bi]; if (!b) return '';
+  return (P.mode === 'day' ? `Ngày ${P.day} · ` : (P.label ? P.label + ' · ' : '')) + b.title;
+}
+async function playBlock(bi, t) {
+  const token = ++P.token, block = P.blocks[bi];
+  if (!block) return;
+  au.pause();
+  P.bi = bi; P.seg = -1; P.cur = null;
+  ui.player.hidden = false;
+  ui.block.textContent = blockLabel();
+  ui.prep.hidden = false; ui.prep.textContent = 'Đang chuẩn bị…';
+  ui.mini.textContent = 'Đang ghép âm thanh của khối này, vài giây là xong.'; ui.mini.className = 'pl-mini vi';
+  let r;
+  try { r = await renderBlock(block, f => { if (token === P.token) ui.prep.textContent = `Đang chuẩn bị ${Math.round(f * 100)}%`; }); }
+  catch (e) { if (token === P.token) { ui.prep.hidden = true; ui.mini.textContent = 'Không tải được âm thanh. Kiểm tra mạng rồi bấm phát lại.'; ui.mini.className = 'pl-mini vi'; } return; }
+  if (token !== P.token) return;
+  ui.prep.hidden = true;
+  setSource(r, t || 0);
+  try { await au.play(); } catch (e) { ui.mini.textContent = 'Bấm nút phát để bắt đầu'; }
+  prune();
+  prerender(bi + 1);
+  renderToday();
+}
+function setSource(r, t) {
+  P.cur = r;
+  au.src = r.url;
+  au.defaultPlaybackRate = S.set.rate; au.playbackRate = S.set.rate;
+  if (t > 1) {
+    const seek = () => { au.removeEventListener('loadedmetadata', seek); try { au.currentTime = Math.min(t, r.dur - 2); } catch (e) { /* ignore */ } };
+    au.addEventListener('loadedmetadata', seek);
+  }
+  ui.block.textContent = blockLabel();
+  meta(null);
+}
+function prerender(bi) { const b = P.blocks[bi]; if (b) renderBlock(b).catch(() => {}); }
+function startDay(d, bi, t) {
+  const blocks = planDay(d);
+  if (bi == null) {
+    const r = S.resume;
+    if (r && r.day === d && blocks[r.b] && !(S.done['d' + d] || {})[r.b]) { bi = r.b; t = r.t; }
+    else { bi = blocks.findIndex((_, i) => !(S.done['d' + d] || {})[i]); if (bi < 0) bi = 0; t = 0; }
+  }
+  P.mode = 'day'; P.day = d; P.label = ''; P.blocks = blocks;
+  playBlock(bi, t);
+}
+function playCustom(blocks, label) { P.mode = 'custom'; P.day = 0; P.label = label; P.blocks = blocks; playBlock(0, 0); }
+function markBlock(bi) {
+  if (P.mode !== 'day') return;
+  const k = 'd' + P.day; S.done[k] = S.done[k] || {};
+  if (S.done[k][bi]) return;
+  S.done[k][bi] = 1;
+  if (P.blocks[bi] && P.blocks[bi].kind === 'new' && !S.dayDate[P.day]) S.dayDate[P.day] = localDate();
+  S.resume = { day: P.day, b: bi + 1, t: 0 };
+  save(true);
+  renderToday();
+}
+au.addEventListener('ended', () => {
+  markBlock(P.bi);
+  const next = P.bi + 1, b = P.blocks[next];
+  if (!b) { P.cur = null; ui.mini.textContent = 'Xong buổi nghe hôm nay. Hẹn gặp lại ngày mai!'; syncIcon(); renderToday(); return; }
+  const r = rendered.get(b.sig);
+  if (r) {
+    P.bi = next; P.seg = -1; P.token++;
+    setSource(r, 0);
+    au.play().catch(() => { ui.mini.textContent = 'Bấm nút phát để tiếp tục'; });
+    prune(); prerender(next + 1); renderToday();
+  } else playBlock(next, 0);
+});
+au.addEventListener('timeupdate', () => {
+  const r = P.cur; if (!r) return;
+  const t = au.currentTime, segs = r.segs;
+  let lo = 0, hi = segs.length - 1, idx = -1;
+  while (lo <= hi) { const mid = (lo + hi) >> 1; if (segs[mid].t0 <= t) { idx = mid; lo = mid + 1; } else hi = mid - 1; }
+  if (idx !== P.seg) { P.seg = idx; showSeg(idx >= 0 ? segs[idx] : null); }
+  const now = performance.now();
+  if (!au.paused && P.tick) { const dt = (now - P.tick) / 1000; if (dt > 0 && dt < 3) { const k = localDate(); S.log[k] = (S.log[k] || 0) + dt; } }
+  P.tick = au.paused ? 0 : now;
+  if (P.mode === 'day' && now - P.lastResume > 5000) { P.lastResume = now; S.resume = { day: P.day, b: P.bi, t: Math.floor(t) }; save(false); }
+  if (Date.now() - lastWrite > 180000) flush();
+  if (r.dur && t / r.dur > 0.97) markBlock(P.bi);
+  if (P.sleepAt && Date.now() >= P.sleepAt) { au.pause(); P.sleepAt = 0; renderSleep(); }
+  ui.time.textContent = `${fmt(t)} / ${fmt(r.dur)}`;
+  const pct = r.dur ? (t / r.dur) * 100 : 0;
+  ui.fill.style.width = pct.toFixed(2) + '%';
+  ui.bar.setAttribute('aria-valuenow', String(Math.round(pct)));
+  if ('mediaSession' in navigator && navigator.mediaSession.setPositionState && now - (P.lastPos || 0) > 4000) {
+    P.lastPos = now;
+    try { navigator.mediaSession.setPositionState({ duration: r.dur, playbackRate: au.playbackRate, position: Math.min(t, r.dur) }); } catch (e) { /* ignore */ }
+  }
+});
+au.addEventListener('play', () => { P.tick = performance.now(); syncIcon(); });
+au.addEventListener('pause', () => { P.tick = 0; syncIcon(); if (P.mode === 'day' && P.cur) { S.resume = { day: P.day, b: P.bi, t: Math.floor(au.currentTime) }; save(true); } });
+au.addEventListener('error', () => { if (P.cur) ui.mini.textContent = 'Trình duyệt không phát được âm thanh này.'; });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flush(); });
+function syncIcon() {
+  const playing = !au.paused && !!P.cur;
+  ui.icon.innerHTML = '';
+  const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', playing ? ICON.pause : ICON.play); ui.icon.append(p);
+  ui.toggle.setAttribute('aria-label', playing ? 'Tạm dừng' : 'Phát');
+  if ('mediaSession' in navigator) navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
+}
+function showSeg(seg) {
+  const tx = seg ? textOf(seg.it) : null;
+  const mode = S.set.text;
+  if (!tx) { ui.mini.textContent = '\u00a0'; ui.mini.className = 'pl-mini'; renderNow(null); return; }
+  if (tx.kind === 'cue') { ui.mini.textContent = tx.vi; ui.mini.className = 'pl-mini vi'; }
+  else if (mode === 'off') { ui.mini.textContent = tx.speak === 'vi' ? 'Nghĩa tiếng Việt' : 'Đang nghe tiếng Trung'; ui.mini.className = 'pl-mini vi'; }
+  else { ui.mini.textContent = tx.zh; ui.mini.className = 'pl-mini'; }
+  renderNow(tx);
+  if (tx.kind === 'zh' && tx.speak === 'zh') meta(tx);
+}
+function renderNow(tx) {
+  const n = ui.now; n.textContent = '';
+  if (!tx) return;
+  const mode = S.set.text;
+  if (tx.kind === 'cue') { if (tx.title) n.append(h('div', { class: 'zh', text: tx.title })); n.append(h('p', { class: 'cue', text: tx.vi })); return; }
+  if (tx.who) n.append(h('div', { class: 'who', text: tx.who + (tx.slow ? ' · đọc chậm' : '') }));
+  if (mode === 'off') { n.append(h('p', { class: 'cue', text: 'Đang ẩn chữ. Chỉ cần nghe.' })); return; }
+  const quiz = P.blocks[P.bi] && P.blocks[P.bi].kind === 'review';
+  if (quiz && tx.speak === 'vi') { n.append(h('div', { class: 'vi speaking', text: tx.vi })); return; }
+  n.append(h('div', { class: 'zh' + (tx.speak === 'zh' ? ' speaking' : ''), lang: 'zh-CN', text: tx.zh }));
+  if (tx.py) n.append(h('div', { class: 'py', text: tx.py }));
+  if (mode === 'full' && !quiz) {
+    n.append(h('div', { class: 'vi' + (tx.speak === 'vi' ? ' speaking' : ''), text: tx.vi }));
+    if (tx.hv) n.append(h('div', { class: 'hv' }, 'Hán Việt: ', tx.hv, tx.note ? h('em', null, ' · ' + tx.note) : null));
+  }
+}
+let ART = null;
+function makeArt() {
+  try {
+    const c = document.createElement('canvas'); c.width = c.height = 512;
+    const x = c.getContext('2d');
+    x.fillStyle = '#b83a29'; x.fillRect(0, 0, 512, 512);
+    x.fillStyle = '#fff'; x.font = '700 330px "Noto Serif SC", "Songti SC", serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+    x.fillText('听', 256, 270);
+    ART = c.toDataURL('image/png');
+  } catch (e) { ART = null; }
+}
+let lastMeta = 0;
+function meta(tx) {
+  if (!('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return;
+  const now = performance.now(); if (tx && now - lastMeta < 1200) return; lastMeta = now;
+  const b = P.blocks[P.bi];
+  const title = tx && S.set.lock && S.set.text !== 'off' ? tx.zh : (b ? b.title : 'Nghe Trung');
+  const artist = tx && S.set.lock && S.set.text === 'full' ? tx.vi : blockLabel();
+  try { navigator.mediaSession.metadata = new MediaMetadata({ title, artist, album: 'Nghe Trung Mỗi Ngày', artwork: ART ? [{ src: ART, sizes: '512x512', type: 'image/png' }] : [] }); } catch (e) { /* ignore */ }
+}
+function seekBy(dt) { if (!P.cur) return; try { au.currentTime = Math.max(0, Math.min(P.cur.dur - 0.5, au.currentTime + dt)); } catch (e) { /* ignore */ } }
+function replaySentence() {
+  const r = P.cur; if (!r) return;
+  const t = au.currentTime; let i = r.segs.findIndex(s => s.t1 > t);
+  if (i < 0) i = r.segs.length - 1;
+  while (i > 0 && (r.segs[i].t0 > t || textOf(r.segs[i].it).speak !== 'zh')) i--;
+  if (t - r.segs[i].t0 < 0.8 && i > 0) { i--; while (i > 0 && textOf(r.segs[i].it).speak !== 'zh') i--; }
+  try { au.currentTime = Math.max(0, r.segs[i].t0); } catch (e) { /* ignore */ }
+  if (au.paused) au.play().catch(() => {});
+}
+function nextBlock() {
+  if (!P.blocks.length) return;
+  if (P.bi + 1 < P.blocks.length) { if (P.cur && au.currentTime / P.cur.dur > 0.6) markBlock(P.bi); playBlock(P.bi + 1, 0); }
+}
+function toggle() {
+  if (!P.cur) { if (P.blocks.length && P.bi >= 0) playBlock(P.bi, 0); else startDay(S.day); return; }
+  if (au.paused) au.play().catch(() => {}); else au.pause();
+}
+ui.toggle.addEventListener('click', toggle);
+$('#pl-replay').addEventListener('click', replaySentence);
+$('#pl-next').addEventListener('click', nextBlock);
+$('#pl-back10').addEventListener('click', () => seekBy(-10));
+$('#pl-fwd10').addEventListener('click', () => seekBy(10));
+ui.info.addEventListener('click', () => { P.open = !P.open; ui.sheet.hidden = !P.open; ui.info.setAttribute('aria-expanded', String(P.open)); });
+function barSeek(ev) { if (!P.cur) return; const rc = ui.bar.getBoundingClientRect(); const f = Math.max(0, Math.min(1, (ev.clientX - rc.left) / rc.width)); try { au.currentTime = f * P.cur.dur; } catch (e) { /* ignore */ } }
+ui.bar.addEventListener('pointerdown', ev => { barSeek(ev); ui.bar.setPointerCapture(ev.pointerId); });
+ui.bar.addEventListener('pointermove', ev => { if (ev.buttons) barSeek(ev); });
+ui.bar.addEventListener('keydown', ev => { if (ev.key === 'ArrowLeft') { seekBy(-10); ev.preventDefault(); } if (ev.key === 'ArrowRight') { seekBy(10); ev.preventDefault(); } });
+document.addEventListener('keydown', ev => {
+  if (ev.target.closest && ev.target.closest('input, select, textarea, [role="slider"]')) return;
+  if (ev.code === 'Space' && P.cur) { ev.preventDefault(); toggle(); }
+  else if (ev.key === 'r' && P.cur) replaySentence();
+});
+if ('mediaSession' in navigator) {
+  const set = (a, f) => { try { navigator.mediaSession.setActionHandler(a, f); } catch (e) { /* unsupported */ } };
+  set('play', () => toggle());
+  set('pause', () => au.pause());
+  set('seekbackward', () => seekBy(-10));
+  set('seekforward', () => seekBy(10));
+  set('previoustrack', replaySentence);
+  set('nexttrack', nextBlock);
+}
+function segButtons(el, opts, cur, onPick) {
+  el.textContent = '';
+  for (const [val, label] of opts) el.append(h('button', { type: 'button', 'aria-pressed': String(val === cur), onclick: () => onPick(val) }, label));
+}
+function renderPlayerOpts() {
+  segButtons($('#pl-rate'), [[0.85, '0.85×'], [1, '1×'], [1.15, '1.15×'], [1.3, '1.3×']], S.set.rate, v => { S.set.rate = v; au.playbackRate = v; au.defaultPlaybackRate = v; save(false); renderPlayerOpts(); });
+  segButtons($('#pl-text'), [['full', 'Đủ'], ['zh', 'Chỉ tiếng Trung'], ['off', 'Ẩn']], S.set.text, v => { S.set.text = v; save(false); renderPlayerOpts(); if (P.cur && P.seg >= 0) showSeg(P.cur.segs[P.seg]); if (route.v === 'tuy-chon') renderOptions(); });
+  renderSleep();
+}
+function renderSleep() {
+  const left = P.sleepAt ? Math.max(0, Math.round((P.sleepAt - Date.now()) / 60000)) : 0;
+  segButtons($('#pl-sleep'), [[0, 'Tắt'], [15, '15′'], [30, '30′'], [45, '45′'], [60, '60′']], P.sleepAt ? -1 : 0, v => { P.sleepAt = v ? Date.now() + v * 60000 : 0; renderSleep(); });
+  if (P.sleepAt) { const b = $('#pl-sleep').firstChild; b.textContent = `Còn ${left}′ · tắt`; b.setAttribute('aria-pressed', 'true'); }
+}
+
+// ---------------------------------------------------------------- views
+const route = { v: 'hom-nay', id: 0 };
+function rollDay() {
+  const d0 = S.day;
+  while (S.dayDate[S.day] && S.dayDate[S.day] < localDate() && S.day < 400) S.day++;
+  if (S.day !== d0) { S.resume = null; save(false); }
+}
+function streak() {
+  let n = 0; const d = new Date();
+  if (!(S.log[localDate(d)] > 120)) d.setDate(d.getDate() - 1);
+  while (S.log[localDate(d)] > 120) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+function statsEl() {
+  const today = S.log[localDate()] || 0, all = Object.values(S.log).reduce((a, b) => a + b, 0);
+  const learned = Object.keys(S.dayDate).length;
+  const hours = all / 3600;
+  const st = (v, l) => h('div', { class: 'stat' }, h('b', { text: v }), h('span', { text: l }));
+  return h('div', { class: 'stats' },
+    st(`${Math.round(today / 60)} phút`, 'Đã nghe hôm nay'),
+    st(hours < 10 ? hours.toFixed(1).replace('.', ',') + ' giờ' : Math.round(hours) + ' giờ', 'Tổng thời gian nghe'),
+    st(`${streak()} ngày`, 'Chuỗi ngày liên tục'),
+    st(`${Math.min(learned * S.set.pace, N)}/${N}`, 'Bài đã nghe'));
+}
+function renderToday() {
+  if (route.v !== 'hom-nay') { $('#daypill').textContent = `Ngày ${S.day}`; return; }
+  const el = $('#v-hom-nay'), d = route.day || S.day, blocks = planDay(d), list = lessonsOfDay(d);
+  const done = S.done['d' + d] || {}, nowPlaying = P.mode === 'day' && P.day === d ? P.bi : -1;
+  const tot = blocks.reduce((a, b) => a + b.dur, 0);
+  const first = LES[list[0].id - 1];
+  const cycle = list[0].cycle;
+  el.textContent = '';
+  $('#daypill').textContent = `Ngày ${S.day}`;
+  const resumeHere = S.resume && S.resume.day === d && blocks[S.resume.b] && S.resume.t > 5 && !done[S.resume.b];
+  const allDone = blocks.every((_, i) => done[i]);
+  const label = nowPlaying >= 0 && P.cur && !au.paused ? 'Đang phát' : resumeHere ? `Nghe tiếp · ${blocks[S.resume.b].title} ${fmt(S.resume.t)}` : allDone ? 'Nghe lại từ đầu' : Object.keys(done).length ? 'Nghe tiếp' : `Bắt đầu nghe · ${mins(tot)} phút`;
+  const startBtn = h('button', { class: 'btn btn-primary', type: 'button', onclick: () => { if (nowPlaying >= 0 && P.cur) { toggle(); return; } startDay(d, allDone ? 0 : null); } }, svg(ICON.play), label);
+  const nav = h('div', { class: 'daynav' },
+    h('button', { type: 'button', 'aria-label': 'Ngày trước', disabled: d <= 1, onclick: () => { route.day = d - 1; renderToday(); } }, '‹'),
+    h('span', { class: 'num', text: `Ngày ${d}${d === S.day ? ' · hôm nay' : ''}` }),
+    h('button', { type: 'button', 'aria-label': 'Ngày sau', onclick: () => { route.day = d + 1; renderToday(); } }, '›'));
+  const titles = list.map(x => LES[x.id - 1]);
+  el.append(h('div', { class: 'hero' },
+    h('div', { class: 'eyebrow', text: `Tuần ${Math.ceil(d / 7)} · ${titles.map(t => 'Bài ' + t.id).join(' + ')}${cycle > 0 ? ' · vòng ' + (cycle + 1) + ', ít tiếng Việt' : ''}` }),
+    h('h1', { class: 'zh-title', lang: 'zh-CN', text: titles.map(t => t.tz).join(' · ') }),
+    h('p', { class: 'vi-title', text: titles.map(t => t.t).join(' · ') }),
+    h('p', { class: 'scene', text: first.sc }),
+    h('div', { class: 'hero-actions' }, startBtn, nav)));
+  el.append(h('div', { class: 'scroll', 'aria-hidden': 'true' }, blocks.map((b, i) => h('i', { 'data-s': i === nowPlaying ? 'now' : done[i] ? 'done' : 'todo', style: `flex:${Math.max(1, b.dur)}` }))));
+  el.append(h('div', { class: 'scroll-legend num' }, h('span', { text: `${blocks.filter((_, i) => done[i]).length}/${blocks.length} khối xong` }), h('span', { text: `Tổng ${mins(tot)} phút` })));
+  el.append(h('ol', { class: 'blocks' }, blocks.map((b, i) => {
+    const s = i === nowPlaying ? 'now' : done[i] ? 'done' : 'todo';
+    return h('li', { class: 'block', 'data-s': s },
+      h('div', { class: 'glyph', title: `${b.g}: ${b.hv}` }, h('b', { lang: 'zh-CN', text: b.g }), h('small', { text: b.hv })),
+      h('div', { class: 'b-main' }, h('div', { class: 'b-title' }, b.title, ' ', s === 'done' ? h('span', { class: 'chip', text: 'Xong' }) : s === 'now' ? h('span', { class: 'chip seal', text: 'Đang nghe' }) : null), h('div', { class: 'b-hint', text: b.hint })),
+      h('div', { class: 'b-side' }, h('span', { class: 'b-dur num', text: `${mins(b.dur)} phút` }),
+        h('button', { class: 'b-play', type: 'button', 'aria-label': `Phát ${b.title}`, onclick: () => startDay(d, i, 0) }, svg(ICON.play))));
+  })));
+  const short = tot < S.set.target * 60 - 120;
+  el.append(h('p', { class: 'note', text: short
+    ? `Hôm nay khoảng ${mins(tot)} phút, ngắn hơn mục tiêu ${S.set.target} phút vì mới có ${Math.min(d * S.set.pace, N)} bài để xoay vòng. Nghe một bài quá nhiều lần trong ngày sẽ giảm hiệu quả, nên thời lượng sẽ tăng dần trong vài ngày tới.`
+    : 'Không cần nghe liền một lúc. Bài mới nghe lúc tập trung; ôn tập trên đường; đắm chìm khi làm việc khác; khối cuối nghe trước khi ngủ. Tắt màn hình vẫn nghe được.' }));
+  if (d === S.day && done[0] && !S.dayDate[d + 1]) el.append(h('p', { style: 'margin-top:12px' }, h('button', { class: 'btn', type: 'button', onclick: () => { S.dayDate[d] = S.dayDate[d] || localDate(); S.day = d + 1; S.resume = null; route.day = 0; save(true); renderToday(); } }, 'Học luôn ngày tiếp theo ›')));
+  el.append(statsEl());
+}
+function renderLibrary() {
+  const el = $('#v-thu-vien'); el.textContent = '';
+  el.append(h('div', { class: 'eyebrow', text: `${N} bài · một câu chuyện liền mạch` }), h('h2', { style: 'margin-top:6px', text: 'Thư viện bài' }),
+    h('p', { class: 'lead', style: 'margin-top:8px', text: 'Nguyễn Minh, kỹ sư người Hà Nội, sang Thượng Hải làm việc. Mỗi bài là một tình huống anh gặp. Bấm vào bài để xem lời thoại, cụm từ và âm Hán Việt, hoặc nghe riêng bài đó.' }));
+  const learnedTo = Math.min(N, S.day * S.set.pace);
+  const row = (id, zh, vi) => h('a', { class: 'lrow', href: '#bai-' + id },
+    h('span', { class: 'lno', text: String(id) }),
+    h('span', { class: 'lmain' }, h('div', { class: 'lz', lang: 'zh-CN', text: zh }), h('div', { class: 'lv', text: vi })),
+    id === 0 ? h('span', { class: 'chip', text: 'Nhập môn' }) : id <= learnedTo - S.set.pace ? h('span', { class: 'chip', text: 'Đã nghe' }) : id <= learnedTo ? h('span', { class: 'chip seal', text: 'Hôm nay' }) : null);
+  const weeks = [[0, 7], [8, 14], [15, 21], [22, 30]];
+  weeks.forEach(([a, b], w) => {
+    const box = h('div', { class: 'week' }, h('h3', { text: `Tuần ${w + 1}` }));
+    for (let id = a; id <= b; id++) { if (id === 0) box.append(row(0, D.primer.tz, D.primer.t)); else if (LES[id - 1]) box.append(row(id, LES[id - 1].tz, LES[id - 1].t)); }
+    el.append(box);
+  });
+}
+let libToggles = { py: true, vi: true };
+function sayClip(sp, key) {
+  (async () => {
+    try {
+      const { data, delta } = await decoded(sp), c = D.sprites[sp].c[key]; if (!c) return;
+      const Ctx = window.AudioContext || window.webkitAudioContext; if (!sayClip.ctx) sayClip.ctx = new Ctx();
+      const ctx = sayClip.ctx; if (ctx.state === 'suspended') await ctx.resume();
+      const n = Math.round((c[1] + 2 * PAD) * SR), buf = ctx.createBuffer(1, n, SR), ch = buf.getChannelData(0), s0 = Math.round((c[0] - PAD + delta) * SR);
+      for (let k = 0; k < n; k++) ch[k] = data[s0 + k] || 0;
+      if (sayClip.src) try { sayClip.src.stop(); } catch (e) { /* ignore */ }
+      const src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination); src.start(); sayClip.src = src;
+    } catch (e) { /* ignore */ }
+  })();
+}
+function renderLesson(id) {
+  const el = $('#v-bai'); el.textContent = '';
+  el.append(h('a', { class: 'back', href: '#thu-vien' }, '‹ Thư viện'));
+  if (id === 0) {
+    el.append(h('div', { class: 'eyebrow', style: 'margin-top:14px', text: 'Bài 0 · nhập môn' }), h('h2', { class: 'zh', style: 'margin-top:6px;font-size:30px', lang: 'zh-CN', text: D.primer.tz }), h('p', { class: 'vi-title', style: 'font-weight:600', text: D.primer.t }));
+    el.append(h('div', { class: 'hero-actions', style: 'margin-top:12px' }, h('button', { class: 'btn btn-primary', type: 'button', onclick: () => playCustom([{ ...KIND.new, kind: 'new', title: 'Làm quen âm thanh', items: primerItems(), dur: 0, sig: 'primer|' + sigOf() }], 'Bài 0') }, svg(ICON.play), 'Nghe bài nhập môn')));
+    const box = h('div', { class: 'part' });
+    D.primer.steps.forEach((st, i) => box.append(st[0] === 'v' ? h('p', { style: 'margin-top:12px;color:var(--muted)', text: st[1] }) : h('button', { class: 'say', type: 'button', style: 'margin:6px 14px 0 0', onclick: () => sayClip('l00', 'x' + i) }, h('span', { class: 'zh', style: 'font-size:22px', lang: 'zh-CN', text: st[1] }), ' ', h('span', { class: 'py', text: st[3] || '' }))));
+    el.append(box);
+    return;
+  }
+  const L = LES[id - 1]; if (!L) { el.append(h('p', { text: 'Không có bài này.' })); return; }
+  const s = spr(id);
+  const sup = supportOf(id, 0);
+  const lessonBlock = { ...KIND.new, kind: 'new', items: lessonItems(id, sup), sig: `les${id}|${sigOf()}` };
+  lessonBlock.dur = total(lessonBlock.items);
+  const immItems = [cue('immersion'), G(0.8)]; immUnits(id).forEach(u => immItems.push(B(), ...u, G(0.5)));
+  const immBlock = { ...KIND.imm, kind: 'imm', items: immItems, sig: `imm${id}|${sigOf()}`, dur: total(immItems) };
+  el.append(h('div', { class: 'eyebrow', style: 'margin-top:14px', text: `Bài ${id}` }),
+    h('h2', { class: 'zh', style: 'margin-top:6px;font-size:30px', lang: 'zh-CN', text: L.tz }),
+    h('p', { style: 'font-weight:600;font-size:18px', text: L.t }),
+    h('p', { class: 'lead', style: 'margin-top:4px', text: L.sc }),
+    h('div', { class: 'hero-actions', style: 'margin-top:12px' },
+      h('button', { class: 'btn btn-primary', type: 'button', onclick: () => playCustom([lessonBlock], `Bài ${id}`) }, svg(ICON.play), `Nghe bài · ${mins(lessonBlock.dur)} phút`),
+      h('button', { class: 'btn', type: 'button', onclick: () => playCustom([immBlock], `Bài ${id}`) }, `Đắm chìm bài này · ${mins(immBlock.dur)} phút`)));
+  const body = h('div', { class: (libToggles.py ? '' : 'hide-py ') + (libToggles.vi ? '' : 'hide-vi') });
+  const tgl = (k, label) => h('button', { class: 'tg', type: 'button', 'aria-pressed': String(libToggles[k]), onclick: () => { libToggles[k] = !libToggles[k]; renderLesson(id); } }, label);
+  el.append(h('div', { class: 'toggles' }, tgl('py', 'Pinyin'), tgl('vi', 'Nghĩa tiếng Việt'), h('span', { class: 'lead', style: 'font-size:14px;align-self:center', text: 'Bấm vào câu để nghe.' })));
+  const line = (who, zh, py, vi, key) => h('div', { class: 'line' }, h('div', { class: 'who', text: who }),
+    h('div', { class: 'txt' }, h('button', { class: 'say', type: 'button', onclick: () => sayClip(s, key) }, h('div', { class: 'zh', lang: 'zh-CN', text: zh })), h('div', { class: 'py', text: py }), h('div', { class: 'vi', text: vi })));
+  body.append(h('div', { class: 'part' }, h('h3', { text: 'Hội thoại' }), L.d.map((r, i) => line(`${L.sp[r[0]][0]}\n${L.sp[r[0]][2]}`, r[1], r[3], r[2], `d${i}.a`))));
+  body.append(h('div', { class: 'part' }, h('h3', { text: 'Từ và cụm từ' }), h('div', { class: 'chunks' }, L.c.map((r, i) => h('div', { class: 'chunk' },
+    h('button', { class: 'say', type: 'button', onclick: () => sayClip(s, `c${i}.a`) }, h('div', { class: 'zh', lang: 'zh-CN', text: r[0] })),
+    h('div', { class: 'py', text: r[4] }), h('div', { class: 'vi', text: r[1] }),
+    r[2] ? h('div', { class: 'hv' }, 'Hán Việt: ', r[2], r[3] ? h('em', null, ' · ' + r[3]) : null) : (r[3] ? h('div', { class: 'hv' }, h('em', null, r[3])) : null))))));
+  body.append(h('div', { class: 'part' }, h('h3', { text: 'Mẫu câu' }), L.p.map((p, i) => h('div', { class: 'pattern' },
+    h('div', { class: 'sk' }, h('span', { class: 'zh', lang: 'zh-CN', text: p[0] })), h('div', { class: 'lead', style: 'font-size:14px', text: p[1] }),
+    h('ul', null, p[2].map((e, j) => h('li', null, h('button', { class: 'say', type: 'button', onclick: () => sayClip(s, `p${i}.e${j}.a`) }, h('span', { class: 'zh', lang: 'zh-CN', style: 'font-size:18px', text: e[0] })), h('div', { class: 'py', text: e[2] }), h('div', { class: 'vi', text: e[1] }))))))));
+  body.append(h('div', { class: 'part' }, h('h3', { text: 'Câu chuyện kể lại' }), L.s.map((r, i) => line('', r[0], r[2], r[1], `s${i}.a`))));
+  el.append(body);
+}
+function renderOptions() {
+  const el = $('#v-tuy-chon'); el.textContent = '';
+  el.append(h('div', { class: 'eyebrow', text: 'Điều chỉnh theo lịch của bạn' }), h('h2', { style: 'margin-top:6px', text: 'Tùy chọn' }));
+  const opt = (lab, help, control) => h('div', { class: 'opt' }, h('div', { class: 'lab', text: lab }), help ? h('div', { class: 'help', text: help }) : null, control);
+  const segc = (key, opts, after) => { const box = h('div', { class: 'seg' }); segButtons(box, opts, S.set[key], v => { S.set[key] = v; planCache.clear(); save(true); renderOptions(); if (after) after(v); }); return box; };
+  el.append(opt('Thời lượng mục tiêu mỗi ngày', 'Khối Đắm chìm sẽ co giãn để vừa mục tiêu.', segc('target', [[60, '60 phút'], [90, '90 phút'], [120, '120 phút']])));
+  el.append(opt('Nhịp bài mới', 'Một bài mỗi ngày là vừa sức với hầu hết người mới học. Hai bài cho người đã có nền.', segc('pace', [[1, '1 bài / ngày'], [2, '2 bài / ngày']])));
+  el.append(opt('Mức hỗ trợ tiếng Việt', 'Tự động: đầy đủ ở 14 bài đầu, sau đó để bạn tự đoán trước khi nghe nghĩa, và rất ít ở vòng nghe lại.', segc('support', [['auto', 'Tự động'], ['full', 'Nhiều'], ['med', 'Vừa'], ['low', 'Ít']])));
+  el.append(opt('Khoảng lặng để nhớ lại', 'Thời gian bạn đoán nghĩa hoặc nói thầm trước khi nghe đáp án.', segc('think', [[1.5, '1,5 giây'], [2, '2 giây'], [3, '3 giây'], [4, '4 giây']])));
+  el.append(opt('Tốc độ phát', null, segc('rate', [[0.85, '0.85×'], [1, '1×'], [1.15, '1.15×'], [1.3, '1.3×']], v => { au.playbackRate = v; au.defaultPlaybackRate = v; renderPlayerOpts(); })));
+  el.append(opt('Hiện chữ khi nghe', 'Ẩn chữ giúp tai làm việc nhiều hơn; hiện chữ giúp kiểm tra khi chưa chắc.', segc('text', [['full', 'Đủ'], ['zh', 'Chỉ tiếng Trung'], ['off', 'Ẩn']], () => renderPlayerOpts())));
+  el.append(opt('Khối Trước khi ngủ', null, segc('sleep', [[true, 'Bật'], [false, 'Tắt']])));
+  el.append(opt('Tiếng chuông giữa các phần', null, segc('chime', [[true, 'Bật'], [false, 'Tắt']])));
+  el.append(opt('Hiện câu đang nghe trên màn hình khóa', null, segc('lock', [[true, 'Bật'], [false, 'Tắt']])));
+  const sel = h('select', { id: 'opt-day', onchange: ev => { S.day = +ev.target.value; S.resume = null; route.day = 0; save(true); renderOptions(); } });
+  for (let d = 1; d <= Math.max(60, S.day + 10); d++) sel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d}`));
+  el.append(opt('Ngày học hiện tại', 'App tự sang ngày mới khi bạn đã nghe xong khối Bài mới của hôm trước.', sel));
+  const syncText = { local: 'Đang lưu trên thiết bị này.', connecting: 'Đang kết nối tài khoản…', synced: 'Đã đồng bộ với tài khoản Claude của bạn. Mở trên điện thoại hay máy tính đều tiếp tục đúng chỗ.', offline: 'Chưa kết nối được để đồng bộ; tiến độ vẫn được lưu trên thiết bị này.' }[syncState];
+  el.append(opt('Lưu tiến độ', syncText, null));
+  const confirmBox = h('div', { class: 'seg' });
+  const askReset = () => { confirmBox.textContent = ''; confirmBox.append(h('span', { class: 'help', style: 'align-self:center', text: 'Xóa toàn bộ tiến độ và thống kê?' }), h('button', { type: 'button', class: 'danger', onclick: () => { const keep = { ...S.set }; S = fresh(); S.set = keep; planCache.clear(); route.day = 0; save(true); renderOptions(); } }, 'Xóa'), h('button', { type: 'button', onclick: () => renderOptions() }, 'Thôi')); };
+  confirmBox.append(h('button', { type: 'button', class: 'danger', onclick: askReset }, 'Đặt lại tiến độ'));
+  el.append(opt('Bắt đầu lại', null, confirmBox));
+}
+function renderRoute() {
+  const raw = (location.hash || '').slice(1);
+  let v = raw || 'hom-nay', id = 0;
+  const m = /^bai-(\d+)$/.exec(v);
+  if (m) { v = 'bai'; id = +m[1]; }
+  if (!['hom-nay', 'thu-vien', 'bai', 'phuong-phap', 'tuy-chon'].includes(v)) v = 'hom-nay';
+  route.v = v; route.id = id;
+  for (const sec of document.querySelectorAll('section.view')) sec.hidden = sec.id !== 'v-' + v;
+  for (const a of document.querySelectorAll('.tabs a')) { if ((a.dataset.v === v) || (v === 'bai' && a.dataset.v === 'thu-vien')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); }
+  if (v === 'hom-nay') renderToday();
+  else if (v === 'thu-vien') renderLibrary();
+  else if (v === 'bai') renderLesson(id);
+  else if (v === 'tuy-chon') renderOptions();
+  $('#daypill').textContent = `Ngày ${S.day}`;
+}
+window.addEventListener('hashchange', () => { renderRoute(); window.scrollTo(0, 0); });
+
+// ---------------------------------------------------------------- boot
+rollDay();
+renderRoute();
+renderPlayerOpts();
+syncIcon();
+if (document.fonts && document.fonts.load) document.fonts.load('700 100px "Noto Serif SC"', '听').then(makeArt, makeArt); else makeArt();
+initSync();
+window.NT_DEBUG = {
+  plan: d => planDay(d).map(b => ({ title: b.title, min: +(b.dur / 60).toFixed(1), items: b.items.length })),
+  state: () => JSON.parse(JSON.stringify(S)),
+  player: () => ({ mode: P.mode, bi: P.bi, seg: P.seg, dur: P.cur && P.cur.dur, t: au.currentTime, paused: au.paused }),
+  delta: async sp => (await decoded(sp)).delta,
+  seek: t => { au.currentTime = t; },
+};
+})();
+</script>
+</body></html>
