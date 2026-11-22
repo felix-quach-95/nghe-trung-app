@@ -44,6 +44,7 @@
   --ui: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --r: 16px;
   --rail: 264px;
+  --qr-bg: #ffffff;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -427,6 +428,29 @@ td .zh { font-size: 20px; color: var(--jade); }
 .kbd { display: none; font-size: 12px; color: var(--muted); text-align: center; }
 .kbd kbd { font-family: var(--ui); font-size: 11px; font-weight: 700; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; background: var(--paper); }
 @media (min-width: 1000px) { .kbd { display: block; } }
+.sf-support { font-size: 12.5px; color: var(--muted); text-decoration: none; border-top: 1px solid var(--line); padding-top: 10px; }
+.sf-support b { color: var(--seal); }
+.sup-grid { display: grid; gap: 18px; }
+@media (min-width: 1000px) { .sup-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: start; } }
+.author, .donate { padding: 22px; display: grid; gap: 14px; }
+.author-top { display: flex; gap: 16px; align-items: center; }
+.author-name { font-size: 26px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+.author p, .donate p { color: var(--muted); max-width: 60ch; }
+.donate h3 { font-size: 20px; }
+.qr-wrap { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 18px; }
+@media (min-width: 1360px) { .qr-wrap { grid-template-columns: auto minmax(0, 1fr); justify-items: stretch; align-items: center; gap: 24px; } }
+.qr-box { display: grid; gap: 8px; justify-items: center; }
+.qr { width: 230px; max-width: 100%; aspect-ratio: 1; background: var(--qr-bg); border-radius: 16px; padding: 10px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+.qr svg { width: 100%; height: 100%; display: block; }
+.qr-cap { font-size: 12px; color: var(--muted); text-align: center; }
+.dlist { display: grid; min-width: 0; width: 100%; }
+.drow { display: grid; grid-template-columns: 104px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.drow:first-child { border-top: 0; }
+.dk { font-size: 13px; color: var(--muted); font-weight: 600; }
+.dv { font-size: 17px; font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+.dv.acct { font-size: 21px; letter-spacing: .04em; white-space: nowrap; }
+.copy { padding: 6px 12px; font-size: 13px; }
+@media (max-width: 600px) { .drow { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; } .dk { grid-column: 1 / -1; } }
 .prep { font-size: 12px; color: var(--seal); font-weight: 700; }
 .boot-error { margin-top: 40px; padding: 16px; border: 1px solid var(--seal); border-radius: 12px; }
 </style>
@@ -444,11 +468,13 @@ td .zh { font-size: 20px; color: var(--jade); }
       <a href="#thu-vien" data-v="thu-vien"><span class="ni" lang="zh-CN" aria-hidden="true">书</span>Thư viện</a>
       <a href="#phuong-phap" data-v="phuong-phap"><span class="ni" lang="zh-CN" aria-hidden="true">法</span>Phương pháp</a>
       <a href="#tuy-chon" data-v="tuy-chon"><span class="ni" lang="zh-CN" aria-hidden="true">设</span>Tùy chọn</a>
+      <a href="#ung-ho" data-v="ung-ho"><span class="ni" lang="zh-CN" aria-hidden="true">谢</span>Ủng hộ</a>
     </nav>
     <div class="side-foot">
       <div class="sf-day"><b class="num" id="sf-day">Ngày 1</b><a href="#lich-hoc">Đổi ngày</a></div>
       <div class="sf-bar" aria-hidden="true"><i id="sf-bar"></i></div>
       <div class="sf-meta"><span><b class="num" id="sf-learn">0/80 bài</b> đã học</span><span id="sf-streak" class="num">0 ngày liên tục</span><span id="sf-hours" class="num">0 giờ đã nghe</span></div>
+      <a class="sf-support" href="#ung-ho">Tạo bởi Felix Quach · <b>Ủng hộ tác giả</b></a>
     </div>
   </header>
 
@@ -517,6 +543,7 @@ td .zh { font-size: 20px; color: var(--jade); }
     </ol>
   </section>
   <section class="view" id="v-tuy-chon" hidden></section>
+  <section class="view" id="v-ung-ho" hidden></section>
   </main>
 </div>
 
@@ -560,6 +587,7 @@ td .zh { font-size: 20px; color: var(--jade); }
   </div>
 </div>
 <audio id="au" preload="auto" playsinline></audio>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script src="data.js?v=1795314843"></script>
 <script>
 (() => {
@@ -1685,12 +1713,59 @@ function renderOptions() {
   grid.append(sect('存', 'var(--k-review)', 'Tiến độ', opt('Lưu tiến độ', syncText, null), opt('Bắt đầu lại', null, confirmBox)));
   el.append(grid);
 }
+const DONATE = {
+  name: 'Felix Quach', bank: 'MB Bank', bankFull: 'Ngân hàng TMCP Quân đội', acct: '0858455779', note: 'Ung ho Nghe Trung',
+  // VietQR (NAPAS EMVCo) static code: MB Bank BIN 970422, no fixed amount, CRC-16/CCITT-FALSE
+  qr: '00020101021138540010A00000072701240006970422011008584557790208QRIBFTTA53037045802VN62210817Ung ho Nghe Trung6304E65C',
+};
+function copyBtn(text) {
+  const b = h('button', { class: 'btn copy', type: 'button' }, 'Sao chép');
+  b.addEventListener('click', async () => {
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) { /* clipboard refused */ }
+    if (!ok) { try { const r = document.createRange(); r.selectNodeContents(b.previousSibling); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); } catch (e) { /* ignore */ } }
+    b.textContent = ok ? 'Đã chép' : 'Đã chọn, nhấn Ctrl+C';
+    setTimeout(() => { b.textContent = 'Sao chép'; }, 2000);
+  });
+  return b;
+}
+function qrNode(text) {
+  const box = h('div', { class: 'qr', role: 'img', 'aria-label': `Mã VietQR chuyển khoản ${DONATE.bank} ${DONATE.acct}` });
+  try {
+    if (typeof window.qrcode !== 'function') throw new Error('no qr lib');
+    const q = window.qrcode(0, 'M'); q.addData(text); q.make();
+    box.innerHTML = q.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+  } catch (e) {
+    box.append(h('p', { style: 'font-size:13px;color:var(--muted);padding:20px;text-align:center', text: 'Không tải được mã QR. Hãy chuyển khoản theo số tài khoản bên cạnh.' }));
+  }
+  return box;
+}
+function renderSupport() {
+  const el = $('#v-ung-ho'); el.textContent = '';
+  el.append(h('div', { class: 'v-head' }, h('div', { class: 'eyebrow', text: 'Người tạo app' }), h('h2', { text: 'Tác giả & ủng hộ' })));
+  const author = h('div', { class: 'card author' },
+    h('div', { class: 'author-top' }, h('span', { class: 'tile lg', style: '--c: var(--seal)', 'aria-hidden': 'true' }, h('b', { lang: 'zh-CN', text: '听' })),
+      h('div', null, h('div', { class: 'author-name', text: DONATE.name }), h('div', { class: 'p-sub', text: 'Người tạo Nghe Trung Mỗi Ngày' }))),
+    h('p', { text: 'Nghe Trung Mỗi Ngày là app miễn phí, không quảng cáo, giúp người Việt học tiếng Trung giao tiếp chỉ bằng cách nghe: 80 bài hội thoại theo một câu chuyện liền mạch, ôn giãn cách, nhiều giọng đọc và gợi ý Hán Việt.' }),
+    h('p', { text: 'Nếu app giúp ích cho bạn, một khoản ủng hộ nhỏ giúp tác giả duy trì app và làm thêm bài mới. Cảm ơn bạn đã nghe mỗi ngày.' }));
+  const donate = h('div', { class: 'card donate' },
+    h('h3', { text: 'Ủng hộ tác giả' }),
+    h('p', { text: 'Mở app ngân hàng, quét mã QR rồi nhập số tiền tùy ý. Hoặc chuyển khoản theo số tài khoản bên dưới.' }),
+    h('div', { class: 'qr-wrap' },
+      h('div', { class: 'qr-box' }, qrNode(DONATE.qr), h('span', { class: 'qr-cap', text: 'VietQR · quét bằng app ngân hàng bất kỳ' })),
+      h('div', { class: 'dlist' },
+        h('div', { class: 'drow' }, h('span', { class: 'dk', text: 'Ngân hàng' }), h('span', { class: 'dv' }, DONATE.bank, h('div', { class: 'p-sub', text: DONATE.bankFull })), h('span')),
+        h('div', { class: 'drow' }, h('span', { class: 'dk', text: 'Số tài khoản' }), h('span', { class: 'dv acct num', text: DONATE.acct }), copyBtn(DONATE.acct)),
+        h('div', { class: 'drow' }, h('span', { class: 'dk', text: 'Nội dung' }), h('span', { class: 'dv', text: DONATE.note }), copyBtn(DONATE.note)))),
+    h('p', { class: 'p-sub', text: 'Hãy kiểm tra lại số tài khoản trong app ngân hàng trước khi xác nhận chuyển.' }));
+  el.append(h('div', { class: 'sup-grid' }, author, donate));
+}
 function renderRoute() {
   const raw = (location.hash || '').slice(1);
   let v = raw || 'hom-nay', id = 0;
   const m = /^bai-(\d+)$/.exec(v);
   if (m) { v = 'bai'; id = +m[1]; }
-  if (!['hom-nay', 'lich-hoc', 'thu-vien', 'bai', 'phuong-phap', 'tuy-chon'].includes(v)) v = 'hom-nay';
+  if (!['hom-nay', 'lich-hoc', 'thu-vien', 'bai', 'phuong-phap', 'tuy-chon', 'ung-ho'].includes(v)) v = 'hom-nay';
   route.v = v; route.id = id;
   for (const sec of document.querySelectorAll('section.view')) sec.hidden = sec.id !== 'v-' + v;
   for (const a of document.querySelectorAll('.nav a')) { if ((a.dataset.v === v) || (v === 'bai' && a.dataset.v === 'thu-vien')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); }
@@ -1699,6 +1774,7 @@ function renderRoute() {
   else if (v === 'thu-vien') renderLibrary();
   else if (v === 'bai') renderLesson(id);
   else if (v === 'tuy-chon') renderOptions();
+  else if (v === 'ung-ho') renderSupport();
   renderSide();
 }
 window.addEventListener('hashchange', () => { renderRoute(); window.scrollTo(0, 0); });
