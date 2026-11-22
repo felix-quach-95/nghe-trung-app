@@ -2,42 +2,67 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+SC:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Noto+Serif+SC:wght@500;700;900&display=swap">
 <style>
-/* Layout: one listening console. The day reads as a scroll of four blocks (新 温 浸 眠); a docked player holds the sentence you are hearing. */
+/* Layout: on a computer, a left rail (brand, sections, progress) beside a wide workspace; on a phone, a sticky header with tabs.
+   A docked player spans the workspace and opens into a focus view. Every block kind (新 温 浸 眠) and every lesson topic has its own ink,
+   shown as a seal-like glyph tile, so a day and a library read by colour before they read by text. */
 :root {
-  --paper: #eef2ef;
+  --paper: #edf1ee;
   --card: #fbfcfb;
-  --ink: #16212a;
+  --sunk: #e3e9e5;
+  --ink: #15212a;
   --muted: #56666d;
-  --line: #d5ddd9;
+  --line: #d3dcd7;
   --jade: #1d6b58;
   --jade-soft: #dcebe5;
   --seal: #b83a29;
   --seal-soft: #f5e1dc;
   --on-jade: #ffffff;
+  --on-tile: #ffffff;
+  --k-new: #b83a29;
+  --k-review: #a3650c;
+  --k-imm: #1d6b58;
+  --k-sleep: #4a55a8;
+  --t-xa: #c0482f;
+  --t-an: #b9730c;
+  --t-mua: #7b52b0;
+  --t-di: #2672b0;
+  --t-viec: #46616f;
+  --t-khoe: #1f8a67;
+  --t-dulich: #bd3b70;
+  --t-nha: #866a1b;
+  --t-vui: #0b8799;
   --shadow: 0 1px 2px rgb(22 33 42 / .06), 0 10px 28px rgb(22 33 42 / .07);
+  --shadow-lift: 0 2px 4px rgb(22 33 42 / .07), 0 16px 36px rgb(22 33 42 / .11);
   --zh: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
   --ui: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --r: 14px;
+  --r: 16px;
+  --rail: 264px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0d1315; --card: #141c1f; --ink: #e3eae7; --muted: #91a19d; --line: #25322f;
-    --jade: #5bbfa3; --jade-soft: #16302a; --seal: #e3624d; --seal-soft: #3b201b; --on-jade: #06120e;
+    --paper: #0c1214; --card: #141c1f; --sunk: #0f1618; --ink: #e3eae7; --muted: #93a39f; --line: #26332f;
+    --jade: #5bbfa3; --jade-soft: #16302a; --seal: #e8664f; --seal-soft: #3b201b; --on-jade: #06120e; --on-tile: #0c1214;
+    --k-new: #e8664f; --k-review: #e0a646; --k-imm: #5bbfa3; --k-sleep: #8f9bf0;
+    --t-xa: #ee7b5f; --t-an: #e6ab48; --t-mua: #b79af0; --t-di: #6db3ec; --t-viec: #9db5c2; --t-khoe: #5ccaa0; --t-dulich: #f07aa8; --t-nha: #d2b25a; --t-vui: #4fc8d8;
     --shadow: 0 1px 2px rgb(0 0 0 / .35), 0 10px 28px rgb(0 0 0 / .3);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / .4), 0 16px 36px rgb(0 0 0 / .4);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0d1315; --card: #141c1f; --ink: #e3eae7; --muted: #91a19d; --line: #25322f;
-  --jade: #5bbfa3; --jade-soft: #16302a; --seal: #e3624d; --seal-soft: #3b201b; --on-jade: #06120e;
+  --paper: #0c1214; --card: #141c1f; --sunk: #0f1618; --ink: #e3eae7; --muted: #93a39f; --line: #26332f;
+  --jade: #5bbfa3; --jade-soft: #16302a; --seal: #e8664f; --seal-soft: #3b201b; --on-jade: #06120e; --on-tile: #0c1214;
+  --k-new: #e8664f; --k-review: #e0a646; --k-imm: #5bbfa3; --k-sleep: #8f9bf0;
+  --t-xa: #ee7b5f; --t-an: #e6ab48; --t-mua: #b79af0; --t-di: #6db3ec; --t-viec: #9db5c2; --t-khoe: #5ccaa0; --t-dulich: #f07aa8; --t-nha: #d2b25a; --t-vui: #4fc8d8;
   --shadow: 0 1px 2px rgb(0 0 0 / .35), 0 10px 28px rgb(0 0 0 / .3);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / .4), 0 16px 36px rgb(0 0 0 / .4);
   color-scheme: dark;
 }
 html, body { background: var(--paper); color: var(--ink); }
 body { font-family: var(--ui); font-size: 16px; line-height: 1.55; -webkit-text-size-adjust: 100%; }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--paper); }
 * { box-sizing: border-box; }
 button, select, input { font: inherit; color: inherit; }
 button { cursor: pointer; }
@@ -46,103 +71,244 @@ a { color: var(--jade); }
 .zh { font-family: var(--zh); font-weight: 500; }
 .py { color: var(--muted); font-size: .92em; }
 .num { font-variant-numeric: tabular-nums; }
-
-.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 170px; }
-.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); padding-block: 12px 0; }
-.brand { display: flex; align-items: center; gap: 10px; }
-.seal { width: 34px; height: 34px; flex: none; display: grid; place-items: center; background: var(--seal); color: #fff; border-radius: 6px; font-family: var(--zh); font-weight: 700; font-size: 21px; line-height: 1; }
-.brand-name { font-weight: 700; letter-spacing: -.01em; }
-.brand-sub { color: var(--muted); font-size: 13px; }
-.brand .grow { flex: 1; min-width: 0; }
-.daypill { font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--jade-soft); color: var(--jade); white-space: nowrap; }
-.tabs { display: flex; gap: 2px; margin-top: 10px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
-.tabs a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 14px; padding: 8px 6px 10px; border-bottom: 2px solid transparent; white-space: nowrap; }
-.tabs a[aria-current="page"] { color: var(--ink); border-color: var(--seal); }
-
-section.view { padding-top: 22px; }
-.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 h1, h2, h3 { text-wrap: balance; margin: 0; }
-h2 { font-size: 22px; letter-spacing: -.01em; }
+h2 { font-size: 26px; letter-spacing: -.015em; line-height: 1.25; }
 h3 { font-size: 17px; }
 p { margin: 0; }
-.lead { color: var(--muted); max-width: 62ch; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.lead { color: var(--muted); max-width: 64ch; }
+.btn svg, .pl-btn svg, .b-play svg, .ico { width: 18px; height: 18px; fill: currentColor; flex: none; }
 
-/* Today */
-.hero { display: grid; gap: 8px; }
-.hero .zh-title { font-family: var(--zh); font-weight: 700; font-size: clamp(30px, 7vw, 44px); line-height: 1.2; letter-spacing: .02em; }
-.hero .vi-title { font-weight: 600; font-size: 18px; }
-.hero .scene { color: var(--muted); max-width: 60ch; }
-.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 10px; }
-.btn { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 9px 16px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+/* ------------------------------------------------ shell */
+.side { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--paper);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px 0; }
+.brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
+.logo { width: 38px; height: 38px; flex: none; display: grid; place-items: center; background: var(--seal); color: #fff; border-radius: 9px; font-family: var(--zh); font-weight: 900; font-size: 23px; line-height: 1; box-shadow: inset 0 0 0 2px rgb(255 255 255 / .18); transform: rotate(-3deg); }
+.brand-name { font-weight: 800; letter-spacing: -.015em; font-size: 16px; white-space: nowrap; }
+.brand-sub { color: var(--muted); font-size: 12.5px; }
+.brand .grow { flex: 1; min-width: 0; }
+.daypill { font-size: 13px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: var(--seal-soft); color: var(--seal); white-space: nowrap; }
+.nav { display: flex; gap: 2px; margin-top: 10px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.nav a { display: flex; align-items: center; gap: 7px; text-decoration: none; color: var(--muted); font-weight: 600; font-size: 14px; padding: 8px 8px 10px; border-bottom: 2px solid transparent; white-space: nowrap; }
+.nav .ni { font-family: var(--zh); font-weight: 700; font-size: 15px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 6px; background: var(--sunk); color: var(--muted); }
+.nav a[aria-current="page"] { color: var(--ink); border-color: var(--seal); }
+.nav a[aria-current="page"] .ni { background: var(--seal); color: #fff; }
+.side-foot { display: none; }
+.ws { min-width: 0; max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 200px; }
+section.view { padding-top: 22px; }
+.v-head { display: grid; gap: 6px; margin-bottom: 18px; }
+
+@media (min-width: 1000px) {
+  .app { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); }
+  .side { height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 22px; padding: 24px 18px 20px; border-right: 1px solid var(--line); background: color-mix(in srgb, var(--card) 55%, var(--paper)); }
+  .nav { flex-direction: column; border: 0; gap: 4px; margin: 0; overflow: visible; }
+  .nav a { padding: 10px 12px; border: 0; border-radius: 12px; font-size: 15px; }
+  .nav a:hover { background: var(--card); color: var(--ink); }
+  .nav a[aria-current="page"] { background: var(--card); box-shadow: var(--shadow); }
+  .nav .ni { width: 28px; height: 28px; font-size: 17px; border-radius: 8px; }
+  .side .daypill { display: none; }
+  .side-foot { display: grid; gap: 12px; margin-top: auto; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
+  .sf-day { display: flex; align-items: baseline; justify-content: space-between; }
+  .sf-day b { font-size: 24px; letter-spacing: -.02em; }
+  .sf-day a { font-size: 13px; font-weight: 600; text-decoration: none; }
+  .sf-bar { height: 8px; border-radius: 99px; background: var(--sunk); overflow: hidden; }
+  .sf-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--jade), var(--k-imm)); border-radius: 99px; }
+  .sf-meta { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+  .sf-meta b { color: var(--ink); }
+  .ws { padding-left: 36px; padding-right: 36px; }
+  section.view { padding-top: 34px; }
+  h2 { font-size: 32px; }
+}
+
+/* ------------------------------------------------ shared pieces */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); }
+.btn { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 9px 16px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); font-size: 15px; }
 .btn:hover { border-color: var(--muted); }
-.btn-primary { background: var(--jade); border-color: var(--jade); color: var(--on-jade); padding: 12px 20px; font-size: 16px; }
-.btn-primary:hover { filter: brightness(1.08); border-color: var(--jade); }
-.btn svg, .pl-btn svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+.btn-primary { background: var(--seal); border-color: var(--seal); color: #fff; padding: 12px 22px; font-size: 16px; box-shadow: 0 6px 18px color-mix(in srgb, var(--seal) 30%, transparent); }
+.btn-primary:hover { filter: brightness(1.07); border-color: var(--seal); }
+.btn-jade { background: var(--jade); border-color: var(--jade); color: var(--on-jade); }
+.chip { white-space: nowrap; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: var(--jade-soft); color: var(--jade); }
+.chip.seal { background: var(--seal-soft); color: var(--seal); }
+.chip.soft { background: var(--sunk); color: var(--muted); }
+.tile { --c: var(--seal); width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 11px; background: var(--c); color: var(--on-tile); font-family: var(--zh); font-weight: 900; font-size: 21px; line-height: 1; box-shadow: inset 0 -3px 0 rgb(0 0 0 / .14); }
+.tile.lg { width: 64px; height: 64px; border-radius: 16px; font-size: 34px; }
+.tile.sm { width: 24px; height: 24px; border-radius: 7px; font-size: 13px; box-shadow: none; }
 .daynav { display: inline-flex; align-items: center; gap: 2px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
-.daynav button { border: 0; background: none; padding: 8px 12px; font-weight: 700; color: var(--muted); }
+.daynav button { border: 0; background: none; padding: 8px 13px; font-weight: 800; color: var(--muted); font-size: 17px; line-height: 1; }
+.daynav button:hover:not(:disabled) { color: var(--ink); }
 .daynav button:disabled { opacity: .35; cursor: default; }
-.daynav span { font-size: 14px; font-weight: 600; padding: 0 4px; }
+.daynav span { font-size: 14px; font-weight: 600; padding: 0 4px; white-space: nowrap; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 12px; }
+.p-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.p-head h3 { font-size: 15px; }
+.p-sub { font-size: 12px; color: var(--muted); }
+.p-link { font-size: 13px; font-weight: 600; text-decoration: none; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 13px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.seg button:hover { color: var(--ink); }
+.seg button[aria-pressed="true"] { border-color: var(--jade); color: var(--jade); background: var(--jade-soft); }
+.danger { color: var(--seal); }
+select, input[type="search"] { border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 8px 11px; max-width: 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .lift { transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .lift:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+}
 
-.scroll { display: flex; gap: 3px; height: 10px; margin-top: 18px; }
-.scroll i { display: block; border-radius: 3px; background: var(--line); min-width: 6px; }
-.scroll i[data-s="done"] { background: var(--jade); }
-.scroll i[data-s="now"] { background: var(--seal); }
-.scroll-legend { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 6px; }
+/* ------------------------------------------------ today */
+.today-grid { display: grid; gap: 18px; }
+.col { display: grid; gap: 16px; align-content: start; min-width: 0; }
+@media (min-width: 1180px) { .today-grid { grid-template-columns: minmax(0, 1fr) 330px; gap: 26px; } }
+.banner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 16px; border-radius: 14px; background: var(--seal-soft); }
+.banner p { flex: 1 1 240px; min-width: 0; font-size: 15px; }
+.hero { --c: var(--seal); position: relative; overflow: hidden; padding: 22px; display: grid; gap: 14px;
+  background: radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--c) 14%, transparent), transparent 60%), var(--card); box-shadow: var(--shadow); }
+.hero .wm { position: absolute; right: -18px; bottom: -64px; font-family: var(--zh); font-weight: 900; font-size: 260px; line-height: 1; color: var(--c); opacity: .07; pointer-events: none; user-select: none; }
+.hero-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; position: relative; }
+.hero-body { display: grid; gap: 16px; position: relative; }
+@media (min-width: 700px) { .hero-body { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
+.les-list { display: grid; gap: 14px; min-width: 0; }
+.les { display: flex; gap: 16px; align-items: center; text-decoration: none; color: inherit; min-width: 0; }
+.les-txt { min-width: 0; display: grid; gap: 2px; }
+.les-no { font-size: 13px; font-weight: 700; color: var(--c); }
+.les-zh { font-family: var(--zh); font-weight: 700; font-size: clamp(28px, 4.2vw, 44px); line-height: 1.18; letter-spacing: .02em; }
+.les-vi { font-weight: 600; font-size: 18px; }
+.les:hover .les-vi { color: var(--jade); }
+.hero .scene { color: var(--muted); max-width: 66ch; position: relative; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; position: relative; }
+.ring { position: relative; width: 128px; height: 128px; justify-self: start; }
+.ring-svg { width: 100%; height: 100%; display: block; }
+.rg-bg { fill: none; stroke: var(--sunk); stroke-width: 11; }
+.rg-fg { fill: none; stroke: var(--seal); stroke-width: 11; stroke-linecap: round; }
+.ring-txt { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; line-height: 1.1; }
+.ring-txt b { font-size: 26px; letter-spacing: -.02em; }
+.ring-txt span { font-size: 12px; color: var(--muted); }
 
-.blocks { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
-.block { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px; }
-.block[data-s="now"] { border-color: var(--seal); box-shadow: var(--shadow); }
-.glyph { width: 46px; text-align: center; }
-.glyph b { display: grid; place-items: center; width: 42px; height: 42px; margin: 0 auto; border-radius: 50%; font-family: var(--zh); font-size: 22px; font-weight: 700; background: var(--jade-soft); color: var(--jade); }
-.block[data-s="done"] .glyph b { background: var(--jade); color: var(--card); }
-.block[data-s="now"] .glyph b { background: var(--seal-soft); color: var(--seal); }
-.glyph small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
-.b-main { min-width: 0; }
-.b-title { font-weight: 700; }
+.scroll { display: flex; gap: 4px; height: 12px; }
+.scroll i { display: block; border-radius: 4px; min-width: 6px; background: color-mix(in srgb, var(--c) 22%, var(--sunk)); }
+.scroll i[data-s="done"] { background: var(--c); }
+.scroll i[data-s="now"] { background: repeating-linear-gradient(-45deg, var(--c) 0 6px, color-mix(in srgb, var(--c) 55%, var(--card)) 6px 12px); background-size: 34px 34px; }
+@media (prefers-reduced-motion: no-preference) { .scroll i[data-s="now"] { animation: stripes 1.2s linear infinite; } }
+@keyframes stripes { to { background-position: 34px 0; } }
+.scroll-legend { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--muted); margin-top: -8px; }
+
+.blocks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.block { --c: var(--k-new); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 13px 15px; }
+.block[data-s="now"] { border-color: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 16%, transparent), var(--shadow); }
+.glyph { width: 50px; text-align: center; }
+.glyph b { display: grid; place-items: center; width: 46px; height: 46px; margin: 0 auto; border-radius: 14px; font-family: var(--zh); font-size: 24px; font-weight: 900; background: color-mix(in srgb, var(--c) 15%, var(--card)); color: var(--c); }
+.block[data-s="done"] .glyph b, .block[data-s="now"] .glyph b { background: var(--c); color: var(--on-tile); }
+.glyph small { display: block; font-size: 11px; color: var(--muted); margin-top: 3px; }
+.b-main { min-width: 0; display: grid; gap: 3px; }
+.b-title { font-weight: 700; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .b-hint { color: var(--muted); font-size: 14px; }
+.b-les { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 3px; }
+.b-les span { font-size: 12px; font-weight: 600; padding: 2px 8px 2px 6px; border-radius: 999px; background: var(--sunk); color: var(--muted); display: inline-flex; align-items: center; gap: 5px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.b-les span i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); flex: none; }
 .b-side { display: flex; align-items: center; gap: 10px; }
 .b-dur { font-size: 14px; color: var(--muted); white-space: nowrap; }
-.b-play { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); display: grid; place-items: center; }
-.b-play svg { width: 16px; height: 16px; fill: currentColor; }
-.b-play:hover { border-color: var(--jade); color: var(--jade); }
-.chip { white-space: nowrap; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--jade-soft); color: var(--jade); }
-.chip.seal { background: var(--seal-soft); color: var(--seal); }
+.b-play { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); display: grid; place-items: center; color: var(--c); }
+.b-play:hover { background: var(--c); color: var(--on-tile); border-color: var(--c); }
+@media (max-width: 520px) { .block { grid-template-columns: auto minmax(0, 1fr); } .b-side { grid-column: 2; } }
+.note { border-left: 3px solid var(--k-review); padding: 4px 0 4px 14px; color: var(--muted); font-size: 15px; max-width: 70ch; }
 
-.note { margin-top: 18px; border-left: 3px solid var(--seal); padding: 4px 0 4px 14px; color: var(--muted); font-size: 15px; max-width: 64ch; }
-.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
-.stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
-.stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.stat { background: var(--sunk); border-radius: 12px; padding: 11px 12px; }
+.stat b { display: block; font-size: 21px; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
 .stat span { font-size: 12px; color: var(--muted); }
-@media (max-width: 560px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.wk { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; height: 110px; align-items: end; }
+.wk-col { height: 100%; display: flex; align-items: flex-end; justify-content: center; }
+.wk-bar { display: block; width: 100%; max-width: 30px; border-radius: 7px 7px 3px 3px; background: color-mix(in srgb, var(--jade) 35%, var(--sunk)); }
+.wk-bar.hit { background: var(--jade); }
+.wk-col.today .wk-bar { background: var(--seal); }
+.wk-goal { position: absolute; left: 0; right: 0; border-top: 1.5px dashed color-mix(in srgb, var(--muted) 60%, transparent); }
+.wk-lab { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; text-align: center; font-size: 11px; color: var(--muted); line-height: 1.3; }
+.wk-lab b { display: block; color: var(--ink); font-size: 12px; }
+.up { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.up-row { width: 100%; border: 0; background: none; padding: 8px; border-radius: 10px; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 8px; text-align: left; align-items: center; }
+.up-row:hover { background: var(--sunk); }
+.up-day { font-size: 13px; font-weight: 700; color: var(--muted); }
+.up-les { display: grid; gap: 4px; min-width: 0; }
+.up-item { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; min-width: 0; }
+.up-item span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-/* Library */
-.week { margin-top: 22px; }
-.week h3 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-.lrow { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center; padding: 11px 4px; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit; }
-.lrow:hover .lv { color: var(--jade); }
-.lno { font-variant-numeric: tabular-nums; color: var(--muted); font-weight: 600; text-align: right; }
-.lmain { min-width: 0; }
-.lz { font-family: var(--zh); font-size: 18px; }
-.lv { font-size: 14px; color: var(--muted); }
+/* ------------------------------------------------ calendar */
+.cal-ctl { display: grid; gap: 16px; padding: 18px; }
+@media (min-width: 900px) { .cal-ctl { grid-template-columns: auto 1fr 1fr; align-items: end; } }
+.cal-now b { display: block; font-size: 30px; letter-spacing: -.02em; line-height: 1.1; }
+.cal-now span { font-size: 13px; color: var(--muted); }
+.fld { display: grid; gap: 6px; min-width: 0; }
+.fld label, .fld .lab { font-size: 13px; font-weight: 700; color: var(--muted); }
+.fld select { width: 100%; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--muted); margin-top: 16px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 4px; border: 1.5px solid var(--line); background: var(--card); }
+.legend i.done { background: var(--jade); border-color: var(--jade); }
+.legend i.part { background: var(--jade-soft); border-color: var(--jade); }
+.legend i.today { border-color: var(--seal); border-width: 2.5px; }
+.cal-week { margin-top: 22px; }
+.cal-week h3 { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.cal { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 10px; }
+.dtile { border: 1px solid var(--line); background: var(--card); border-radius: 14px; padding: 11px 12px; text-align: left; display: grid; gap: 8px; align-content: start; min-width: 0; position: relative; }
+.dtile:hover { border-color: var(--muted); }
+.dt-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.dt-top b { font-size: 15px; }
+.dt-les { display: grid; gap: 6px; }
+.dt-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: center; }
+.dt-item span { font-size: 13px; line-height: 1.3; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.dt-item small { display: block; font-weight: 500; color: var(--muted); font-size: 11px; }
+.dtile[data-s="done"] { background: color-mix(in srgb, var(--jade) 9%, var(--card)); border-color: color-mix(in srgb, var(--jade) 45%, var(--line)); }
+.dtile[data-s="part"] { border-color: var(--jade); border-style: dashed; }
+.dtile[data-s="today"], .dtile.is-today { border-color: var(--seal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--seal) 15%, transparent); }
+.dtile.is-view { outline: 2px solid var(--jade); outline-offset: 2px; }
 
-/* Lesson detail */
+/* ------------------------------------------------ library */
+.lib-tools { display: grid; gap: 12px; margin-bottom: 6px; }
+.lib-tools input { width: 100%; max-width: 460px; padding: 11px 14px; border-radius: 12px; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button { --c: var(--muted); border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 12px 6px 8px; font-size: 14px; font-weight: 600; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; }
+.filters button i { font-style: normal; font-family: var(--zh); font-weight: 900; font-size: 12px; width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; background: var(--c); color: var(--on-tile); }
+.filters button small { font-size: 12px; opacity: .75; }
+.filters button[aria-pressed="true"] { border-color: var(--c); color: var(--ink); background: color-mix(in srgb, var(--c) 12%, var(--card)); }
+.lib-sec { margin-top: 22px; }
+.lib-sec h3 { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.lgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 12px; }
+.lcard { --c: var(--seal); display: grid; gap: 6px; align-content: start; padding: 14px; border-radius: var(--r); background: var(--card); border: 1px solid var(--line); text-decoration: none; color: inherit; min-width: 0; position: relative; overflow: hidden; }
+.lcard:hover { border-color: var(--c); }
+.lc-top { display: flex; align-items: center; gap: 10px; }
+.lc-no { font-size: 13px; font-weight: 800; color: var(--c); flex: 1; }
+.lc-zh { font-family: var(--zh); font-weight: 700; font-size: 22px; line-height: 1.3; margin-top: 4px; }
+.lc-vi { font-weight: 600; font-size: 15px; line-height: 1.35; }
+.lc-meta { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.empty { padding: 30px 0; color: var(--muted); }
+
+/* ------------------------------------------------ lesson detail */
 .back { display: inline-flex; gap: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
-.toggles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.lnav { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.lnav a { font-size: 14px; font-weight: 600; text-decoration: none; }
+.lhero { --c: var(--seal); position: relative; overflow: hidden; padding: 22px; display: grid; gap: 12px; margin-top: 12px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--c) 13%, var(--card)), var(--card) 65%); }
+.lhero .wm { position: absolute; right: -10px; top: -40px; font-family: var(--zh); font-weight: 900; font-size: 220px; line-height: 1; color: var(--c); opacity: .08; pointer-events: none; }
+.lhero-row { display: flex; align-items: center; gap: 16px; position: relative; min-width: 0; }
+.lhero h2.zh { font-size: clamp(30px, 4vw, 44px); font-weight: 700; }
+.lhero .vt { font-weight: 600; font-size: 19px; }
+.toggles { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 16px; }
 .tg { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 600; color: var(--muted); }
 .tg[aria-pressed="true"] { color: var(--jade); border-color: var(--jade); background: var(--jade-soft); }
-.part { margin-top: 26px; }
-.part > h3 { margin-bottom: 10px; }
-.line { display: grid; grid-template-columns: 70px 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); }
+.lcols { display: grid; gap: 8px 32px; }
+@media (min-width: 1100px) { .lcols { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); } }
+.part { margin-top: 24px; min-width: 0; }
+.part > h3 { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.part > h3 .zh { color: var(--c, var(--seal)); font-size: 18px; }
+.line { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
 .line .who { font-size: 13px; font-weight: 600; color: var(--muted); padding-top: 4px; white-space: pre-line; }
 .line .txt { min-width: 0; }
-.line .zh { font-size: 20px; line-height: 1.45; }
-.line .vi { color: var(--ink); opacity: .85; font-size: 15px; }
+.line .zh { font-size: 21px; line-height: 1.45; }
+.line .vi { opacity: .85; font-size: 15px; }
 .say { border: 0; background: none; padding: 0; text-align: left; cursor: pointer; color: inherit; }
 .say:hover .zh { color: var(--jade); }
 .hide-py .py, .hide-vi .vi, .hide-vi .hv { display: none; }
-.chunks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-@media (max-width: 560px) { .chunks { grid-template-columns: minmax(0, 1fr); } }
-.chunk { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.chunks { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+.chunk { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; min-width: 0; }
 .chunk .zh { font-size: 22px; }
 .hv { font-size: 13px; color: var(--seal); font-weight: 600; }
 .hv em { font-style: normal; color: var(--muted); font-weight: 400; }
@@ -150,85 +316,133 @@ p { margin: 0; }
 .pattern .sk { font-weight: 700; }
 .pattern .sk .zh { font-size: 18px; }
 .pattern ul { margin: 6px 0 0; padding: 0; list-style: none; }
-.pattern li { padding: 5px 0; border-top: 1px dashed var(--line); }
+.pattern li { padding: 6px 0; border-top: 1px dashed var(--line); }
 
-/* Method */
-.prose { max-width: 66ch; }
+/* ------------------------------------------------ method */
+.prose { max-width: 68ch; }
 .prose p + p { margin-top: 10px; }
 .evidence { display: grid; gap: 12px; margin-top: 16px; }
-.ev { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+@media (min-width: 1000px) { .evidence { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ev { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
 .ev b { display: block; margin-bottom: 4px; }
 .principles { counter-reset: pr; list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 12px; }
-.principles li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; }
-.principles li::before { counter-increment: pr; content: counter(pr); font-weight: 700; color: var(--seal); font-variant-numeric: tabular-nums; }
+@media (min-width: 1100px) { .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 28px; } }
+.principles li { display: grid; grid-template-columns: 32px 1fr; gap: 10px; }
+.principles li::before { counter-increment: pr; content: counter(pr); font-weight: 800; color: var(--seal); font-variant-numeric: tabular-nums; font-size: 18px; }
 .principles .how { color: var(--jade); font-weight: 600; }
 .tablewrap { overflow-x: auto; margin-top: 14px; }
 table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 15px; }
-th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
 th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
 td .zh { font-size: 20px; color: var(--jade); }
 .refs { font-size: 14px; color: var(--muted); padding-left: 18px; }
 .refs li { margin-top: 6px; }
 
-/* Options */
-.opt { display: grid; gap: 8px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.opt label, .opt .lab { font-weight: 600; }
+/* ------------------------------------------------ options */
+.opt-grid { display: grid; gap: 18px; }
+@media (min-width: 1100px) { .opt-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+.sect { padding: 6px 18px 8px; }
+.sect > h3 { display: flex; align-items: center; gap: 10px; padding: 14px 0 6px; font-size: 18px; }
+.sect > h3 .tile { width: 30px; height: 30px; border-radius: 9px; font-size: 16px; }
+.opt { display: grid; gap: 8px; padding: 14px 0; border-top: 1px solid var(--line); }
+.sect > h3 + .opt, .sect > h3 + .vgroup { border-top: 0; }
+.opt .lab { font-weight: 700; }
 .opt .help { color: var(--muted); font-size: 14px; }
-.seg { display: flex; flex-wrap: wrap; gap: 6px; }
-.seg button { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 13px; font-size: 14px; font-weight: 600; color: var(--muted); }
-.seg button[aria-pressed="true"] { border-color: var(--jade); color: var(--jade); background: var(--jade-soft); }
-.danger { color: var(--seal); }
-select { border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 7px 10px; }
+.vgroup { display: grid; gap: 8px; padding: 12px 0 14px; border-top: 1px solid var(--line); }
+.vgroup .lab { font-weight: 700; }
+.vcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.vcard { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 12px 12px 14px; background: var(--card); }
+.vcard[data-on="true"] { border-color: var(--jade); background: color-mix(in srgb, var(--jade) 8%, var(--card)); }
+.vpick { border: 0; background: none; padding: 0; text-align: left; display: grid; gap: 2px; min-width: 0; }
+.vpick b { font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.vpick b::before { content: ""; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line); flex: none; }
+.vcard[data-on="true"] .vpick b::before { border-color: var(--jade); background: radial-gradient(circle, var(--jade) 0 40%, transparent 45%); }
+.vpick span { font-size: 13px; color: var(--muted); }
+.vpick small { font-size: 12px; color: var(--muted); opacity: .8; }
+.vplay { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); display: grid; place-items: center; color: var(--jade); }
+.vplay:hover, .vplay[data-busy="true"] { background: var(--jade); color: var(--on-jade); border-color: var(--jade); }
+.vnote { font-size: 13px; color: var(--muted); }
 
-/* Player */
-.player { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--card); border-top: 1px solid var(--line); box-shadow: 0 -8px 30px rgb(0 0 0 / .08); padding-bottom: env(safe-area-inset-bottom, 0px); max-height: 88vh; overflow-y: auto; }
-.pl-in { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px 12px; }
-.pl-bar { height: 4px; background: var(--line); border-radius: 2px; cursor: pointer; position: relative; margin-bottom: 10px; touch-action: none; }
-.pl-bar i { position: absolute; inset: 0 auto 0 0; background: var(--seal); border-radius: 2px; width: 0; }
-.pl-row { display: flex; align-items: center; gap: 8px; }
-.pl-info { flex: 1; min-width: 0; border: 0; background: none; text-align: left; padding: 0; }
+/* ------------------------------------------------ player */
+.player { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: color-mix(in srgb, var(--card) 94%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--line); box-shadow: 0 -10px 34px rgb(0 0 0 / .09); padding-bottom: env(safe-area-inset-bottom, 0px); max-height: 92vh; overflow-y: auto; }
+@media (min-width: 1000px) { .player { left: var(--rail); } }
+.pl-in { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px 12px; }
+@media (min-width: 1000px) { .pl-in { padding-left: 36px; padding-right: 36px; } }
+.pl-bar { height: 5px; background: var(--sunk); border-radius: 3px; cursor: pointer; position: relative; margin-bottom: 10px; touch-action: none; }
+.pl-bar i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--seal), var(--k-review)); border-radius: 3px; width: 0; }
+.pl-row { display: flex; align-items: center; gap: 10px; }
+.pl-info { flex: 1; min-width: 0; border: 0; background: none; text-align: left; padding: 0; display: flex; align-items: center; gap: 12px; }
+.pl-txt { min-width: 0; flex: 1; display: grid; }
 .pl-head { font-size: 12px; color: var(--muted); display: flex; gap: 8px; white-space: nowrap; overflow: hidden; }
 .pl-head .num { margin-left: auto; }
-.pl-mini { font-family: var(--zh); font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pl-mini { font-family: var(--zh); font-size: 19px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pl-mini.vi { font-family: var(--ui); font-size: 15px; color: var(--muted); }
+.pl-ctrls { display: flex; align-items: center; gap: 8px; }
 .pl-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); display: grid; place-items: center; flex: none; }
-.pl-btn.main { width: 50px; height: 50px; background: var(--jade); border-color: var(--jade); color: var(--on-jade); }
-.pl-btn.main svg { width: 22px; height: 22px; }
-.pl-sheet { display: grid; gap: 12px; padding-top: 14px; }
-.now { min-height: 150px; display: grid; align-content: center; gap: 4px; text-align: center; padding: 6px 0; }
+.pl-btn:hover { border-color: var(--muted); }
+.pl-btn.main { width: 52px; height: 52px; background: var(--seal); border-color: var(--seal); color: #fff; box-shadow: 0 6px 16px color-mix(in srgb, var(--seal) 30%, transparent); }
+.pl-btn.main svg { width: 24px; height: 24px; }
+.eq { width: 34px; height: 34px; flex: none; border-radius: 10px; background: var(--seal-soft); display: flex; align-items: flex-end; justify-content: center; gap: 3px; padding: 9px 7px; }
+.eq i { width: 3px; height: 30%; border-radius: 2px; background: var(--seal); }
+@media (prefers-reduced-motion: no-preference) {
+  .player.playing .eq i { animation: eq .9s ease-in-out infinite alternate; }
+  .player.playing .eq i:nth-child(2) { animation-delay: -.3s; }
+  .player.playing .eq i:nth-child(3) { animation-delay: -.6s; }
+  .player.playing .eq i:nth-child(4) { animation-delay: -.15s; }
+  .pl-bar i { transition: width .25s linear; }
+}
+@keyframes eq { from { height: 20%; } to { height: 100%; } }
+@media (max-width: 560px) { .eq, .pl-expand, #pl-replay { display: none; } }
+.pl-sheet { display: grid; gap: 18px; padding-top: 16px; }
+@media (min-width: 1000px) { .pl-sheet { grid-template-columns: minmax(0, 1fr) 340px; align-items: center; gap: 28px; padding-block: 18px 8px; } }
+.now-wrap { display: grid; gap: 8px; justify-items: center; min-width: 0; }
+.pl-lesson { --c: var(--seal); display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--c); padding: 4px 12px 4px 4px; border-radius: 999px; background: color-mix(in srgb, var(--c) 12%, var(--card)); max-width: 100%; }
+.pl-lesson span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.now { min-height: 170px; display: grid; align-content: center; gap: 6px; text-align: center; padding: 6px 0; width: 100%; }
 .now .who { font-size: 13px; font-weight: 600; color: var(--muted); }
-.now .zh { font-size: clamp(26px, 6.5vw, 38px); line-height: 1.35; }
-.now .py { font-size: 16px; }
-.now .vi { font-size: 16px; }
+.now .zh { font-size: clamp(28px, 4.6vw, 58px); line-height: 1.3; }
+.now .py { font-size: 17px; }
+.now .vi { font-size: 17px; }
 .now .vi.speaking, .now .zh.speaking { color: var(--seal); }
-.now .cue { color: var(--muted); font-size: 16px; max-width: 46ch; margin: 0 auto; }
+.now .cue { color: var(--muted); font-size: 17px; max-width: 52ch; margin: 0 auto; }
+.sheet-side { display: grid; gap: 12px; }
 .ctrls { display: flex; justify-content: center; align-items: center; gap: 12px; }
 .subopts { display: grid; gap: 8px; }
 .subopts .seg { justify-content: center; }
-.subopts .lab { font-size: 12px; color: var(--muted); text-align: center; }
-.prep { font-size: 13px; color: var(--seal); font-weight: 600; }
+.subopts .lab { font-size: 12px; color: var(--muted); text-align: center; font-weight: 600; }
+.kbd { display: none; font-size: 12px; color: var(--muted); text-align: center; }
+.kbd kbd { font-family: var(--ui); font-size: 11px; font-weight: 700; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; background: var(--paper); }
+@media (min-width: 1000px) { .kbd { display: block; } }
+.prep { font-size: 12px; color: var(--seal); font-weight: 700; }
 .boot-error { margin-top: 40px; padding: 16px; border: 1px solid var(--seal); border-radius: 12px; }
-@media (prefers-reduced-motion: no-preference) { .pl-bar i { transition: width .25s linear; } }
 </style>
 
-<div class="wrap">
-  <header class="top">
-    <div class="brand">
-      <div class="seal" aria-hidden="true">听</div>
-      <div class="grow"><div class="brand-name">Nghe Trung Mỗi Ngày</div><div class="brand-sub">Học tiếng Trung giao tiếp chỉ bằng tai</div></div>
+<div class="app">
+  <header class="side">
+    <a class="brand" href="#hom-nay">
+      <div class="logo" aria-hidden="true">听</div>
+      <div class="grow"><div class="brand-name">Nghe Trung Mỗi Ngày</div><div class="brand-sub">Tiếng Trung giao tiếp bằng tai</div></div>
       <span class="daypill num" id="daypill">Ngày 1</span>
-    </div>
-    <nav class="tabs" aria-label="Mục">
-      <a href="#hom-nay" data-v="hom-nay">Hôm nay</a>
-      <a href="#thu-vien" data-v="thu-vien">Thư viện</a>
-      <a href="#phuong-phap" data-v="phuong-phap">Phương pháp</a>
-      <a href="#tuy-chon" data-v="tuy-chon">Tùy chọn</a>
+    </a>
+    <nav class="nav" aria-label="Mục">
+      <a href="#hom-nay" data-v="hom-nay"><span class="ni" lang="zh-CN" aria-hidden="true">今</span>Hôm nay</a>
+      <a href="#lich-hoc" data-v="lich-hoc"><span class="ni" lang="zh-CN" aria-hidden="true">历</span>Lịch học</a>
+      <a href="#thu-vien" data-v="thu-vien"><span class="ni" lang="zh-CN" aria-hidden="true">书</span>Thư viện</a>
+      <a href="#phuong-phap" data-v="phuong-phap"><span class="ni" lang="zh-CN" aria-hidden="true">法</span>Phương pháp</a>
+      <a href="#tuy-chon" data-v="tuy-chon"><span class="ni" lang="zh-CN" aria-hidden="true">设</span>Tùy chọn</a>
     </nav>
+    <div class="side-foot">
+      <div class="sf-day"><b class="num" id="sf-day">Ngày 1</b><a href="#lich-hoc">Đổi ngày</a></div>
+      <div class="sf-bar" aria-hidden="true"><i id="sf-bar"></i></div>
+      <div class="sf-meta"><span><b class="num" id="sf-learn">0/80 bài</b> đã học</span><span id="sf-streak" class="num">0 ngày liên tục</span><span id="sf-hours" class="num">0 giờ đã nghe</span></div>
+    </div>
   </header>
 
+  <main class="ws">
   <div class="boot-error" id="boot-error" hidden>Không tìm thấy dữ liệu bài học (data.js). Hãy chạy bước build rồi mở lại trang.</div>
-
   <section class="view" id="v-hom-nay"></section>
+  <section class="view" id="v-lich-hoc" hidden></section>
   <section class="view" id="v-thu-vien" hidden></section>
   <section class="view" id="v-bai" hidden></section>
   <section class="view" id="v-phuong-phap" hidden>
@@ -248,7 +462,7 @@ select { border: 1px solid var(--line); background: var(--card); border-radius: 
       <li><div><b>Hiểu trước, nghe nhiều sau.</b> Krashen gọi đây là đầu vào dễ hiểu. Chang và Read (2006) thấy cho người học biết trước chủ đề là kiểu hỗ trợ hiệu quả nhất, nghe lặp lại đứng thứ hai. <span class="how">Trong app:</span> mỗi bài mở đầu bằng bối cảnh tiếng Việt, mỗi câu được kẹp Trung, Việt, Trung chậm, rồi Trung.</div></li>
       <li><div><b>Nghe hẹp, lặp lại có biến thể.</b> Krashen (1996) đề xuất nghe nhiều lần các bản ghi cùng một chủ đề, và người học trong nghiên cứu của Dupuy (1999) thấy cách này giúp nghe hiểu, độ trôi chảy và vốn từ. <span class="how">Trong app:</span> khối Đắm chìm xoay vòng các bài của 7 ngày gần nhất với 8 biến thể: giọng khác, bản chậm, cụm từ, mẫu câu, câu chuyện.</div></li>
       <li><div><b>Nhiều giọng đọc.</b> Wang, Spence, Jongman và Sereno (1999) luyện thanh điệu tiếng Phổ thông với nhiều người nói: độ chính xác tăng khoảng 21%, áp dụng được cho giọng mới và vẫn giữ sau 6 tháng. <span class="how">Trong app:</span> 5 giọng Trung khác nhau, mỗi câu được nghe bằng ít nhất 2 giọng.</div></li>
-      <li><div><b>Ôn giãn cách.</b> Cepeda và cộng sự (2008) cho thấy khoảng cách ôn tối ưu dài dần theo thời gian bạn cần nhớ. <span class="how">Trong app:</span> mỗi bài quay lại sau 1, 2, 4, 7, 12, 20, 30, 45 và 60 ngày.</div></li>
+      <li><div><b>Ôn giãn cách.</b> Cepeda và cộng sự (2008) cho thấy khoảng cách ôn tối ưu dài dần theo thời gian bạn cần nhớ. <span class="how">Trong app:</span> mỗi bài quay lại sau 1, 2, 4, 7, 12, 20, 30, 45 và 60 ngày. Bài bạn đánh dấu là hiểu ít được ôn dày hơn trong hai tuần đầu.</div></li>
       <li><div><b>Nhớ lại trong đầu.</b> Roediger và Karpicke (2006): tự nhớ lại giữ kiến thức lâu hơn hẳn đọc lại. <span class="how">Trong app:</span> phần ôn có khoảng lặng để bạn đoán nghĩa hoặc nói thầm câu tiếng Trung, rồi nghe đáp án. Không cần chạm vào màn hình.</div></li>
       <li><div><b>Chậm trước, tự nhiên sau.</b> Các nghiên cứu về tốc độ nói cho kết quả lẫn lộn, nhưng người mới học thường được lợi khi có thêm thời gian xử lý. <span class="how">Trong app:</span> câu mới có bản đọc chậm còn 70% tốc độ và luôn được nghe lại ở tốc độ tự nhiên.</div></li>
       <li><div><b>Lợi thế của người Việt.</b> Khoảng một phần ba đến 40% từ vựng tiếng Việt có gốc Hán, nhiều hơn hẳn trong văn trang trọng. <span class="how">Trong app:</span> mỗi cụm từ có âm Hán Việt và lời nhắc những từ dễ nhầm, như <span class="zh">便宜</span> đọc là tiện nghi nhưng nghĩa là rẻ.</div></li>
@@ -269,7 +483,7 @@ select { border: 1px solid var(--line); background: var(--card); border-radius: 
     <p class="lead" style="margin-top:10px">Chữ trên mỗi khối là một gợi ý Hán Việt: <span class="zh">新</span> tân (mới), <span class="zh">温</span> ôn (như ôn tập, từ câu ôn cố tri tân), <span class="zh">浸</span> tẩm (ngấm), <span class="zh">眠</span> miên (ngủ).</p>
     <h3 style="margin-top:28px">Kỳ vọng thực tế</h3>
     <div class="prose" style="margin-top:8px">
-      <p>Sau 30 ngày, khoảng 40 đến 60 giờ nghe, bạn sẽ hiểu các hội thoại đời thường nói chậm và rõ trong 30 tình huống, với khoảng 240 cụm từ và 60 mẫu câu nằm trong ngữ cảnh.</p>
+      <p>Sau 30 ngày, khoảng 40 đến 60 giờ nghe, bạn sẽ hiểu các hội thoại đời thường nói chậm và rõ trong 30 tình huống. Hết 80 bài, bạn đã nghe trong ngữ cảnh khoảng 540 cụm từ và 160 mẫu câu giao tiếp thông dụng.</p>
       <p>Nghe không thay thế được nói. Hãy dùng app tương tác để nói và phản xạ; kết hợp hai thứ mới là cách mạnh nhất.</p>
       <p>Giọng đọc được tạo bằng AI. Chúng rất gần giọng người, nhưng khi đã quen, hãy thêm phim và podcast tiếng Trung thật.</p>
       <p>Những ngày đầu thời lượng ngắn hơn mục tiêu vì chưa có nhiều bài. Nghe một bài quá nhiều lần trong một ngày sẽ giảm hiệu quả, nên app không kéo dài nhân tạo.</p>
@@ -290,6 +504,7 @@ select { border: 1px solid var(--line); background: var(--card); border-radius: 
     </ol>
   </section>
   <section class="view" id="v-tuy-chon" hidden></section>
+  </main>
 </div>
 
 <div class="player" id="player" hidden>
@@ -297,23 +512,32 @@ select { border: 1px solid var(--line); background: var(--card); border-radius: 
     <div class="pl-bar" id="pl-bar" role="slider" aria-label="Vị trí trong khối" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><i id="pl-fill"></i></div>
     <div class="pl-row">
       <button class="pl-info" id="pl-info" aria-expanded="false" aria-controls="pl-sheet">
-        <div class="pl-head"><span id="pl-block">Đang chuẩn bị</span><span class="prep" id="pl-prep" hidden></span><span class="num" id="pl-time">0:00 / 0:00</span></div>
-        <div class="pl-mini" id="pl-mini">&nbsp;</div>
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="pl-txt">
+          <span class="pl-head"><span id="pl-block">Đang chuẩn bị</span><span class="prep" id="pl-prep" hidden></span><span class="num" id="pl-time">0:00 / 0:00</span></span>
+          <span class="pl-mini" id="pl-mini">&nbsp;</span>
+        </span>
       </button>
-      <button class="pl-btn" id="pl-replay" aria-label="Nghe lại câu vừa rồi" title="Nghe lại câu"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg></button>
-      <button class="pl-btn main" id="pl-toggle" aria-label="Phát"><svg viewBox="0 0 24 24" id="pl-icon"><path d="M8 5v14l11-7z"/></svg></button>
-      <button class="pl-btn" id="pl-next" aria-label="Sang khối tiếp theo" title="Khối tiếp theo"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm9-12v12h2V6h-2z"/></svg></button>
+      <div class="pl-ctrls">
+        <button class="pl-btn" id="pl-replay" aria-label="Nghe lại câu vừa rồi" title="Nghe lại câu (R)"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg></button>
+        <button class="pl-btn main" id="pl-toggle" aria-label="Phát"><svg viewBox="0 0 24 24" id="pl-icon"><path d="M8 5v14l11-7z"/></svg></button>
+        <button class="pl-btn" id="pl-next" aria-label="Sang khối tiếp theo" title="Khối tiếp theo (N)"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm9-12v12h2V6h-2z"/></svg></button>
+        <button class="pl-btn pl-expand" id="pl-expand" aria-label="Mở chế độ tập trung" title="Chế độ tập trung (F)"><svg viewBox="0 0 24 24" id="pl-exp-icon"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></button>
+      </div>
     </div>
     <div class="pl-sheet" id="pl-sheet" hidden>
-      <div class="now" id="now"></div>
-      <div class="ctrls">
-        <button class="btn" id="pl-back10" aria-label="Lùi 10 giây"><span class="num">−10s</span></button>
-        <button class="btn" id="pl-fwd10" aria-label="Tiến 10 giây"><span class="num">+10s</span></button>
-      </div>
-      <div class="subopts">
-        <div class="lab">Tốc độ</div><div class="seg" id="pl-rate"></div>
-        <div class="lab">Hiện chữ</div><div class="seg" id="pl-text"></div>
-        <div class="lab">Hẹn giờ tắt</div><div class="seg" id="pl-sleep"></div>
+      <div class="now-wrap"><div class="pl-lesson" id="pl-lesson" hidden></div><div class="now" id="now"></div></div>
+      <div class="sheet-side">
+        <div class="ctrls">
+          <button class="btn" id="pl-back10" aria-label="Lùi 10 giây"><span class="num">−10s</span></button>
+          <button class="btn" id="pl-fwd10" aria-label="Tiến 10 giây"><span class="num">+10s</span></button>
+        </div>
+        <div class="subopts">
+          <div class="lab">Tốc độ</div><div class="seg" id="pl-rate"></div>
+          <div class="lab">Hiện chữ</div><div class="seg" id="pl-text"></div>
+          <div class="lab">Hẹn giờ tắt</div><div class="seg" id="pl-sleep"></div>
+        </div>
+        <p class="kbd"><kbd>Space</kbd> phát/dừng · <kbd>R</kbd> nghe lại câu · <kbd>←</kbd><kbd>→</kbd> 10 giây · <kbd>N</kbd> khối sau · <kbd>F</kbd> thu gọn</p>
       </div>
     </div>
   </div>
@@ -354,11 +578,11 @@ const ICON = {
 const svg = d => { const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true'); const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', d); s.append(p); return s; };
 
 // ---------------------------------------------------------------- state
-const DEF = { target: 90, pace: 1, support: 'auto', think: 2, rate: 1, sleep: true, chime: true, lock: true, text: 'full' };
+const DEF = { target: 90, pace: 1, support: 'auto', think: 2, rate: 1, sleep: true, chime: true, lock: true, text: 'full', zh: 1, vi: 'f', auto: true };
 const LS_KEY = 'nt-progress-v1';
-const fresh = () => ({ v: 1, day: 1, set: { ...DEF }, done: {}, dayDate: {}, log: {}, resume: null, updatedAt: 0 });
+const fresh = () => ({ v: 1, day: 1, set: { ...DEF }, done: {}, dayDate: {}, log: {}, learn: {}, rate: {}, resume: null, updatedAt: 0 });
 let S = fresh();
-const normalize = o => { const s = fresh(); Object.assign(s, o || {}); s.set = { ...DEF, ...((o && o.set) || {}) }; s.done = s.done || {}; s.dayDate = s.dayDate || {}; s.log = s.log || {}; return s; };
+const normalize = o => { const s = fresh(); Object.assign(s, o || {}); s.set = { ...DEF, ...((o && o.set) || {}) }; s.done = s.done || {}; s.dayDate = s.dayDate || {}; s.log = s.log || {}; s.learn = (o && o.learn) || { ...s.dayDate }; s.rate = s.rate || {}; return s; };
 try { const raw = localStorage.getItem(LS_KEY); if (raw) { const o = JSON.parse(raw); if (o && o.v === 1) S = normalize(o); } } catch (e) { /* storage unavailable */ }
 
 let db = null, docRef = null, syncState = 'local', dirty = false, writing = false, lastWrite = 0;
@@ -414,7 +638,16 @@ const clipInfo = (sp, key) => (D.sprites[sp] && D.sprites[sp].c[key]) || null;
 const gapDur = it => it.t ? it.d * (S.set.think / 2) : it.d;
 const itemDur = it => it.k === 'c' ? ((clipInfo(it.sp, it.key) || [0, 0])[1] + 2 * PAD) : it.k === 'g' ? gapDur(it) : CHIME;
 const total = items => items.reduce((a, it) => a + itemDur(it), 0);
-const C = (sp, key, m, g) => ({ k: 'c', sp, key, m, g });
+// voice options: zh set 2 swaps the two recorded casts (a <-> b); vi 'm' reads narrator clips from the male pack
+function resolveClip(sp, key, o = S.set) {
+  if (o.zh === 2) {
+    const mm = /^(d\d+|c\d+|s\d+|p\d+\.e\d+)\.(a|b)$/.exec(key);
+    if (mm) key = mm[1] + (mm[2] === 'a' ? '.b' : '.a');
+  }
+  if (o.vi === 'm' && D.sprites[sp + 'm'] && D.sprites[sp + 'm'].c[key]) sp = sp + 'm';
+  return [sp, key];
+}
+const C = (sp, key, m, g) => { const [s2, k2] = resolveClip(sp, key); return { k: 'c', sp: s2, key: k2, m, g }; };
 const G = (d, t) => ({ k: 'g', d, t: !!t });
 const B = () => ({ k: 'b' });
 const cue = name => C('cues', name, { cue: name });
@@ -522,6 +755,15 @@ function reviewDayItems(d) {
       seen.add(key); g[mode].push(...r); t += rt;
     }
   }
+  const EXTRA = { 1: [1, 2, 3, 4, 5, 6, 8, 10, 12, 14], 2: [3, 5, 8, 10, 14] };
+  for (const sid in S.rate) {
+    const id = +sid, offs = EXTRA[S.rate[sid]];
+    if (!offs || !LES[id - 1] || !offs.includes(d - dayOfLesson(id))) continue;
+    if (['comp', 'prod', 'listen'].some(m => seen.has(id + m))) continue;
+    const r = reviewItems(id, 'comp'), rt = total(r);
+    if (t > 0 && t + rt > 32 * 60) continue;
+    seen.add(id + 'comp'); g.comp.push(...r); t += rt;
+  }
   const out = [];
   if (g.comp.length) out.push(cue('review'), G(0.6), ...g.comp);
   if (g.prod.length) out.push(G(0.6), cue('review_prod'), G(0.6), ...g.prod);
@@ -591,7 +833,7 @@ const KIND = {
   imm: { g: '浸', hv: 'tẩm', title: 'Đắm chìm', hint: 'Chỉ tiếng Trung. Nghe khi làm việc nhà, tập thể dục.' },
   sleep: { g: '眠', hv: 'miên', title: 'Trước khi ngủ', hint: 'Chậm, nhỏ dần rồi tắt.' },
 };
-const sigOf = () => JSON.stringify([S.set.target, S.set.pace, S.set.support, S.set.think, S.set.sleep, S.set.chime]);
+const sigOf = () => JSON.stringify([S.set.target, S.set.pace, S.set.support, S.set.think, S.set.sleep, S.set.chime, S.set.zh, S.set.vi, S.rate]);
 const planCache = new Map();
 function planDay(d) {
   const key = d + '|' + sigOf();
@@ -795,7 +1037,7 @@ function markBlock(bi) {
   const k = 'd' + P.day; S.done[k] = S.done[k] || {};
   if (S.done[k][bi]) return;
   S.done[k][bi] = 1;
-  if (P.blocks[bi] && P.blocks[bi].kind === 'new' && !S.dayDate[P.day]) S.dayDate[P.day] = localDate();
+  if (P.blocks[bi] && P.blocks[bi].kind === 'new') { if (!S.dayDate[P.day]) S.dayDate[P.day] = localDate(); S.learn[P.day] = localDate(); }
   S.resume = { day: P.day, b: bi + 1, t: 0 };
   save(true);
   renderToday();
@@ -843,10 +1085,12 @@ function syncIcon() {
   ui.icon.innerHTML = '';
   const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', playing ? ICON.pause : ICON.play); ui.icon.append(p);
   ui.toggle.setAttribute('aria-label', playing ? 'Tạm dừng' : 'Phát');
+  ui.player.classList.toggle('playing', playing);
   if ('mediaSession' in navigator) navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
 }
 function showSeg(seg) {
   const tx = seg ? textOf(seg.it) : null;
+  showLesson(seg);
   const mode = S.set.text;
   if (!tx) { ui.mini.textContent = '\u00a0'; ui.mini.className = 'pl-mini'; renderNow(null); return; }
   if (tx.kind === 'cue') { ui.mini.textContent = tx.vi; ui.mini.className = 'pl-mini vi'; }
@@ -914,15 +1158,30 @@ $('#pl-replay').addEventListener('click', replaySentence);
 $('#pl-next').addEventListener('click', nextBlock);
 $('#pl-back10').addEventListener('click', () => seekBy(-10));
 $('#pl-fwd10').addEventListener('click', () => seekBy(10));
-ui.info.addEventListener('click', () => { P.open = !P.open; ui.sheet.hidden = !P.open; ui.info.setAttribute('aria-expanded', String(P.open)); });
+function toggleSheet(force) {
+  P.open = force == null ? !P.open : force;
+  ui.sheet.hidden = !P.open; ui.info.setAttribute('aria-expanded', String(P.open));
+  $('#pl-expand').setAttribute('aria-label', P.open ? 'Thu gọn' : 'Mở chế độ tập trung');
+  const ic = $('#pl-exp-icon'); ic.textContent = '';
+  const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', P.open ? ICON2.shrink : ICON2.expand); ic.append(p);
+}
+ui.info.addEventListener('click', () => toggleSheet());
+$('#pl-expand').addEventListener('click', () => toggleSheet());
 function barSeek(ev) { if (!P.cur) return; const rc = ui.bar.getBoundingClientRect(); const f = Math.max(0, Math.min(1, (ev.clientX - rc.left) / rc.width)); try { au.currentTime = f * P.cur.dur; } catch (e) { /* ignore */ } }
 ui.bar.addEventListener('pointerdown', ev => { barSeek(ev); ui.bar.setPointerCapture(ev.pointerId); });
 ui.bar.addEventListener('pointermove', ev => { if (ev.buttons) barSeek(ev); });
 ui.bar.addEventListener('keydown', ev => { if (ev.key === 'ArrowLeft') { seekBy(-10); ev.preventDefault(); } if (ev.key === 'ArrowRight') { seekBy(10); ev.preventDefault(); } });
 document.addEventListener('keydown', ev => {
+  if (ev.metaKey || ev.ctrlKey || ev.altKey || !P.cur) return;
   if (ev.target.closest && ev.target.closest('input, select, textarea, [role="slider"]')) return;
-  if (ev.code === 'Space' && P.cur) { ev.preventDefault(); toggle(); }
-  else if (ev.key === 'r' && P.cur) replaySentence();
+  const onBtn = ev.target.closest && ev.target.closest('button, a');
+  const k = (ev.key || '').toLowerCase();
+  if (ev.code === 'Space') { if (onBtn) return; ev.preventDefault(); toggle(); }
+  else if (k === 'r') replaySentence();
+  else if (k === 'n') nextBlock();
+  else if (k === 'f') toggleSheet();
+  else if (ev.key === 'ArrowLeft' && !onBtn) { ev.preventDefault(); seekBy(-10); }
+  else if (ev.key === 'ArrowRight' && !onBtn) { ev.preventDefault(); seekBy(10); }
 });
 if ('mediaSession' in navigator) {
   const set = (a, f) => { try { navigator.mediaSession.setActionHandler(a, f); } catch (e) { /* unsupported */ } };
@@ -948,11 +1207,63 @@ function renderSleep() {
   if (P.sleepAt) { const b = $('#pl-sleep').firstChild; b.textContent = `Còn ${left}′ · tắt`; b.setAttribute('aria-pressed', 'true'); }
 }
 
+
 // ---------------------------------------------------------------- views
-const route = { v: 'hom-nay', id: 0 };
+const route = { v: 'hom-nay', id: 0, day: 0 };
+const TOPIC = {
+  xa: { n: 'Bạn bè & giao tiếp', g: '友', hv: 'hữu' },
+  an: { n: 'Ăn uống', g: '食', hv: 'thực' },
+  mua: { n: 'Mua sắm & dịch vụ', g: '买', hv: 'mãi' },
+  di: { n: 'Đi lại', g: '行', hv: 'hành' },
+  viec: { n: 'Công việc', g: '工', hv: 'công' },
+  khoe: { n: 'Sức khỏe', g: '医', hv: 'y' },
+  dulich: { n: 'Du lịch', g: '游', hv: 'du' },
+  nha: { n: 'Nhà & đời sống', g: '家', hv: 'gia' },
+  vui: { n: 'Giải trí', g: '乐', hv: 'lạc' },
+};
+const TOPIC_IDS = {
+  xa: [1, 12, 14, 21, 22, 26, 30, 31, 46, 47, 48, 57, 63, 69, 70, 80],
+  an: [5, 6, 17, 35, 36, 37, 56, 66, 76],
+  mua: [7, 18, 19, 20, 32, 33, 38, 39, 40, 42, 62, 71, 73],
+  di: [8, 9, 25, 41, 49, 54, 68],
+  viec: [2, 15, 16, 28, 58, 59, 60, 75, 78],
+  khoe: [13, 34, 45, 55, 77],
+  dulich: [23, 24, 29, 50, 51, 64, 65, 67, 74],
+  nha: [3, 4, 10, 11, 27, 52, 53, 72, 79],
+  vui: [43, 44, 61],
+};
+const TOPIC_OF = {};
+for (const k in TOPIC_IDS) for (const i of TOPIC_IDS[k]) TOPIC_OF[i] = k;
+const topicOf = id => TOPIC_OF[id] || 'xa';
+const tc = k => `--c: var(--t-${k})`;
+const KCOL = { new: 'var(--k-new)', review: 'var(--k-review)', imm: 'var(--k-imm)', sleep: 'var(--k-sleep)' };
+const ICON2 = {
+  cal: 'M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zM5 10h14v10H5V10zm2 2v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2z',
+  speaker: 'M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z',
+  expand: 'M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z',
+  shrink: 'M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z',
+};
+function tile(id, size) {
+  const k = id === 0 ? 'xa' : topicOf(id), T = TOPIC[k];
+  return h('span', { class: 'tile' + (size ? ' ' + size : ''), style: id === 0 ? '--c: var(--seal)' : tc(k), title: id === 0 ? 'Nhập môn' : T.n, 'aria-hidden': 'true' }, h('b', { lang: 'zh-CN', text: id === 0 ? '听' : T.g }));
+}
+const lessonName = id => id === 0 ? D.primer.t : (LES[id - 1] ? LES[id - 1].t : '');
+const dayOfLesson = id => Math.ceil(id / S.set.pace);
+const cycleDays = () => Math.ceil(N / S.set.pace);
+function lessonsIn(b) {
+  if (!b._ids) { const s = new Set(); for (const it of b.items) if (it.k === 'c' && it.m && it.m.L > 0) s.add(it.m.L); b._ids = [...s].sort((a, x) => a - x); }
+  return b._ids;
+}
+function setDay(d) {
+  S.day = Math.max(1, d | 0);
+  delete S.learn[S.day];
+  S.resume = null; route.day = 0;
+  save(true);
+}
 function rollDay() {
+  if (!S.set.auto) return;
   const d0 = S.day;
-  while (S.dayDate[S.day] && S.dayDate[S.day] < localDate() && S.day < 400) S.day++;
+  while (S.learn[S.day] && S.learn[S.day] < localDate() && S.day < 400) S.day++;
   if (S.day !== d0) { S.resume = null; save(false); }
 }
 function streak() {
@@ -961,169 +1272,388 @@ function streak() {
   while (S.log[localDate(d)] > 120) { n++; d.setDate(d.getDate() - 1); }
   return n;
 }
+const hoursText = () => { const hrs = Object.values(S.log).reduce((a, b) => a + b, 0) / 3600; return (hrs < 10 ? hrs.toFixed(1).replace('.', ',') : String(Math.round(hrs))) + ' giờ'; };
+const learnedCount = () => Math.min(N, Object.keys(S.dayDate).length * S.set.pace);
 function statsEl() {
-  const today = S.log[localDate()] || 0, all = Object.values(S.log).reduce((a, b) => a + b, 0);
-  const learned = Object.keys(S.dayDate).length;
-  const hours = all / 3600;
+  const today = S.log[localDate()] || 0;
   const st = (v, l) => h('div', { class: 'stat' }, h('b', { text: v }), h('span', { text: l }));
   return h('div', { class: 'stats' },
     st(`${Math.round(today / 60)} phút`, 'Đã nghe hôm nay'),
-    st(hours < 10 ? hours.toFixed(1).replace('.', ',') + ' giờ' : Math.round(hours) + ' giờ', 'Tổng thời gian nghe'),
+    st(hoursText(), 'Tổng thời gian nghe'),
     st(`${streak()} ngày`, 'Chuỗi ngày liên tục'),
-    st(`${Math.min(learned * S.set.pace, N)}/${N}`, 'Bài đã nghe'));
+    st(`${learnedCount()}/${N}`, 'Bài đã học'));
+}
+function renderSide() {
+  $('#daypill').textContent = `Ngày ${S.day}`;
+  $('#sf-day').textContent = `Ngày ${S.day}`;
+  const n = learnedCount();
+  $('#sf-learn').textContent = `${n}/${N} bài`;
+  $('#sf-bar').style.width = (n / N * 100).toFixed(1) + '%';
+  $('#sf-streak').textContent = `${streak()} ngày nghe liên tục`;
+  $('#sf-hours').textContent = `${hoursText()} đã nghe`;
+}
+function ring(frac, big, small) {
+  const NS = 'http://www.w3.org/2000/svg', s = document.createElementNS(NS, 'svg');
+  s.setAttribute('viewBox', '0 0 120 120'); s.setAttribute('class', 'ring-svg'); s.setAttribute('aria-hidden', 'true');
+  const R = 52, LEN = 2 * Math.PI * R, f = Math.max(0, Math.min(1, frac));
+  const c = (cls, extra) => { const e = document.createElementNS(NS, 'circle'); e.setAttribute('cx', '60'); e.setAttribute('cy', '60'); e.setAttribute('r', String(R)); e.setAttribute('class', cls); for (const k in extra || {}) e.setAttribute(k, extra[k]); return e; };
+  s.append(c('rg-bg'));
+  if (f > 0.004) s.append(c('rg-fg', { 'stroke-dasharray': `${(LEN * f).toFixed(1)} ${LEN.toFixed(1)}`, transform: 'rotate(-90 60 60)' }));
+  return h('div', { class: 'ring', role: 'img', 'aria-label': `Đã nghe ${Math.round(f * 100)}% thời lượng của ngày này` }, s, h('div', { class: 'ring-txt' }, h('b', { class: 'num', text: big }), h('span', { text: small })));
+}
+function weekChart() {
+  const days = [], now = new Date();
+  for (let k = 6; k >= 0; k--) { const x = new Date(now); x.setDate(now.getDate() - k); days.push(x); }
+  const vals = days.map(x => (S.log[localDate(x)] || 0) / 60);
+  const tgt = S.set.target, max = Math.max(tgt, ...vals) * 1.08;
+  const DOW = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+  const sum = vals.reduce((a, b) => a + b, 0);
+  return h('div', { class: 'panel' },
+    h('div', { class: 'p-head' }, h('h3', { text: '7 ngày qua' }), h('span', { class: 'p-sub num', text: `${Math.round(sum)} phút · mục tiêu ${tgt}′/ngày` })),
+    h('div', { class: 'wk', role: 'img', 'aria-label': 'Số phút nghe mỗi ngày trong 7 ngày qua: ' + vals.map(v => Math.round(v)).join(', ') },
+      h('i', { class: 'wk-goal', style: `bottom:${(tgt / max * 100).toFixed(1)}%` }),
+      days.map((x, i) => h('div', { class: 'wk-col' + (i === 6 ? ' today' : '') }, h('i', { class: 'wk-bar' + (vals[i] >= tgt ? ' hit' : ''), style: `height:${Math.max(3, vals[i] / max * 100).toFixed(1)}%` })))),
+    h('div', { class: 'wk-lab num' }, days.map((x, i) => h('span', null, h('b', { text: vals[i] >= 1 ? String(Math.round(vals[i])) : '·' }), i === 6 ? 'Nay' : DOW[x.getDay()]))));
+}
+function upcoming(d) {
+  const ul = h('ul', { class: 'up' });
+  for (let k = 1; k <= 3; k++) {
+    const dd = d + k;
+    ul.append(h('li', null, h('button', { class: 'up-row', type: 'button', onclick: () => { route.day = dd === S.day ? 0 : dd; renderToday(); window.scrollTo(0, 0); } },
+      h('span', { class: 'up-day num', text: `Ngày ${dd}` }),
+      h('span', { class: 'up-les' }, lessonsOfDay(dd).map(x => h('span', { class: 'up-item' }, tile(x.id, 'sm'), h('span', { text: `Bài ${x.id} · ${lessonName(x.id)}` })))))));
+  }
+  return h('div', { class: 'panel' }, h('div', { class: 'p-head' }, h('h3', { text: 'Sắp tới' }), h('a', { class: 'p-link', href: '#lich-hoc', text: 'Xem lịch học' })), ul);
+}
+const RATE = [[3, 'Hiểu gần hết'], [2, 'Khoảng một nửa'], [1, 'Hiểu ít']];
+function rateBox(id, compact) {
+  const cur = S.rate[id] || 0;
+  const seg = h('div', { class: 'seg' });
+  segButtons(seg, RATE, cur, v => { S.rate[id] = v; planCache.clear(); save(true); renderRoute(); });
+  return h('div', { class: compact ? 'rate' : 'panel rate' },
+    compact ? null : h('div', { class: 'p-head' }, h('h3', { text: `Bài ${id} bạn hiểu được bao nhiêu?` })),
+    h('p', { class: 'lead', style: 'font-size:14px', text: cur ? (cur === 3 ? 'Tốt. Bài này giữ lịch ôn bình thường.' : cur === 2 ? 'Bài này sẽ được ôn thêm vài lần trong hai tuần tới.' : 'Bài này sẽ được ôn thêm gần như mỗi ngày trong hai tuần tới, có giải nghĩa tiếng Việt.') : 'Chọn một mức. App sẽ ôn thêm những bài bạn chưa chắc.' }), seg);
 }
 function renderToday() {
-  if (route.v !== 'hom-nay') { $('#daypill').textContent = `Ngày ${S.day}`; return; }
+  renderSide();
+  if (route.v !== 'hom-nay') return;
   const el = $('#v-hom-nay'), d = route.day || S.day, blocks = planDay(d), list = lessonsOfDay(d);
   const done = S.done['d' + d] || {}, nowPlaying = P.mode === 'day' && P.day === d ? P.bi : -1;
-  const tot = blocks.reduce((a, b) => a + b.dur, 0);
-  const first = LES[list[0].id - 1];
-  const cycle = list[0].cycle;
+  const tot = blocks.reduce((a, b) => a + b.dur, 0), doneDur = blocks.reduce((a, b, i) => a + (done[i] ? b.dur : 0), 0);
+  const first = LES[list[0].id - 1], cycle = list[0].cycle, tk = topicOf(first.id);
   el.textContent = '';
-  $('#daypill').textContent = `Ngày ${S.day}`;
   const resumeHere = S.resume && S.resume.day === d && blocks[S.resume.b] && S.resume.t > 5 && !done[S.resume.b];
   const allDone = blocks.every((_, i) => done[i]);
-  const label = nowPlaying >= 0 && P.cur && !au.paused ? 'Đang phát' : resumeHere ? `Nghe tiếp · ${blocks[S.resume.b].title} ${fmt(S.resume.t)}` : allDone ? 'Nghe lại từ đầu' : Object.keys(done).length ? 'Nghe tiếp' : `Bắt đầu nghe · ${mins(tot)} phút`;
-  const startBtn = h('button', { class: 'btn btn-primary', type: 'button', onclick: () => { if (nowPlaying >= 0 && P.cur) { toggle(); return; } startDay(d, allDone ? 0 : null); } }, svg(ICON.play), label);
+  const playingHere = nowPlaying >= 0 && P.cur && !au.paused;
+  const label = playingHere ? 'Đang phát · bấm để dừng' : resumeHere ? `Nghe tiếp · ${blocks[S.resume.b].title} ${fmt(S.resume.t)}` : allDone ? 'Nghe lại từ đầu' : Object.keys(done).length ? 'Nghe tiếp' : `Bắt đầu nghe · ${mins(tot)} phút`;
+  const startBtn = h('button', { class: 'btn btn-primary', type: 'button', onclick: () => { if (nowPlaying >= 0 && P.cur) { toggle(); return; } startDay(d, allDone ? 0 : null); } }, svg(playingHere ? ICON.pause : ICON.play), label);
+  const go = nd => { route.day = nd === S.day ? 0 : nd; renderToday(); };
   const nav = h('div', { class: 'daynav' },
-    h('button', { type: 'button', 'aria-label': 'Ngày trước', disabled: d <= 1, onclick: () => { route.day = d - 1; renderToday(); } }, '‹'),
-    h('span', { class: 'num', text: `Ngày ${d}${d === S.day ? ' · hôm nay' : ''}` }),
-    h('button', { type: 'button', 'aria-label': 'Ngày sau', onclick: () => { route.day = d + 1; renderToday(); } }, '›'));
-  const titles = list.map(x => LES[x.id - 1]);
-  el.append(h('div', { class: 'hero' },
-    h('div', { class: 'eyebrow', text: `Tuần ${Math.ceil(d / 7)} · ${titles.map(t => 'Bài ' + t.id).join(' + ')}${cycle > 0 ? ' · vòng ' + (cycle + 1) + ', ít tiếng Việt' : ''}` }),
-    h('h1', { class: 'zh-title', lang: 'zh-CN', text: titles.map(t => t.tz).join(' · ') }),
-    h('p', { class: 'vi-title', text: titles.map(t => t.t).join(' · ') }),
-    h('p', { class: 'scene', text: first.sc }),
-    h('div', { class: 'hero-actions' }, startBtn, nav)));
-  el.append(h('div', { class: 'scroll', 'aria-hidden': 'true' }, blocks.map((b, i) => h('i', { 'data-s': i === nowPlaying ? 'now' : done[i] ? 'done' : 'todo', style: `flex:${Math.max(1, b.dur)}` }))));
-  el.append(h('div', { class: 'scroll-legend num' }, h('span', { text: `${blocks.filter((_, i) => done[i]).length}/${blocks.length} khối xong` }), h('span', { text: `Tổng ${mins(tot)} phút` })));
-  el.append(h('ol', { class: 'blocks' }, blocks.map((b, i) => {
+    h('button', { type: 'button', 'aria-label': 'Ngày trước', disabled: d <= 1, onclick: () => go(d - 1) }, '‹'),
+    h('span', { class: 'num', text: `Ngày ${d}` }),
+    h('button', { type: 'button', 'aria-label': 'Ngày sau', onclick: () => go(d + 1) }, '›'));
+  const grid = h('div', { class: 'today-grid' }), main = h('div', { class: 'col' }), aside = h('div', { class: 'col' });
+  if (d !== S.day) {
+    main.append(h('div', { class: 'banner' },
+      h('p', null, `Bạn đang xem `, h('b', { text: `Ngày ${d}` }), S.dayDate[d] ? ' (đã học)' : '', `. Ngày học hiện tại là Ngày ${S.day}.`),
+      h('button', { class: 'btn btn-jade', type: 'button', onclick: () => { setDay(d); renderToday(); } }, `Học Ngày ${d} từ bây giờ`),
+      h('button', { class: 'btn', type: 'button', onclick: () => go(S.day) }, 'Về hôm nay')));
+  }
+  main.append(h('div', { class: 'hero card', style: tc(tk) },
+    h('span', { class: 'wm', lang: 'zh-CN', 'aria-hidden': 'true', text: TOPIC[tk].g }),
+    h('div', { class: 'hero-top' },
+      h('span', { class: 'eyebrow', text: `Ngày ${d} · Tuần ${Math.ceil(d / 7)}${cycle > 0 ? ` · vòng ${cycle + 1}, ít tiếng Việt` : ''}` }),
+      d === S.day ? h('span', { class: 'chip seal', text: 'Hôm nay' }) : null,
+      allDone ? h('span', { class: 'chip', text: 'Đã nghe xong' }) : null),
+    h('div', { class: 'hero-body' },
+      h('div', { class: 'les-list' }, list.map(x => { const L = LES[x.id - 1], k = topicOf(x.id); return h('a', { class: 'les', href: '#bai-' + x.id, style: tc(k) }, tile(x.id, 'lg'), h('div', { class: 'les-txt' }, h('div', { class: 'les-no', text: `Bài ${x.id} · ${TOPIC[k].n}` }), h('div', { class: 'les-zh', lang: 'zh-CN', text: L.tz }), h('div', { class: 'les-vi', text: L.t }))); })),
+      ring(tot ? doneDur / tot : 0, `${mins(doneDur)}′`, `trên ${mins(tot)} phút`)),
+    h('p', { class: 'scene', text: list.map(x => LES[x.id - 1].sc).join(' ') }),
+    h('div', { class: 'hero-actions' }, startBtn, h('a', { class: 'btn', href: '#lich-hoc' }, svg(ICON2.cal), 'Chọn ngày học'), nav)));
+  main.append(h('div', { class: 'scroll', 'aria-hidden': 'true' }, blocks.map((b, i) => h('i', { 'data-s': i === nowPlaying ? 'now' : done[i] ? 'done' : 'todo', style: `flex:${Math.max(1, b.dur)};--c:${KCOL[b.kind]}`, title: `${b.title} · ${mins(b.dur)} phút` }))));
+  main.append(h('div', { class: 'scroll-legend num' }, h('span', { text: `${blocks.filter((_, i) => done[i]).length}/${blocks.length} khối xong` }), h('span', { text: `Tổng ${mins(tot)} phút` })));
+  main.append(h('ol', { class: 'blocks' }, blocks.map((b, i) => {
     const s = i === nowPlaying ? 'now' : done[i] ? 'done' : 'todo';
-    return h('li', { class: 'block', 'data-s': s },
+    const ids = lessonsIn(b);
+    const les = b.kind === 'new' ? ids.map(id => h('span', { style: tc(topicOf(id)) }, h('i'), `Bài ${id} · ${lessonName(id)}`))
+      : ids.length > 8 ? [h('span', null, h('i'), `${ids.length} bài: ${ids.slice(0, 6).join(', ')}…`)]
+      : ids.map(id => h('span', { style: tc(topicOf(id)), title: lessonName(id) }, h('i'), `Bài ${id}`));
+    return h('li', { class: 'block', 'data-s': s, style: `--c:${KCOL[b.kind]}` },
       h('div', { class: 'glyph', title: `${b.g}: ${b.hv}` }, h('b', { lang: 'zh-CN', text: b.g }), h('small', { text: b.hv })),
-      h('div', { class: 'b-main' }, h('div', { class: 'b-title' }, b.title, ' ', s === 'done' ? h('span', { class: 'chip', text: 'Xong' }) : s === 'now' ? h('span', { class: 'chip seal', text: 'Đang nghe' }) : null), h('div', { class: 'b-hint', text: b.hint })),
+      h('div', { class: 'b-main' },
+        h('div', { class: 'b-title' }, b.title, s === 'done' ? h('span', { class: 'chip', text: 'Xong' }) : s === 'now' ? h('span', { class: 'chip seal', text: 'Đang nghe' }) : null),
+        h('div', { class: 'b-hint', text: b.hint }),
+        les.length ? h('div', { class: 'b-les' }, les) : null),
       h('div', { class: 'b-side' }, h('span', { class: 'b-dur num', text: `${mins(b.dur)} phút` }),
         h('button', { class: 'b-play', type: 'button', 'aria-label': `Phát ${b.title}`, onclick: () => startDay(d, i, 0) }, svg(ICON.play))));
   })));
+  if (done[0]) list.forEach(x => { if (x.cycle === 0) main.append(rateBox(x.id)); });
   const short = tot < S.set.target * 60 - 120;
-  el.append(h('p', { class: 'note', text: short
-    ? `Hôm nay khoảng ${mins(tot)} phút, ngắn hơn mục tiêu ${S.set.target} phút vì mới có ${Math.min(d * S.set.pace, N)} bài để xoay vòng. Nghe một bài quá nhiều lần trong ngày sẽ giảm hiệu quả, nên thời lượng sẽ tăng dần trong vài ngày tới.`
+  main.append(h('p', { class: 'note', text: short
+    ? `Ngày này khoảng ${mins(tot)} phút, ngắn hơn mục tiêu ${S.set.target} phút vì mới có ${Math.min(d * S.set.pace, N)} bài để xoay vòng. Nghe một bài quá nhiều lần trong ngày sẽ giảm hiệu quả, nên thời lượng tăng dần trong vài ngày tới.`
     : 'Không cần nghe liền một lúc. Bài mới nghe lúc tập trung; ôn tập trên đường; đắm chìm khi làm việc khác; khối cuối nghe trước khi ngủ. Tắt màn hình vẫn nghe được.' }));
-  if (d === S.day && done[0] && !S.dayDate[d + 1]) el.append(h('p', { style: 'margin-top:12px' }, h('button', { class: 'btn', type: 'button', onclick: () => { S.dayDate[d] = S.dayDate[d] || localDate(); S.day = d + 1; S.resume = null; route.day = 0; save(true); renderToday(); } }, 'Học luôn ngày tiếp theo ›')));
-  el.append(statsEl());
+  if (d === S.day && done[0]) main.append(h('p', null, h('button', { class: 'btn', type: 'button', onclick: () => { S.dayDate[d] = S.dayDate[d] || localDate(); S.learn[d] = S.learn[d] || localDate(); setDay(d + 1); renderToday(); window.scrollTo(0, 0); } }, `Học luôn Ngày ${d + 1} ›`)));
+  aside.append(h('div', { class: 'panel' }, h('div', { class: 'p-head' }, h('h3', { text: 'Tiến độ' })), statsEl()), weekChart(), upcoming(d));
+  grid.append(main, aside);
+  el.append(grid);
+}
+function renderCalendar() {
+  const el = $('#v-lich-hoc'); el.textContent = '';
+  const cd = cycleDays(), total = Math.ceil(Math.max(cd, S.day + 1) / 7) * 7;
+  el.append(h('div', { class: 'v-head' }, h('div', { class: 'eyebrow', text: `${cd} ngày cho ${N} bài · ${S.set.pace} bài mỗi ngày` }), h('h2', { text: 'Lịch học' }),
+    h('p', { class: 'lead', text: 'Bấm vào một ngày để xem và nghe ngày đó. Ngày học hiện tại quyết định bài mới, phần ôn giãn cách và phần đắm chìm của hôm nay.' })));
+  const daySel = h('select', { id: 'cal-day', onchange: ev => { setDay(+ev.target.value); renderCalendar(); renderSide(); } });
+  for (let d = 1; d <= total; d++) { const ls = lessonsOfDay(d); daySel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d} · ${ls.map(x => 'Bài ' + x.id).join(' + ')}`)); }
+  const lesSel = h('select', { id: 'cal-lesson', onchange: ev => { const id = +ev.target.value; if (id) { setDay(dayOfLesson(id)); renderCalendar(); renderSide(); } } });
+  lesSel.append(h('option', { value: '0' }, 'Chọn bài…'));
+  for (let id = 1; id <= N; id++) lesSel.append(h('option', { value: String(id) }, `Bài ${id} · ${lessonName(id)}`));
+  const autoSeg = h('div', { class: 'seg' });
+  segButtons(autoSeg, [[true, 'Tự sang ngày mới'], [false, 'Tôi tự chọn ngày']], S.set.auto, v => { S.set.auto = v; save(true); renderCalendar(); });
+  el.append(h('div', { class: 'card cal-ctl' },
+    h('div', { class: 'cal-now' }, h('span', { text: 'Ngày học hiện tại' }), h('b', { class: 'num', text: `Ngày ${S.day}` }), h('span', { text: lessonsOfDay(S.day).map(x => `Bài ${x.id} · ${lessonName(x.id)}`).join(' + ') })),
+    h('div', { class: 'fld' }, h('label', { for: 'cal-day', text: 'Chuyển tới ngày' }), daySel),
+    h('div', { class: 'fld' }, h('label', { for: 'cal-lesson', text: 'Hoặc bắt đầu từ bài' }), lesSel),
+    h('div', { class: 'fld', style: 'grid-column:1/-1' }, h('span', { class: 'lab', text: 'Cách sang ngày mới' }), autoSeg,
+      h('span', { class: 'p-sub', text: S.set.auto ? 'Sáng hôm sau, nếu bạn đã nghe xong khối Bài mới, app tự chuyển sang ngày kế tiếp.' : 'App giữ nguyên ngày học cho tới khi bạn tự đổi. Hợp khi muốn nghe một bài nhiều ngày.' }))));
+  el.append(h('div', { class: 'legend' },
+    h('span', null, h('i', { class: 'done' }), 'Đã học'), h('span', null, h('i', { class: 'part' }), 'Đang nghe dở'),
+    h('span', null, h('i', { class: 'today' }), 'Ngày học hiện tại'), h('span', null, h('i'), 'Chưa học')));
+  for (let w = 0; w * 7 < total; w++) {
+    const g = h('div', { class: 'cal' });
+    for (let d = w * 7 + 1; d <= w * 7 + 7; d++) {
+      const ls = lessonsOfDay(d), dn = S.done['d' + d] || {};
+      const st = S.dayDate[d] ? 'done' : Object.keys(dn).length ? 'part' : 'todo';
+      const hard = ls.some(x => x.cycle === 0 && S.rate[x.id] === 1);
+      g.append(h('button', { type: 'button', class: 'dtile lift' + (d === S.day ? ' is-today' : ''), 'data-s': st, onclick: () => { route.day = d === S.day ? 0 : d; location.hash = '#hom-nay'; } },
+        h('div', { class: 'dt-top' }, h('b', { class: 'num', text: `Ngày ${d}` }),
+          d === S.day ? h('span', { class: 'chip seal', text: 'Hôm nay' }) : st === 'done' ? h('span', { class: 'chip', text: hard ? 'Cần ôn' : 'Đã học' }) : ls[0].cycle > 0 ? h('span', { class: 'chip soft', text: `Vòng ${ls[0].cycle + 1}` }) : null),
+        h('div', { class: 'dt-les' }, ls.map(x => h('div', { class: 'dt-item' }, tile(x.id), h('span', null, lessonName(x.id), h('small', { text: `Bài ${x.id} · ${TOPIC[topicOf(x.id)].n}` })))))));
+    }
+    el.append(h('div', { class: 'cal-week' }, h('h3', { text: `Tuần ${w + 1}` }), g));
+  }
+}
+const lib = { q: '', t: 'all' };
+function lessonStatus(id) {
+  const dd = dayOfLesson(id);
+  if (dd === S.day) return h('span', { class: 'chip seal', text: 'Hôm nay' });
+  if (S.dayDate[dd]) return S.rate[id] === 1 ? h('span', { class: 'chip seal', text: 'Cần ôn' }) : h('span', { class: 'chip', text: 'Đã học' });
+  return null;
+}
+const MARKS = new RegExp('[' + String.fromCharCode(0x300) + '-' + String.fromCharCode(0x36f) + ']', 'g');
+const fold = s => String(s).toLowerCase().normalize('NFD').replace(MARKS, '').replace(/đ/g, 'd');
+function libCard(id) {
+  if (id === 0) return h('a', { class: 'lcard lift', href: '#bai-0' }, h('div', { class: 'lc-top' }, tile(0), h('span', { class: 'lc-no', text: 'Bài 0' }), h('span', { class: 'chip', text: 'Nhập môn' })), h('div', { class: 'lc-zh', lang: 'zh-CN', text: D.primer.tz }), h('div', { class: 'lc-vi', text: D.primer.t }));
+  const L = LES[id - 1], k = topicOf(id);
+  return h('a', { class: 'lcard lift', href: '#bai-' + id, style: tc(k) },
+    h('div', { class: 'lc-top' }, tile(id), h('span', { class: 'lc-no', text: `Bài ${id}` }), lessonStatus(id)),
+    h('div', { class: 'lc-zh', lang: 'zh-CN', text: L.tz }), h('div', { class: 'lc-vi', text: L.t }),
+    h('div', { class: 'lc-meta', text: `${TOPIC[k].n} · Ngày ${dayOfLesson(id)}` }));
+}
+function renderLibGrid() {
+  const box = $('#lib-grid'); if (!box) return; box.textContent = '';
+  const q = fold(lib.q.trim());
+  const match = id => {
+    if (lib.t === 'hard') { if (!(S.rate[id] && S.rate[id] < 3)) return false; }
+    else if (lib.t !== 'all' && topicOf(id) !== lib.t) return false;
+    if (!q) return true;
+    const L = LES[id - 1];
+    if (String(id) === q) return true;
+    const hay = fold([L.t, L.tz, L.sc, ...L.c.map(c => c[0] + ' ' + c[1] + ' ' + (c[4] || '')), ...L.d.map(r => r[1])].join(' '));
+    return hay.includes(q) || L.c.some(c => c[0].includes(lib.q.trim())) || L.d.some(r => r[1].includes(lib.q.trim()));
+  };
+  const ids = []; for (let id = 1; id <= N; id++) if (match(id)) ids.push(id);
+  if (lib.t === 'all' && !q) {
+    for (let w = 0; 7 * w < N; w++) {
+      const g = h('div', { class: 'lgrid' });
+      if (w === 0) g.append(libCard(0));
+      for (let id = 7 * w + 1; id <= Math.min(N, 7 * w + 7); id++) g.append(libCard(id));
+      box.append(h('div', { class: 'lib-sec' }, h('h3', { text: `Tuần ${w + 1} · Bài ${7 * w + 1}–${Math.min(N, 7 * w + 7)}` }), g));
+    }
+    return;
+  }
+  if (!ids.length) { box.append(h('p', { class: 'empty', text: lib.t === 'hard' ? 'Chưa có bài nào được đánh dấu khó. Sau mỗi bài mới, chọn mức hiểu ở trang Hôm nay.' : 'Không có bài nào khớp. Thử từ khác, chữ Hán hoặc tiếng Việt không dấu.' })); return; }
+  box.append(h('div', { class: 'lib-sec' }, h('h3', { text: `${ids.length} bài` }), h('div', { class: 'lgrid' }, ids.map(libCard))));
 }
 function renderLibrary() {
   const el = $('#v-thu-vien'); el.textContent = '';
-  el.append(h('div', { class: 'eyebrow', text: `${N} bài · một câu chuyện liền mạch` }), h('h2', { style: 'margin-top:6px', text: 'Thư viện bài' }),
-    h('p', { class: 'lead', style: 'margin-top:8px', text: 'Nguyễn Minh, kỹ sư người Hà Nội, sang Thượng Hải làm việc. Mỗi bài là một tình huống anh gặp. Bấm vào bài để xem lời thoại, cụm từ và âm Hán Việt, hoặc nghe riêng bài đó.' }));
-  const learnedTo = Math.min(N, S.day * S.set.pace);
-  const row = (id, zh, vi) => h('a', { class: 'lrow', href: '#bai-' + id },
-    h('span', { class: 'lno', text: String(id) }),
-    h('span', { class: 'lmain' }, h('div', { class: 'lz', lang: 'zh-CN', text: zh }), h('div', { class: 'lv', text: vi })),
-    id === 0 ? h('span', { class: 'chip', text: 'Nhập môn' }) : id <= learnedTo - S.set.pace ? h('span', { class: 'chip', text: 'Đã nghe' }) : id <= learnedTo ? h('span', { class: 'chip seal', text: 'Hôm nay' }) : null);
-  const weeks = [[0, 7], [8, 14], [15, 21], [22, 30]];
-  weeks.forEach(([a, b], w) => {
-    const box = h('div', { class: 'week' }, h('h3', { text: `Tuần ${w + 1}` }));
-    for (let id = a; id <= b; id++) { if (id === 0) box.append(row(0, D.primer.tz, D.primer.t)); else if (LES[id - 1]) box.append(row(id, LES[id - 1].tz, LES[id - 1].t)); }
-    el.append(box);
-  });
+  el.append(h('div', { class: 'v-head' }, h('div', { class: 'eyebrow', text: `${N} bài · một câu chuyện liền mạch` }), h('h2', { text: 'Thư viện bài' }),
+    h('p', { class: 'lead', text: 'Nguyễn Minh, kỹ sư người Hà Nội, sang Thượng Hải làm việc. Mỗi bài là một tình huống anh gặp. Mở một bài để xem lời thoại, cụm từ và âm Hán Việt, hoặc nghe riêng bài đó.' })));
+  const input = h('input', { type: 'search', id: 'lib-q', placeholder: 'Tìm theo tên bài, chữ Hán, pinyin hoặc tiếng Việt', value: lib.q, 'aria-label': 'Tìm bài', oninput: ev => { lib.q = ev.target.value; renderLibGrid(); } });
+  const filters = h('div', { class: 'filters', role: 'group', 'aria-label': 'Lọc theo chủ đề' });
+  const fb = (key, label, glyph, count, color) => h('button', { type: 'button', 'aria-pressed': String(lib.t === key), style: color ? `--c:${color}` : null, onclick: () => { lib.t = key; renderLibrary(); } }, h('i', { lang: 'zh-CN', text: glyph }), label, h('small', { class: 'num', text: String(count) }));
+  filters.append(fb('all', 'Tất cả', '全', N, 'var(--ink)'));
+  for (const k in TOPIC) filters.append(fb(k, TOPIC[k].n, TOPIC[k].g, TOPIC_IDS[k].length, `var(--t-${k})`));
+  const nHard = Object.keys(S.rate).filter(id => S.rate[id] < 3).length;
+  filters.append(fb('hard', 'Cần ôn thêm', '难', nHard, 'var(--seal)'));
+  el.append(h('div', { class: 'lib-tools' }, input, filters), h('div', { id: 'lib-grid' }));
+  renderLibGrid();
 }
 let libToggles = { py: true, vi: true };
-function sayClip(sp, key) {
-  (async () => {
-    try {
-      const { data, delta } = await decoded(sp), c = D.sprites[sp].c[key]; if (!c) return;
-      const Ctx = window.AudioContext || window.webkitAudioContext; if (!sayClip.ctx) sayClip.ctx = new Ctx();
-      const ctx = sayClip.ctx; if (ctx.state === 'suspended') await ctx.resume();
-      const n = Math.round((c[1] + 2 * PAD) * SR), buf = ctx.createBuffer(1, n, SR), ch = buf.getChannelData(0), s0 = Math.round((c[0] - PAD + delta) * SR);
-      for (let k = 0; k < n; k++) ch[k] = data[s0 + k] || 0;
-      if (sayClip.src) try { sayClip.src.stop(); } catch (e) { /* ignore */ }
-      const src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination); src.start(); sayClip.src = src;
-    } catch (e) { /* ignore */ }
-  })();
+let sayCtx = null, saySrc = null, sayTok = 0;
+async function sayClips(pairs, o, onEnd) {
+  const tok = ++sayTok;
+  try {
+    if (!au.paused) au.pause();
+    const parts = [];
+    for (const [sp0, k0] of pairs) {
+      const [sp, key] = resolveClip(sp0, k0, o);
+      if (!D.sprites[sp]) continue;
+      const { data, delta } = await decoded(sp), c = D.sprites[sp].c[key];
+      if (!c) continue;
+      const s0 = Math.round((c[0] - PAD + delta) * SR), n = Math.round((c[1] + 2 * PAD) * SR), a = new Float32Array(n);
+      for (let k = 0; k < n; k++) a[k] = data[s0 + k] || 0;
+      parts.push(a);
+    }
+    if (tok !== sayTok || !parts.length) { if (onEnd) onEnd(); return; }
+    const gap = Math.round(0.35 * SR), len = parts.reduce((x, a) => x + a.length, 0) + gap * (parts.length - 1);
+    const Ctx = window.AudioContext || window.webkitAudioContext; if (!sayCtx) sayCtx = new Ctx();
+    if (sayCtx.state === 'suspended') await sayCtx.resume();
+    const buf = sayCtx.createBuffer(1, len, SR), ch = buf.getChannelData(0);
+    let at = 0; for (const a of parts) { ch.set(a, at); at += a.length + gap; }
+    if (saySrc) try { saySrc.onended = null; saySrc.stop(); } catch (e) { /* ignore */ }
+    const src = sayCtx.createBufferSource(); src.buffer = buf; src.connect(sayCtx.destination);
+    src.onended = () => { if (onEnd) onEnd(); };
+    src.start(); saySrc = src;
+  } catch (e) { if (onEnd) onEnd(); }
 }
+const sayClip = (sp, key) => sayClips([[sp, key]]);
 function renderLesson(id) {
   const el = $('#v-bai'); el.textContent = '';
-  el.append(h('a', { class: 'back', href: '#thu-vien' }, '‹ Thư viện'));
+  const navRow = h('div', { class: 'lnav' }, h('a', { class: 'back', href: '#thu-vien' }, '‹ Thư viện'),
+    h('span', { style: 'display:flex;gap:16px' },
+      id > 0 ? h('a', { href: '#bai-' + (id - 1), text: `‹ Bài ${id - 1}` }) : null,
+      id < N ? h('a', { href: '#bai-' + (id + 1), text: `Bài ${id + 1} ›` }) : null));
+  el.append(navRow);
   if (id === 0) {
-    el.append(h('div', { class: 'eyebrow', style: 'margin-top:14px', text: 'Bài 0 · nhập môn' }), h('h2', { class: 'zh', style: 'margin-top:6px;font-size:30px', lang: 'zh-CN', text: D.primer.tz }), h('p', { class: 'vi-title', style: 'font-weight:600', text: D.primer.t }));
-    el.append(h('div', { class: 'hero-actions', style: 'margin-top:12px' }, h('button', { class: 'btn btn-primary', type: 'button', onclick: () => playCustom([{ ...KIND.new, kind: 'new', title: 'Làm quen âm thanh', items: primerItems(), dur: 0, sig: 'primer|' + sigOf() }], 'Bài 0') }, svg(ICON.play), 'Nghe bài nhập môn')));
+    el.append(h('div', { class: 'lhero card' }, h('span', { class: 'wm', lang: 'zh-CN', 'aria-hidden': 'true', text: '听' }),
+      h('div', { class: 'lhero-row' }, tile(0, 'lg'), h('div', null, h('div', { class: 'eyebrow', text: 'Bài 0 · nhập môn' }), h('h2', { class: 'zh', lang: 'zh-CN', text: D.primer.tz }), h('p', { class: 'vt', text: D.primer.t }))),
+      h('div', { class: 'hero-actions' }, h('button', { class: 'btn btn-primary', type: 'button', onclick: () => playCustom([{ ...KIND.new, kind: 'new', title: 'Làm quen âm thanh', items: primerItems(), dur: 0, sig: 'primer|' + sigOf() }], 'Bài 0') }, svg(ICON.play), 'Nghe bài nhập môn'))));
     const box = h('div', { class: 'part' });
     D.primer.steps.forEach((st, i) => box.append(st[0] === 'v' ? h('p', { style: 'margin-top:12px;color:var(--muted)', text: st[1] }) : h('button', { class: 'say', type: 'button', style: 'margin:6px 14px 0 0', onclick: () => sayClip('l00', 'x' + i) }, h('span', { class: 'zh', style: 'font-size:22px', lang: 'zh-CN', text: st[1] }), ' ', h('span', { class: 'py', text: st[3] || '' }))));
     el.append(box);
     return;
   }
   const L = LES[id - 1]; if (!L) { el.append(h('p', { text: 'Không có bài này.' })); return; }
-  const s = spr(id);
+  const s = spr(id), k = topicOf(id);
   const sup = supportOf(id, 0);
   const lessonBlock = { ...KIND.new, kind: 'new', items: lessonItems(id, sup), sig: `les${id}|${sigOf()}` };
   lessonBlock.dur = total(lessonBlock.items);
   const immItems = [cue('immersion'), G(0.8)]; immUnits(id).forEach(u => immItems.push(B(), ...u, G(0.5)));
   const immBlock = { ...KIND.imm, kind: 'imm', items: immItems, sig: `imm${id}|${sigOf()}`, dur: total(immItems) };
-  el.append(h('div', { class: 'eyebrow', style: 'margin-top:14px', text: `Bài ${id}` }),
-    h('h2', { class: 'zh', style: 'margin-top:6px;font-size:30px', lang: 'zh-CN', text: L.tz }),
-    h('p', { style: 'font-weight:600;font-size:18px', text: L.t }),
-    h('p', { class: 'lead', style: 'margin-top:4px', text: L.sc }),
-    h('div', { class: 'hero-actions', style: 'margin-top:12px' },
+  const dd = dayOfLesson(id);
+  el.append(h('div', { class: 'lhero card', style: tc(k) }, h('span', { class: 'wm', lang: 'zh-CN', 'aria-hidden': 'true', text: TOPIC[k].g }),
+    h('div', { class: 'lhero-row' }, tile(id, 'lg'), h('div', { style: 'min-width:0' },
+      h('div', { class: 'eyebrow', text: `Bài ${id} · ${TOPIC[k].n} · Ngày ${dd}` }),
+      h('h2', { class: 'zh', lang: 'zh-CN', text: L.tz }), h('p', { class: 'vt', text: L.t }))),
+    h('p', { class: 'lead', style: 'position:relative', text: L.sc }),
+    h('div', { class: 'hero-actions' },
       h('button', { class: 'btn btn-primary', type: 'button', onclick: () => playCustom([lessonBlock], `Bài ${id}`) }, svg(ICON.play), `Nghe bài · ${mins(lessonBlock.dur)} phút`),
-      h('button', { class: 'btn', type: 'button', onclick: () => playCustom([immBlock], `Bài ${id}`) }, `Đắm chìm bài này · ${mins(immBlock.dur)} phút`)));
-  const body = h('div', { class: (libToggles.py ? '' : 'hide-py ') + (libToggles.vi ? '' : 'hide-vi') });
-  const tgl = (k, label) => h('button', { class: 'tg', type: 'button', 'aria-pressed': String(libToggles[k]), onclick: () => { libToggles[k] = !libToggles[k]; renderLesson(id); } }, label);
-  el.append(h('div', { class: 'toggles' }, tgl('py', 'Pinyin'), tgl('vi', 'Nghĩa tiếng Việt'), h('span', { class: 'lead', style: 'font-size:14px;align-self:center', text: 'Bấm vào câu để nghe.' })));
+      h('button', { class: 'btn', type: 'button', onclick: () => playCustom([immBlock], `Bài ${id}`) }, `Đắm chìm bài này · ${mins(immBlock.dur)} phút`),
+      dd !== S.day ? h('button', { class: 'btn', type: 'button', onclick: () => { setDay(dd); location.hash = '#hom-nay'; } }, svg(ICON2.cal), `Học từ bài này (Ngày ${dd})`) : h('span', { class: 'chip seal', text: 'Bài của hôm nay' }))));
+  if (S.dayDate[dd]) el.append(h('div', { style: 'margin-top:14px' }, rateBox(id)));
+  const body = h('div', { class: (libToggles.py ? '' : 'hide-py ') + (libToggles.vi ? '' : 'hide-vi'), style: tc(k) });
+  const tgl = (key, label) => h('button', { class: 'tg', type: 'button', 'aria-pressed': String(libToggles[key]), onclick: () => { libToggles[key] = !libToggles[key]; renderLesson(id); } }, label);
+  el.append(h('div', { class: 'toggles' }, tgl('py', 'Pinyin'), tgl('vi', 'Nghĩa tiếng Việt'), h('span', { class: 'lead', style: 'font-size:14px', text: 'Bấm vào câu tiếng Trung để nghe.' })));
   const line = (who, zh, py, vi, key) => h('div', { class: 'line' }, h('div', { class: 'who', text: who }),
     h('div', { class: 'txt' }, h('button', { class: 'say', type: 'button', onclick: () => sayClip(s, key) }, h('div', { class: 'zh', lang: 'zh-CN', text: zh })), h('div', { class: 'py', text: py }), h('div', { class: 'vi', text: vi })));
-  body.append(h('div', { class: 'part' }, h('h3', { text: 'Hội thoại' }), L.d.map((r, i) => line(`${L.sp[r[0]][0]}\n${L.sp[r[0]][2]}`, r[1], r[3], r[2], `d${i}.a`))));
-  body.append(h('div', { class: 'part' }, h('h3', { text: 'Từ và cụm từ' }), h('div', { class: 'chunks' }, L.c.map((r, i) => h('div', { class: 'chunk' },
+  const left = h('div', { style: 'min-width:0' }), right = h('div', { style: 'min-width:0' });
+  const ph = (g, t) => h('h3', null, h('span', { class: 'zh', lang: 'zh-CN', 'aria-hidden': 'true', text: g }), t);
+  left.append(h('div', { class: 'part' }, ph('话', 'Hội thoại'), L.d.map((r, i) => line(`${L.sp[r[0]][0]}\n${L.sp[r[0]][2]}`, r[1], r[3], r[2], `d${i}.a`))));
+  left.append(h('div', { class: 'part' }, ph('事', 'Câu chuyện kể lại'), L.s.map((r, i) => line('', r[0], r[2], r[1], `s${i}.a`))));
+  right.append(h('div', { class: 'part' }, ph('词', 'Từ và cụm từ'), h('div', { class: 'chunks' }, L.c.map((r, i) => h('div', { class: 'chunk' },
     h('button', { class: 'say', type: 'button', onclick: () => sayClip(s, `c${i}.a`) }, h('div', { class: 'zh', lang: 'zh-CN', text: r[0] })),
     h('div', { class: 'py', text: r[4] }), h('div', { class: 'vi', text: r[1] }),
     r[2] ? h('div', { class: 'hv' }, 'Hán Việt: ', r[2], r[3] ? h('em', null, ' · ' + r[3]) : null) : (r[3] ? h('div', { class: 'hv' }, h('em', null, r[3])) : null))))));
-  body.append(h('div', { class: 'part' }, h('h3', { text: 'Mẫu câu' }), L.p.map((p, i) => h('div', { class: 'pattern' },
+  right.append(h('div', { class: 'part' }, ph('句', 'Mẫu câu'), L.p.map((p, i) => h('div', { class: 'pattern' },
     h('div', { class: 'sk' }, h('span', { class: 'zh', lang: 'zh-CN', text: p[0] })), h('div', { class: 'lead', style: 'font-size:14px', text: p[1] }),
     h('ul', null, p[2].map((e, j) => h('li', null, h('button', { class: 'say', type: 'button', onclick: () => sayClip(s, `p${i}.e${j}.a`) }, h('span', { class: 'zh', lang: 'zh-CN', style: 'font-size:18px', text: e[0] })), h('div', { class: 'py', text: e[2] }), h('div', { class: 'vi', text: e[1] }))))))));
-  body.append(h('div', { class: 'part' }, h('h3', { text: 'Câu chuyện kể lại' }), L.s.map((r, i) => line('', r[0], r[2], r[1], `s${i}.a`))));
+  body.append(h('div', { class: 'lcols' }, left, right));
   el.append(body);
+}
+const VOICES_ZH = [
+  [1, 'Hiểu Hiểu & Vân Hi', 'Nữ ấm, tròn chữ · nam trẻ, tự nhiên', 'Xiaoxiao · Yunxi'],
+  [2, 'Hiểu Y & Vân Kiện', 'Nữ tươi, nói nhanh hơn · nam trầm, chắc', 'Xiaoyi · Yunjian'],
+];
+const VOICES_VI = [
+  ['f', 'Hoài My', 'Giọng nữ miền Bắc, nhẹ và rõ', 'HoaiMy'],
+  ['m', 'Nam Minh', 'Giọng nam miền Bắc, chậm rãi', 'NamMinh'],
+];
+function voiceCards(key, opts, sample) {
+  const box = h('div', { class: 'vcards' });
+  for (const [val, name, desc, tech] of opts) {
+    const on = S.set[key] === val;
+    const play = h('button', { class: 'vplay', type: 'button', 'aria-label': `Nghe thử giọng ${name}`, title: 'Nghe thử' }, svg(ICON2.speaker));
+    play.addEventListener('click', () => { play.dataset.busy = 'true'; sayClips(sample, { ...S.set, [key]: val }, () => { play.dataset.busy = 'false'; }); });
+    box.append(h('div', { class: 'vcard', 'data-on': String(on) },
+      h('button', { class: 'vpick', type: 'button', 'aria-pressed': String(on), onclick: () => { S.set[key] = val; planCache.clear(); save(true); renderOptions(); } },
+        h('b', { text: name }), h('span', { text: desc }), h('small', { text: 'Microsoft ' + tech })), play));
+  }
+  return box;
 }
 function renderOptions() {
   const el = $('#v-tuy-chon'); el.textContent = '';
-  el.append(h('div', { class: 'eyebrow', text: 'Điều chỉnh theo lịch của bạn' }), h('h2', { style: 'margin-top:6px', text: 'Tùy chọn' }));
+  el.append(h('div', { class: 'v-head' }, h('div', { class: 'eyebrow', text: 'Điều chỉnh theo lịch và đôi tai của bạn' }), h('h2', { text: 'Tùy chọn' })));
   const opt = (lab, help, control) => h('div', { class: 'opt' }, h('div', { class: 'lab', text: lab }), help ? h('div', { class: 'help', text: help }) : null, control);
   const segc = (key, opts, after) => { const box = h('div', { class: 'seg' }); segButtons(box, opts, S.set[key], v => { S.set[key] = v; planCache.clear(); save(true); renderOptions(); if (after) after(v); }); return box; };
-  el.append(opt('Thời lượng mục tiêu mỗi ngày', 'Khối Đắm chìm sẽ co giãn để vừa mục tiêu.', segc('target', [[60, '60 phút'], [90, '90 phút'], [120, '120 phút']])));
-  el.append(opt('Nhịp bài mới', 'Một bài mỗi ngày là vừa sức với hầu hết người mới học. Hai bài cho người đã có nền.', segc('pace', [[1, '1 bài / ngày'], [2, '2 bài / ngày']])));
-  el.append(opt('Mức hỗ trợ tiếng Việt', 'Tự động: đầy đủ ở 14 bài đầu, sau đó để bạn tự đoán trước khi nghe nghĩa, và rất ít ở vòng nghe lại.', segc('support', [['auto', 'Tự động'], ['full', 'Nhiều'], ['med', 'Vừa'], ['low', 'Ít']])));
-  el.append(opt('Khoảng lặng để nhớ lại', 'Thời gian bạn đoán nghĩa hoặc nói thầm trước khi nghe đáp án.', segc('think', [[1.5, '1,5 giây'], [2, '2 giây'], [3, '3 giây'], [4, '4 giây']])));
-  el.append(opt('Tốc độ phát', null, segc('rate', [[0.85, '0.85×'], [1, '1×'], [1.15, '1.15×'], [1.3, '1.3×']], v => { au.playbackRate = v; au.defaultPlaybackRate = v; renderPlayerOpts(); })));
-  el.append(opt('Hiện chữ khi nghe', 'Ẩn chữ giúp tai làm việc nhiều hơn; hiện chữ giúp kiểm tra khi chưa chắc.', segc('text', [['full', 'Đủ'], ['zh', 'Chỉ tiếng Trung'], ['off', 'Ẩn']], () => renderPlayerOpts())));
-  el.append(opt('Khối Trước khi ngủ', null, segc('sleep', [[true, 'Bật'], [false, 'Tắt']])));
-  el.append(opt('Tiếng chuông giữa các phần', null, segc('chime', [[true, 'Bật'], [false, 'Tắt']])));
-  el.append(opt('Hiện câu đang nghe trên màn hình khóa', null, segc('lock', [[true, 'Bật'], [false, 'Tắt']])));
-  const sel = h('select', { id: 'opt-day', onchange: ev => { S.day = +ev.target.value; S.resume = null; route.day = 0; save(true); renderOptions(); } });
-  for (let d = 1; d <= Math.max(60, S.day + 10); d++) sel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d}`));
-  el.append(opt('Ngày học hiện tại', 'App tự sang ngày mới khi bạn đã nghe xong khối Bài mới của hôm trước.', sel));
+  const sect = (g, color, title, ...kids) => h('div', { class: 'card sect' }, h('h3', null, h('span', { class: 'tile', style: `--c:${color}`, 'aria-hidden': 'true' }, h('b', { lang: 'zh-CN', text: g })), title), ...kids);
+  const maleReady = !!D.sprites.l01m;
+  const grid = h('div', { class: 'opt-grid' });
+  grid.append(sect('声', 'var(--k-sleep)', 'Giọng đọc',
+    h('div', { class: 'vgroup' }, h('div', { class: 'lab', text: 'Giọng tiếng Trung' }),
+      h('div', { class: 'help', text: 'Cặp giọng chính của hội thoại, cụm từ và câu chuyện. Mỗi câu vẫn được nghe bằng ít nhất hai giọng để tai quen nhiều người nói.' }),
+      voiceCards('zh', VOICES_ZH, [['l01', 'd0.a'], ['l01', 'd1.a']])),
+    h('div', { class: 'vgroup' }, h('div', { class: 'lab', text: 'Giọng tiếng Việt' }),
+      h('div', { class: 'help', text: 'Giọng đọc lời dẫn, giải nghĩa và âm Hán Việt. Lời dịch hội thoại giữ giọng nam hoặc nữ theo nhân vật.' }),
+      voiceCards('vi', VOICES_VI, [['l01', 'c0.v'], ['l01', 'c1.v']]),
+      maleReady ? null : h('div', { class: 'vnote', text: 'Giọng Nam Minh đang được bổ sung cho các bài. Bài nào chưa có sẽ tạm dùng giọng Hoài My.' }))));
+  const daySel = h('select', { id: 'opt-day', onchange: ev => { setDay(+ev.target.value); renderOptions(); renderSide(); } });
+  for (let d = 1; d <= Math.max(cycleDays() + 7, S.day + 7); d++) daySel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d} · ${lessonsOfDay(d).map(x => 'Bài ' + x.id + ' ' + lessonName(x.id)).join(' + ')}`));
+  grid.append(sect('历', 'var(--k-new)', 'Lịch học',
+    opt('Ngày học hiện tại', 'Chọn ngày bạn muốn học. Xem toàn bộ các ngày ở mục Lịch học.', h('div', { class: 'seg' }, daySel, h('a', { class: 'btn', href: '#lich-hoc' }, svg(ICON2.cal), 'Mở lịch học'))),
+    opt('Cách sang ngày mới', S.set.auto ? 'Sáng hôm sau, nếu đã nghe xong khối Bài mới, app tự chuyển sang ngày kế tiếp.' : 'App giữ nguyên ngày cho tới khi bạn tự đổi.', segc('auto', [[true, 'Tự động'], [false, 'Tôi tự chọn']])),
+    opt('Thời lượng mục tiêu mỗi ngày', 'Khối Đắm chìm co giãn để vừa mục tiêu.', segc('target', [[45, '45 phút'], [60, '60 phút'], [90, '90 phút'], [120, '120 phút']])),
+    opt('Nhịp bài mới', 'Một bài mỗi ngày vừa sức với hầu hết người mới học. Hai bài cho người đã có nền.', segc('pace', [[1, '1 bài / ngày'], [2, '2 bài / ngày']]))));
+  grid.append(sect('耳', 'var(--k-imm)', 'Cách nghe',
+    opt('Mức hỗ trợ tiếng Việt', 'Tự động: đầy đủ ở 14 bài đầu, sau đó để bạn tự đoán trước khi nghe nghĩa, và rất ít ở vòng nghe lại.', segc('support', [['auto', 'Tự động'], ['full', 'Nhiều'], ['med', 'Vừa'], ['low', 'Ít']])),
+    opt('Khoảng lặng để nhớ lại', 'Thời gian bạn đoán nghĩa hoặc nói thầm trước khi nghe đáp án.', segc('think', [[1.5, '1,5 giây'], [2, '2 giây'], [3, '3 giây'], [4, '4 giây']])),
+    opt('Tốc độ phát', null, segc('rate', [[0.85, '0.85×'], [1, '1×'], [1.15, '1.15×'], [1.3, '1.3×']], v => { au.playbackRate = v; au.defaultPlaybackRate = v; renderPlayerOpts(); })),
+    opt('Hiện chữ khi nghe', 'Ẩn chữ giúp tai làm việc nhiều hơn; hiện chữ giúp kiểm tra khi chưa chắc.', segc('text', [['full', 'Đủ'], ['zh', 'Chỉ tiếng Trung'], ['off', 'Ẩn']], () => renderPlayerOpts())),
+    opt('Khối Trước khi ngủ', null, segc('sleep', [[true, 'Bật'], [false, 'Tắt']])),
+    opt('Tiếng chuông giữa các phần', null, segc('chime', [[true, 'Bật'], [false, 'Tắt']])),
+    opt('Hiện câu đang nghe trên màn hình khóa', null, segc('lock', [[true, 'Bật'], [false, 'Tắt']]))));
   const syncText = { local: 'Đang lưu trên thiết bị này.', connecting: 'Đang kết nối tài khoản…', synced: 'Đã đồng bộ với tài khoản Claude của bạn. Mở trên điện thoại hay máy tính đều tiếp tục đúng chỗ.', offline: 'Chưa kết nối được để đồng bộ; tiến độ vẫn được lưu trên thiết bị này.' }[syncState];
-  el.append(opt('Lưu tiến độ', syncText, null));
   const confirmBox = h('div', { class: 'seg' });
-  const askReset = () => { confirmBox.textContent = ''; confirmBox.append(h('span', { class: 'help', style: 'align-self:center', text: 'Xóa toàn bộ tiến độ và thống kê?' }), h('button', { type: 'button', class: 'danger', onclick: () => { const keep = { ...S.set }; S = fresh(); S.set = keep; planCache.clear(); route.day = 0; save(true); renderOptions(); } }, 'Xóa'), h('button', { type: 'button', onclick: () => renderOptions() }, 'Thôi')); };
+  const askReset = () => { confirmBox.textContent = ''; confirmBox.append(h('span', { class: 'help', style: 'align-self:center', text: 'Xóa toàn bộ tiến độ và thống kê?' }), h('button', { type: 'button', class: 'danger', onclick: () => { const keep = { ...S.set }; S = fresh(); S.set = keep; planCache.clear(); route.day = 0; save(true); renderOptions(); renderSide(); } }, 'Xóa'), h('button', { type: 'button', onclick: () => renderOptions() }, 'Thôi')); };
   confirmBox.append(h('button', { type: 'button', class: 'danger', onclick: askReset }, 'Đặt lại tiến độ'));
-  el.append(opt('Bắt đầu lại', null, confirmBox));
+  grid.append(sect('存', 'var(--k-review)', 'Tiến độ', opt('Lưu tiến độ', syncText, null), opt('Bắt đầu lại', null, confirmBox)));
+  el.append(grid);
 }
 function renderRoute() {
   const raw = (location.hash || '').slice(1);
   let v = raw || 'hom-nay', id = 0;
   const m = /^bai-(\d+)$/.exec(v);
   if (m) { v = 'bai'; id = +m[1]; }
-  if (!['hom-nay', 'thu-vien', 'bai', 'phuong-phap', 'tuy-chon'].includes(v)) v = 'hom-nay';
+  if (!['hom-nay', 'lich-hoc', 'thu-vien', 'bai', 'phuong-phap', 'tuy-chon'].includes(v)) v = 'hom-nay';
   route.v = v; route.id = id;
   for (const sec of document.querySelectorAll('section.view')) sec.hidden = sec.id !== 'v-' + v;
-  for (const a of document.querySelectorAll('.tabs a')) { if ((a.dataset.v === v) || (v === 'bai' && a.dataset.v === 'thu-vien')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); }
+  for (const a of document.querySelectorAll('.nav a')) { if ((a.dataset.v === v) || (v === 'bai' && a.dataset.v === 'thu-vien')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); }
   if (v === 'hom-nay') renderToday();
+  else if (v === 'lich-hoc') renderCalendar();
   else if (v === 'thu-vien') renderLibrary();
   else if (v === 'bai') renderLesson(id);
   else if (v === 'tuy-chon') renderOptions();
-  $('#daypill').textContent = `Ngày ${S.day}`;
+  renderSide();
 }
 window.addEventListener('hashchange', () => { renderRoute(); window.scrollTo(0, 0); });
+function showLesson(seg) {
+  const el = $('#pl-lesson'), id = seg && seg.it.m ? seg.it.m.L : null;
+  if (id == null || (id > 0 && !LES[id - 1])) { el.hidden = true; return; }
+  if (el.dataset.id === String(id) && !el.hidden) return;
+  el.dataset.id = String(id); el.textContent = '';
+  el.style.cssText = id === 0 ? '--c: var(--seal)' : tc(topicOf(id));
+  el.append(tile(id, 'sm'), h('span', { text: id === 0 ? `Bài 0 · ${D.primer.t}` : `Bài ${id} · ${lessonName(id)}` }));
+  el.hidden = false;
+}
 
 // ---------------------------------------------------------------- boot
 rollDay();
@@ -1141,4 +1671,5 @@ window.NT_DEBUG = {
 };
 })();
 </script>
+
 </body></html>
