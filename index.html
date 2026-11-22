@@ -1397,22 +1397,23 @@ function renderToday() {
   grid.append(main, aside);
   el.append(grid);
 }
+const lesLabel = x => `Bài ${x.id}${x.cycle > 0 ? ` (vòng ${x.cycle + 1})` : ''}`;
 function renderCalendar() {
   const el = $('#v-lich-hoc'); el.textContent = '';
   const cd = cycleDays(), total = Math.ceil(Math.max(cd, S.day + 1) / 7) * 7;
   el.append(h('div', { class: 'v-head' }, h('div', { class: 'eyebrow', text: `${cd} ngày cho ${N} bài · ${S.set.pace} bài mỗi ngày` }), h('h2', { text: 'Lịch học' }),
     h('p', { class: 'lead', text: 'Bấm vào một ngày để xem và nghe ngày đó. Ngày học hiện tại quyết định bài mới, phần ôn giãn cách và phần đắm chìm của hôm nay.' })));
   const daySel = h('select', { id: 'cal-day', onchange: ev => { setDay(+ev.target.value); renderCalendar(); renderSide(); } });
-  for (let d = 1; d <= total; d++) { const ls = lessonsOfDay(d); daySel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d} · ${ls.map(x => 'Bài ' + x.id).join(' + ')}`)); }
+  for (let d = 1; d <= total; d++) { const ls = lessonsOfDay(d); daySel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d} · ${ls.map(lesLabel).join(' + ')}`)); }
   const lesSel = h('select', { id: 'cal-lesson', onchange: ev => { const id = +ev.target.value; if (id) { setDay(dayOfLesson(id)); renderCalendar(); renderSide(); } } });
   lesSel.append(h('option', { value: '0' }, 'Chọn bài…'));
   for (let id = 1; id <= N; id++) lesSel.append(h('option', { value: String(id) }, `Bài ${id} · ${lessonName(id)}`));
   const autoSeg = h('div', { class: 'seg' });
   segButtons(autoSeg, [[true, 'Tự sang ngày mới'], [false, 'Tôi tự chọn ngày']], S.set.auto, v => { S.set.auto = v; save(true); renderCalendar(); });
   el.append(h('div', { class: 'card cal-ctl' },
-    h('div', { class: 'cal-now' }, h('span', { text: 'Ngày học hiện tại' }), h('b', { class: 'num', text: `Ngày ${S.day}` }), h('span', { text: lessonsOfDay(S.day).map(x => `Bài ${x.id} · ${lessonName(x.id)}`).join(' + ') })),
-    h('div', { class: 'fld' }, h('label', { for: 'cal-day', text: 'Chuyển tới ngày' }), daySel),
-    h('div', { class: 'fld' }, h('label', { for: 'cal-lesson', text: 'Hoặc bắt đầu từ bài' }), lesSel),
+    h('div', { class: 'cal-now' }, h('span', { text: 'Ngày học hiện tại' }), h('b', { class: 'num', text: `Ngày ${S.day}` }), h('span', { text: lessonsOfDay(S.day).map(x => `${lesLabel(x)} · ${lessonName(x.id)}`).join(' + ') })),
+    h('div', { class: 'fld' }, h('label', { for: 'cal-day', text: 'Đổi ngày học hiện tại' }), daySel, h('span', { class: 'p-sub', text: 'Ngày học quyết định bài mới, phần ôn và phần đắm chìm. Chọn ở đây là đổi luôn ngày đang học.' })),
+    h('div', { class: 'fld' }, h('label', { for: 'cal-lesson', text: 'Hoặc bắt đầu từ bài' }), lesSel, h('span', { class: 'p-sub', text: 'Chọn bài, app chuyển tới ngày học bài đó.' })),
     h('div', { class: 'fld', style: 'grid-column:1/-1' }, h('span', { class: 'lab', text: 'Cách sang ngày mới' }), autoSeg,
       h('span', { class: 'p-sub', text: S.set.auto ? 'Sáng hôm sau, nếu bạn đã nghe xong khối Bài mới, app tự chuyển sang ngày kế tiếp.' : 'App giữ nguyên ngày học cho tới khi bạn tự đổi. Hợp khi muốn nghe một bài nhiều ngày.' }))));
   el.append(h('div', { class: 'legend' },
@@ -1607,7 +1608,7 @@ function renderOptions() {
       voiceCards('vi', VOICES_VI, [['l01', 'c0.v'], ['l01', 'c1.v']]),
       maleReady ? null : h('div', { class: 'vnote', text: 'Giọng Nam Minh đang được bổ sung cho các bài. Bài nào chưa có sẽ tạm dùng giọng Hoài My.' }))));
   const daySel = h('select', { id: 'opt-day', onchange: ev => { setDay(+ev.target.value); renderOptions(); renderSide(); } });
-  for (let d = 1; d <= Math.max(cycleDays() + 7, S.day + 7); d++) daySel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d} · ${lessonsOfDay(d).map(x => 'Bài ' + x.id + ' ' + lessonName(x.id)).join(' + ')}`));
+  for (let d = 1; d <= Math.max(cycleDays() + 7, S.day + 7); d++) daySel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d} · ${lessonsOfDay(d).map(x => lesLabel(x) + ' ' + lessonName(x.id)).join(' + ')}`));
   grid.append(sect('历', 'var(--k-new)', 'Lịch học',
     opt('Ngày học hiện tại', 'Chọn ngày bạn muốn học. Xem toàn bộ các ngày ở mục Lịch học.', h('div', { class: 'seg' }, daySel, h('a', { class: 'btn', href: '#lich-hoc' }, svg(ICON2.cal), 'Mở lịch học'))),
     opt('Cách sang ngày mới', S.set.auto ? 'Sáng hôm sau, nếu đã nghe xong khối Bài mới, app tự chuyển sang ngày kế tiếp.' : 'App giữ nguyên ngày cho tới khi bạn tự đổi.', segc('auto', [[true, 'Tự động'], [false, 'Tôi tự chọn']])),
