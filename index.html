@@ -1,4 +1,9 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Nghe Trung Mỗi Ngày</title>
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"><link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#b83a29"><style>:root{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Nghe Trung Mỗi Ngày</title>
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#b83a29">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -287,6 +292,9 @@ select, input[type="search"] { border: 1px solid var(--line); background: var(--
 .empty { padding: 30px 0; color: var(--muted); }
 
 /* ------------------------------------------------ lesson detail */
+.lesnav { display: inline-flex; flex-wrap: wrap; gap: 8px; }
+.lesnav .btn { padding: 8px 14px; font-size: 14px; }
+.lesnav .btn:disabled { opacity: .4; cursor: default; }
 .back { display: inline-flex; gap: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
 .lnav { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 .lnav a { font-size: 14px; font-weight: 600; text-decoration: none; }
@@ -537,18 +545,22 @@ td .zh { font-size: 20px; color: var(--jade); }
           <button class="btn" id="pl-back10" aria-label="Lùi 10 giây"><span class="num">−10s</span></button>
           <button class="btn" id="pl-fwd10" aria-label="Tiến 10 giây"><span class="num">+10s</span></button>
         </div>
+        <div class="ctrls">
+          <button class="btn" id="pl-prevles">‹ Bài trước</button>
+          <button class="btn" id="pl-nextles">Bài tiếp theo ›</button>
+        </div>
         <div class="subopts">
           <div class="lab">Tốc độ</div><div class="seg" id="pl-rate"></div>
           <div class="lab">Hiện chữ</div><div class="seg" id="pl-text"></div>
           <div class="lab">Hẹn giờ tắt</div><div class="seg" id="pl-sleep"></div>
         </div>
-        <p class="kbd"><kbd>Space</kbd> phát/dừng · <kbd>R</kbd> nghe lại câu · <kbd>←</kbd><kbd>→</kbd> 10 giây · <kbd>N</kbd> khối sau · <kbd>F</kbd> thu gọn</p>
+        <p class="kbd"><kbd>Space</kbd> phát/dừng · <kbd>R</kbd> nghe lại câu · <kbd>←</kbd><kbd>→</kbd> 10 giây · <kbd>N</kbd> khối sau · <kbd>[</kbd><kbd>]</kbd> bài trước/sau · <kbd>F</kbd> thu gọn</p>
       </div>
     </div>
   </div>
 </div>
 <audio id="au" preload="auto" playsinline></audio>
-<script src="data.js"></script>
+<script src="data.js?v=1795314843"></script>
 <script>
 (() => {
 'use strict';
@@ -1050,7 +1062,7 @@ function markBlock(bi) {
 au.addEventListener('ended', () => {
   markBlock(P.bi);
   const next = P.bi + 1, b = P.blocks[next];
-  if (!b) { P.cur = null; ui.mini.textContent = 'Xong buổi nghe hôm nay. Hẹn gặp lại ngày mai!'; syncIcon(); renderToday(); return; }
+  if (!b) { finished(); return; }
   const r = rendered.get(b.sig);
   if (r) {
     P.bi = next; P.seg = -1; P.token++;
@@ -1185,6 +1197,8 @@ document.addEventListener('keydown', ev => {
   else if (k === 'r') replaySentence();
   else if (k === 'n') nextBlock();
   else if (k === 'f') toggleSheet();
+  else if (ev.key === '[') jumpLesson(-1);
+  else if (ev.key === ']') jumpLesson(1);
   else if (ev.key === 'ArrowLeft' && !onBtn) { ev.preventDefault(); seekBy(-10); }
   else if (ev.key === 'ArrowRight' && !onBtn) { ev.preventDefault(); seekBy(10); }
 });
@@ -1353,10 +1367,9 @@ function renderToday() {
   const label = playingHere ? 'Đang phát · bấm để dừng' : resumeHere ? `Nghe tiếp · ${blocks[S.resume.b].title} ${fmt(S.resume.t)}` : allDone ? 'Nghe lại từ đầu' : Object.keys(done).length ? 'Nghe tiếp' : `Bắt đầu nghe · ${mins(tot)} phút`;
   const startBtn = h('button', { class: 'btn btn-primary', type: 'button', onclick: () => { if (nowPlaying >= 0 && P.cur) { toggle(); return; } startDay(d, allDone ? 0 : null); } }, svg(playingHere ? ICON.pause : ICON.play), label);
   const go = nd => { route.day = nd === S.day ? 0 : nd; renderToday(); };
-  const nav = h('div', { class: 'daynav' },
-    h('button', { type: 'button', 'aria-label': 'Ngày trước', disabled: d <= 1, onclick: () => go(d - 1) }, '‹'),
-    h('span', { class: 'num', text: `Ngày ${d}` }),
-    h('button', { type: 'button', 'aria-label': 'Ngày sau', onclick: () => go(d + 1) }, '›'));
+  const nav = h('div', { class: 'lesnav' },
+    h('button', { class: 'btn', type: 'button', disabled: d <= 1, onclick: () => { setDay(d - 1); renderToday(); } }, '‹ Bài trước'),
+    h('button', { class: 'btn', type: 'button', onclick: () => { setDay(d + 1); renderToday(); } }, 'Bài tiếp theo ›'));
   const grid = h('div', { class: 'today-grid' }), main = h('div', { class: 'col' }), aside = h('div', { class: 'col' });
   if (d !== S.day) {
     main.append(h('div', { class: 'banner' },
@@ -1524,17 +1537,57 @@ async function sayClips(pairs, o, onEnd) {
   } catch (e) { if (onEnd) onEnd(); }
 }
 const sayClip = (sp, key) => sayClips([[sp, key]]);
+function lessonBlockOf(id) {
+  const items = lessonItems(id, supportOf(id, 0));
+  return { ...KIND.new, kind: 'new', title: lessonName(id), items, dur: total(items), sig: `les${id}|${sigOf()}` };
+}
+function playLesson(id) { playCustom([lessonBlockOf(id)], `Bài ${id}`); P.cid = id; }
+function jumpLesson(delta) {
+  if (P.mode === 'day') {
+    const nd = P.day + delta; if (nd < 1) return;
+    if (P.day === S.day) setDay(nd);
+    startDay(nd, 0, 0); renderRoute();
+  } else if (P.cid) {
+    const n = P.cid + delta; if (n >= 1 && n <= N) playLesson(n);
+  } else {
+    const nd = S.day + delta; if (nd < 1) return;
+    setDay(nd); startDay(nd, 0, 0); renderRoute();
+  }
+}
+$('#pl-prevles').addEventListener('click', () => jumpLesson(-1));
+$('#pl-nextles').addEventListener('click', () => jumpLesson(1));
+// called when the last block of a session has finished playing
+function finished() {
+  P.cur = null; syncIcon();
+  const say = t => { ui.mini.textContent = t; ui.mini.className = 'pl-mini vi'; };
+  if (P.mode === 'custom' && P.cid) {
+    if (S.set.auto && P.cid < N) { const n = P.cid + 1; say(`Xong Bài ${P.cid}. Chuyển sang Bài ${n}: ${lessonName(n)}`); playLesson(n); return; }
+    say(`Xong Bài ${P.cid}.`); return;
+  }
+  if (P.mode === 'day') {
+    const d = P.day, last = P.blocks[P.blocks.length - 1];
+    S.dayDate[d] = S.dayDate[d] || localDate(); S.learn[d] = S.learn[d] || localDate();
+    if (S.set.auto && d === S.day) {
+      setDay(d + 1);
+      const nx = lessonsOfDay(d + 1).map(x => `Bài ${x.id}: ${lessonName(x.id)}`).join(' + ');
+      if (last && last.kind === 'sleep') { say(`Xong Ngày ${d}. Lần nghe sau: ${nx}`); renderRoute(); return; }
+      say(`Xong Ngày ${d}. Chuyển sang ${nx}`); renderRoute(); startDay(d + 1, 0, 0); return;
+    }
+    save(true);
+  }
+  say('Xong buổi nghe. Hẹn gặp lại!'); renderRoute();
+}
 function renderLesson(id) {
   const el = $('#v-bai'); el.textContent = '';
   const navRow = h('div', { class: 'lnav' }, h('a', { class: 'back', href: '#thu-vien' }, '‹ Thư viện'),
-    h('span', { style: 'display:flex;gap:16px' },
-      id > 0 ? h('a', { href: '#bai-' + (id - 1), text: `‹ Bài ${id - 1}` }) : null,
-      id < N ? h('a', { href: '#bai-' + (id + 1), text: `Bài ${id + 1} ›` }) : null));
+    h('span', { class: 'lesnav' },
+      id > 0 ? h('a', { class: 'btn', href: '#bai-' + (id - 1), title: lessonName(id - 1), text: `‹ Bài ${id - 1}` }) : null,
+      id < N ? h('a', { class: 'btn', href: '#bai-' + (id + 1), title: lessonName(id + 1), text: `Bài ${id + 1}: ${lessonName(id + 1)} ›` }) : null));
   el.append(navRow);
   if (id === 0) {
     el.append(h('div', { class: 'lhero card' }, h('span', { class: 'wm', lang: 'zh-CN', 'aria-hidden': 'true', text: '听' }),
       h('div', { class: 'lhero-row' }, tile(0, 'lg'), h('div', null, h('div', { class: 'eyebrow', text: 'Bài 0 · nhập môn' }), h('h2', { class: 'zh', lang: 'zh-CN', text: D.primer.tz }), h('p', { class: 'vt', text: D.primer.t }))),
-      h('div', { class: 'hero-actions' }, h('button', { class: 'btn btn-primary', type: 'button', onclick: () => playCustom([{ ...KIND.new, kind: 'new', title: 'Làm quen âm thanh', items: primerItems(), dur: 0, sig: 'primer|' + sigOf() }], 'Bài 0') }, svg(ICON.play), 'Nghe bài nhập môn'))));
+      h('div', { class: 'hero-actions' }, h('button', { class: 'btn btn-primary', type: 'button', onclick: () => { playCustom([{ ...KIND.new, kind: 'new', title: 'Làm quen âm thanh', items: primerItems(), dur: 0, sig: 'primer|' + sigOf() }], 'Bài 0'); P.cid = 0; } }, svg(ICON.play), 'Nghe bài nhập môn'))));
     const box = h('div', { class: 'part' });
     D.primer.steps.forEach((st, i) => box.append(st[0] === 'v' ? h('p', { style: 'margin-top:12px;color:var(--muted)', text: st[1] }) : h('button', { class: 'say', type: 'button', style: 'margin:6px 14px 0 0', onclick: () => sayClip('l00', 'x' + i) }, h('span', { class: 'zh', style: 'font-size:22px', lang: 'zh-CN', text: st[1] }), ' ', h('span', { class: 'py', text: st[3] || '' }))));
     el.append(box);
@@ -1554,8 +1607,8 @@ function renderLesson(id) {
       h('h2', { class: 'zh', lang: 'zh-CN', text: L.tz }), h('p', { class: 'vt', text: L.t }))),
     h('p', { class: 'lead', style: 'position:relative', text: L.sc }),
     h('div', { class: 'hero-actions' },
-      h('button', { class: 'btn btn-primary', type: 'button', onclick: () => playCustom([lessonBlock], `Bài ${id}`) }, svg(ICON.play), `Nghe bài · ${mins(lessonBlock.dur)} phút`),
-      h('button', { class: 'btn', type: 'button', onclick: () => playCustom([immBlock], `Bài ${id}`) }, `Đắm chìm bài này · ${mins(immBlock.dur)} phút`),
+      h('button', { class: 'btn btn-primary', type: 'button', onclick: () => playLesson(id) }, svg(ICON.play), `Nghe bài · ${mins(lessonBlock.dur)} phút`),
+      h('button', { class: 'btn', type: 'button', onclick: () => { playCustom([immBlock], `Bài ${id}`); P.cid = 0; } }, `Đắm chìm bài này · ${mins(immBlock.dur)} phút`),
       dd !== S.day ? h('button', { class: 'btn', type: 'button', onclick: () => { setDay(dd); location.hash = '#hom-nay'; } }, svg(ICON2.cal), `Học từ bài này (Ngày ${dd})`) : h('span', { class: 'chip seal', text: 'Bài của hôm nay' }))));
   if (S.dayDate[dd]) el.append(h('div', { style: 'margin-top:14px' }, rateBox(id)));
   const body = h('div', { class: (libToggles.py ? '' : 'hide-py ') + (libToggles.vi ? '' : 'hide-vi'), style: tc(k) });
@@ -1603,7 +1656,7 @@ function renderOptions() {
   const opt = (lab, help, control) => h('div', { class: 'opt' }, h('div', { class: 'lab', text: lab }), help ? h('div', { class: 'help', text: help }) : null, control);
   const segc = (key, opts, after) => { const box = h('div', { class: 'seg' }); segButtons(box, opts, S.set[key], v => { S.set[key] = v; planCache.clear(); save(true); renderOptions(); if (after) after(v); }); return box; };
   const sect = (g, color, title, ...kids) => h('div', { class: 'card sect' }, h('h3', null, h('span', { class: 'tile', style: `--c:${color}`, 'aria-hidden': 'true' }, h('b', { lang: 'zh-CN', text: g })), title), ...kids);
-  const maleReady = !!D.sprites.l01m;
+  const maleCount = LES.filter(L => D.sprites[spr(L.id) + 'm']).length;
   const grid = h('div', { class: 'opt-grid' });
   grid.append(sect('声', 'var(--k-sleep)', 'Giọng đọc',
     h('div', { class: 'vgroup' }, h('div', { class: 'lab', text: 'Giọng tiếng Trung' }),
@@ -1612,7 +1665,7 @@ function renderOptions() {
     h('div', { class: 'vgroup' }, h('div', { class: 'lab', text: 'Giọng tiếng Việt' }),
       h('div', { class: 'help', text: 'Giọng đọc lời dẫn, giải nghĩa và âm Hán Việt. Lời dịch hội thoại giữ giọng nam hoặc nữ theo nhân vật.' }),
       voiceCards('vi', VOICES_VI, [['l01', 'c0.v'], ['l01', 'c1.v']]),
-      maleReady ? null : h('div', { class: 'vnote', text: 'Giọng Nam Minh đang được bổ sung cho các bài. Bài nào chưa có sẽ tạm dùng giọng Hoài My.' }))));
+      maleCount >= N ? null : h('div', { class: 'vnote', text: `Giọng Nam Minh hiện có cho ${maleCount}/${N} bài và đang được bổ sung. Bài chưa có tạm dùng giọng Hoài My.` }))));
   grid.append(sect('历', 'var(--k-new)', 'Lịch học',
     opt('Cách sang ngày mới', S.set.auto ? 'Sáng hôm sau, nếu đã nghe xong khối Bài mới, app tự chuyển sang ngày kế tiếp.' : 'App giữ nguyên ngày cho tới khi bạn tự đổi.', segc('auto', [[true, 'Tự động'], [false, 'Tôi tự chọn']])),
     opt('Thời lượng mục tiêu mỗi ngày', 'Khối Đắm chìm co giãn để vừa mục tiêu.', segc('target', [[45, '45 phút'], [60, '60 phút'], [90, '90 phút'], [120, '120 phút']])),
