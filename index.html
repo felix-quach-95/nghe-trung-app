@@ -232,8 +232,13 @@ select, input[type="search"] { border: 1px solid var(--line); background: var(--
 .up-item span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* ------------------------------------------------ calendar */
-.cal-ctl { display: grid; gap: 16px; padding: 18px; }
-@media (min-width: 900px) { .cal-ctl { grid-template-columns: auto 1fr 1fr; align-items: end; } }
+.cal-cur { display: grid; gap: 18px; padding: 20px; }
+@media (min-width: 900px) { .cal-cur { grid-template-columns: minmax(0, 1fr) minmax(220px, 320px) auto; align-items: center; gap: 28px; } }
+.cal-prog { display: grid; gap: 8px; min-width: 0; }
+.cal-prog .lab { font-size: 13px; font-weight: 700; color: var(--muted); }
+.cp-bar, .dt-bar { height: 10px; border-radius: 99px; background: var(--sunk); overflow: hidden; }
+.cp-bar i, .dt-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--jade), var(--k-imm)); }
+.dt-bar { height: 5px; }
 .cal-now b { display: block; font-size: 30px; letter-spacing: -.02em; line-height: 1.1; }
 .cal-now span { font-size: 13px; color: var(--muted); }
 .fld { display: grid; gap: 6px; min-width: 0; }
@@ -1397,25 +1402,23 @@ function renderToday() {
   grid.append(main, aside);
   el.append(grid);
 }
-const lesLabel = x => `Bài ${x.id}${x.cycle > 0 ? ` (vòng ${x.cycle + 1})` : ''}`;
 function renderCalendar() {
   const el = $('#v-lich-hoc'); el.textContent = '';
   const cd = cycleDays(), total = Math.ceil(Math.max(cd, S.day + 1) / 7) * 7;
   el.append(h('div', { class: 'v-head' }, h('div', { class: 'eyebrow', text: `${cd} ngày cho ${N} bài · ${S.set.pace} bài mỗi ngày` }), h('h2', { text: 'Lịch học' }),
-    h('p', { class: 'lead', text: 'Bấm vào một ngày để xem và nghe ngày đó. Ngày học hiện tại quyết định bài mới, phần ôn giãn cách và phần đắm chìm của hôm nay.' })));
-  const daySel = h('select', { id: 'cal-day', onchange: ev => { setDay(+ev.target.value); renderCalendar(); renderSide(); } });
-  for (let d = 1; d <= total; d++) { const ls = lessonsOfDay(d); daySel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d} · ${ls.map(lesLabel).join(' + ')}`)); }
-  const lesSel = h('select', { id: 'cal-lesson', onchange: ev => { const id = +ev.target.value; if (id) { setDay(dayOfLesson(id)); renderCalendar(); renderSide(); } } });
-  lesSel.append(h('option', { value: '0' }, 'Chọn bài…'));
-  for (let id = 1; id <= N; id++) lesSel.append(h('option', { value: String(id) }, `Bài ${id} · ${lessonName(id)}`));
-  const autoSeg = h('div', { class: 'seg' });
-  segButtons(autoSeg, [[true, 'Tự sang ngày mới'], [false, 'Tôi tự chọn ngày']], S.set.auto, v => { S.set.auto = v; save(true); renderCalendar(); });
-  el.append(h('div', { class: 'card cal-ctl' },
-    h('div', { class: 'cal-now' }, h('span', { text: 'Ngày học hiện tại' }), h('b', { class: 'num', text: `Ngày ${S.day}` }), h('span', { text: lessonsOfDay(S.day).map(x => `${lesLabel(x)} · ${lessonName(x.id)}`).join(' + ') })),
-    h('div', { class: 'fld' }, h('label', { for: 'cal-day', text: 'Đổi ngày học hiện tại' }), daySel, h('span', { class: 'p-sub', text: 'Ngày học quyết định bài mới, phần ôn và phần đắm chìm. Chọn ở đây là đổi luôn ngày đang học.' })),
-    h('div', { class: 'fld' }, h('label', { for: 'cal-lesson', text: 'Hoặc bắt đầu từ bài' }), lesSel, h('span', { class: 'p-sub', text: 'Chọn bài, app chuyển tới ngày học bài đó.' })),
-    h('div', { class: 'fld', style: 'grid-column:1/-1' }, h('span', { class: 'lab', text: 'Cách sang ngày mới' }), autoSeg,
-      h('span', { class: 'p-sub', text: S.set.auto ? 'Sáng hôm sau, nếu bạn đã nghe xong khối Bài mới, app tự chuyển sang ngày kế tiếp.' : 'App giữ nguyên ngày học cho tới khi bạn tự đổi. Hợp khi muốn nghe một bài nhiều ngày.' }))));
+    h('p', { class: 'lead', text: 'Bấm vào một ngày để xem và nghe ngày đó.' })));
+  const cur = S.day, cb = planDay(cur), cdn = S.done['d' + cur] || {};
+  const ctot = cb.reduce((x, y) => x + y.dur, 0);
+  let heard = cb.reduce((x, y, i) => x + (cdn[i] ? y.dur : 0), 0);
+  if (S.resume && S.resume.day === cur && cb[S.resume.b] && !cdn[S.resume.b]) heard += Math.min(S.resume.t, cb[S.resume.b].dur);
+  const pct = ctot ? Math.min(100, heard / ctot * 100) : 0;
+  el.append(h('div', { class: 'card cal-cur' },
+    h('div', { class: 'les-list' }, lessonsOfDay(cur).map(x => { const L = LES[x.id - 1], k = topicOf(x.id); return h('a', { class: 'les', href: '#bai-' + x.id, style: tc(k) }, tile(x.id, 'lg'), h('div', { class: 'les-txt' }, h('div', { class: 'les-no', text: `Ngày ${cur} · Bài ${x.id}${x.cycle > 0 ? ` (vòng ${x.cycle + 1})` : ''} · ${TOPIC[k].n}` }), h('div', { class: 'les-zh', lang: 'zh-CN', text: L.tz }), h('div', { class: 'les-vi', text: L.t }))); })),
+    h('div', { class: 'cal-prog' },
+      h('div', { class: 'p-head' }, h('span', { class: 'lab', text: 'Tiến độ đã nghe' }), h('b', { class: 'num', text: `${Math.round(heard / 60)}/${mins(ctot)} phút` })),
+      h('div', { class: 'cp-bar', role: 'img', 'aria-label': `Đã nghe ${Math.round(pct)}%` }, h('i', { style: `width:${pct.toFixed(1)}%` })),
+      h('span', { class: 'p-sub num', text: `${cb.filter((_, i) => cdn[i]).length}/${cb.length} khối xong · ${Math.round(pct)}%` })),
+    h('a', { class: 'btn btn-primary', href: '#hom-nay' }, svg(ICON.play), heard > 0 && pct < 99 ? 'Nghe tiếp' : 'Nghe ngay')));
   el.append(h('div', { class: 'legend' },
     h('span', null, h('i', { class: 'done' }), 'Đã học'), h('span', null, h('i', { class: 'part' }), 'Đang nghe dở'),
     h('span', null, h('i', { class: 'today' }), 'Ngày học hiện tại'), h('span', null, h('i'), 'Chưa học')));
@@ -1425,10 +1428,13 @@ function renderCalendar() {
       const ls = lessonsOfDay(d), dn = S.done['d' + d] || {};
       const st = S.dayDate[d] ? 'done' : Object.keys(dn).length ? 'part' : 'todo';
       const hard = ls.some(x => x.cycle === 0 && S.rate[x.id] === 1);
+      let dpct = 0;
+      if (Object.keys(dn).length) { const pb = planDay(d), pt = pb.reduce((x, y) => x + y.dur, 0); dpct = pt ? pb.reduce((x, y, i) => x + (dn[i] ? y.dur : 0), 0) / pt * 100 : 0; }
       g.append(h('button', { type: 'button', class: 'dtile lift' + (d === S.day ? ' is-today' : ''), 'data-s': st, onclick: () => { route.day = d === S.day ? 0 : d; location.hash = '#hom-nay'; } },
         h('div', { class: 'dt-top' }, h('b', { class: 'num', text: `Ngày ${d}` }),
           d === S.day ? h('span', { class: 'chip seal', text: 'Hôm nay' }) : st === 'done' ? h('span', { class: 'chip', text: hard ? 'Cần ôn' : 'Đã học' }) : ls[0].cycle > 0 ? h('span', { class: 'chip soft', text: `Vòng ${ls[0].cycle + 1}` }) : null),
-        h('div', { class: 'dt-les' }, ls.map(x => h('div', { class: 'dt-item' }, tile(x.id), h('span', null, lessonName(x.id), h('small', { text: `Bài ${x.id} · ${TOPIC[topicOf(x.id)].n}` })))))));
+        h('div', { class: 'dt-les' }, ls.map(x => h('div', { class: 'dt-item' }, tile(x.id), h('span', null, lessonName(x.id), h('small', { text: `Bài ${x.id} · ${TOPIC[topicOf(x.id)].n}` }))))),
+        dpct > 0 ? h('div', { class: 'dt-bar', title: `Đã nghe ${Math.round(dpct)}%` }, h('i', { style: `width:${dpct.toFixed(1)}%` })) : null));
     }
     el.append(h('div', { class: 'cal-week' }, h('h3', { text: `Tuần ${w + 1}` }), g));
   }
@@ -1607,10 +1613,7 @@ function renderOptions() {
       h('div', { class: 'help', text: 'Giọng đọc lời dẫn, giải nghĩa và âm Hán Việt. Lời dịch hội thoại giữ giọng nam hoặc nữ theo nhân vật.' }),
       voiceCards('vi', VOICES_VI, [['l01', 'c0.v'], ['l01', 'c1.v']]),
       maleReady ? null : h('div', { class: 'vnote', text: 'Giọng Nam Minh đang được bổ sung cho các bài. Bài nào chưa có sẽ tạm dùng giọng Hoài My.' }))));
-  const daySel = h('select', { id: 'opt-day', onchange: ev => { setDay(+ev.target.value); renderOptions(); renderSide(); } });
-  for (let d = 1; d <= Math.max(cycleDays() + 7, S.day + 7); d++) daySel.append(h('option', { value: String(d), selected: d === S.day }, `Ngày ${d} · ${lessonsOfDay(d).map(x => lesLabel(x) + ' ' + lessonName(x.id)).join(' + ')}`));
   grid.append(sect('历', 'var(--k-new)', 'Lịch học',
-    opt('Ngày học hiện tại', 'Chọn ngày bạn muốn học. Xem toàn bộ các ngày ở mục Lịch học.', h('div', { class: 'seg' }, daySel, h('a', { class: 'btn', href: '#lich-hoc' }, svg(ICON2.cal), 'Mở lịch học'))),
     opt('Cách sang ngày mới', S.set.auto ? 'Sáng hôm sau, nếu đã nghe xong khối Bài mới, app tự chuyển sang ngày kế tiếp.' : 'App giữ nguyên ngày cho tới khi bạn tự đổi.', segc('auto', [[true, 'Tự động'], [false, 'Tôi tự chọn']])),
     opt('Thời lượng mục tiêu mỗi ngày', 'Khối Đắm chìm co giãn để vừa mục tiêu.', segc('target', [[45, '45 phút'], [60, '60 phút'], [90, '90 phút'], [120, '120 phút']])),
     opt('Nhịp bài mới', 'Một bài mỗi ngày vừa sức với hầu hết người mới học. Hai bài cho người đã có nền.', segc('pace', [[1, '1 bài / ngày'], [2, '2 bài / ngày']]))));
